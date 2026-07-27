@@ -452,13 +452,26 @@ section {
   gap: 16px;
   margin: 3rem auto;
   max-width: 720px;
+  align-items: start;
 }
 
-.reel-grid a { text-decoration: none; }
+.reel-grid a {
+  display: block;
+  text-decoration: none;
+  aspect-ratio: 9 / 16;
+  border-radius: 14px;
+  overflow: hidden;
+}
 
 .reel-grid .photo-placeholder--portrait { aspect-ratio: 9 / 16; border-radius: 14px; }
 
 .reel-grid .photo-placeholder::after { font-size: 0.8rem; padding: 12px 14px; }
+
+.reel-grid img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
 
 @media (min-width: 640px) {
   .reel-grid { grid-template-columns: repeat(4, 1fr); }
@@ -990,7 +1003,7 @@ section {
 .testimonial p {
   font-family: var(--font-display);
   font-style: italic;
-  font-size: clamp(1.15rem, 2.6vw, 1.5rem);
+  font-size: clamp(1.15rem, 2.6vw, 1rem);
   line-height: 1.55;
   color: var(--charcoal);
   text-align: center;
@@ -1267,3 +1280,98 @@ section {
 .narrative .story-photo { margin: 3.5rem 0; }
 
 .narrative .cta-row { margin-top: 2.5rem; }
+
+/* ============================================
+   Course page — sales additions
+   ============================================ */
+
+/* A note from Maria */
+.note-from-me {
+  font-size: 1.2rem;
+  line-height: 1.75;
+  color: var(--charcoal);
+  max-width: 42ch;
+  margin: 0 auto;
+}
+
+/* Modules / curriculum */
+.module-list {
+  max-width: 720px;
+  margin: 3rem auto 0;
+}
+
+.module {
+  display: flex;
+  gap: 22px;
+  align-items: baseline;
+  padding: 22px 4px;
+  border-bottom: 1px solid rgba(201, 169, 110, 0.3);
+}
+
+.module:first-child { border-top: 1px solid rgba(201, 169, 110, 0.3); }
+
+.module__num {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 1.5rem;
+  line-height: 1;
+  color: var(--gold);
+  flex-shrink: 0;
+  width: 2.2rem;
+}
+
+.module__title {
+  font-family: var(--font-display);
+  font-size: clamp(1.15rem, 2.5vw, 1.3rem);
+  color: var(--charcoal);
+}
+
+/* You also get — bonus box */
+.bonus-box {
+  max-width: 720px;
+  margin: 2.75rem auto 0;
+  background: var(--blush-light);
+  border: 1px solid rgba(201, 169, 110, 0.45);
+  border-radius: 18px;
+  padding: 32px 34px;
+}
+
+.bonus-box h3 {
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.bonus-box .check-list { max-width: 460px; margin: 0 auto; }
+
+/* Investment / Enroll band */
+.enroll {
+  background: linear-gradient(160deg, var(--burgundy) 0%, #692735 55%, #5E202B 100%);
+  text-align: center;
+}
+
+.enroll h2 { color: var(--cream); }
+
+.enroll__price {
+  font-family: var(--font-display);
+  font-size: clamp(2.8rem, 8vw, 3.6rem);
+  line-height: 1;
+  color: var(--cream);
+  margin: 0.75rem 0 0.4rem;
+}
+
+.enroll__terms {
+  color: rgba(250, 246, 241, 0.92);
+  font-size: 1.05rem;
+  letter-spacing: 0.02em;
+  margin-bottom: 1.75rem;
+}
+
+.enroll__context {
+  color: rgba(250, 246, 241, 0.82);
+  max-width: 54ch;
+  margin: 0 auto 2rem;
+  font-size: 1rem;
+  line-height: 1.7;
+}
+
+.enroll .btn--light { font-size: 1.05rem; padding: 16px 40px; }

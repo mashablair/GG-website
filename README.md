@@ -4,17 +4,17 @@ Pure HTML + CSS + vanilla JS. No frameworks, no build step. Hosted on Cloudflare
 
 ## Files
 
-| File | What it is |
-|------|-----------|
-| `index.html` | Homepage — the scrolling story |
-| `my-story.html` | Full story page |
-| `course.html` | Intentional Dating Method (waitlist page) |
-| `work-with-me.html` | 1:1 consultations ($47/session) |
-| `contact.html` | Instagram + YouTube links |
-| `css/style.css` | All styling (brand colors + fonts at the top in `:root`) |
-| `js/main.js` | Mobile menu + waitlist form submission |
-| `functions/api/waitlist.js` | Cloudflare Pages Function that saves signups to D1 |
-| `schema.sql` | Database table definition (run once) |
+| File                        | What it is                                               |
+| --------------------------- | -------------------------------------------------------- |
+| `index.html`                | Homepage — the scrolling story                           |
+| `my-story.html`             | Full story page                                          |
+| `course.html`               | Intentional Dating Method (waitlist page)                |
+| `work-with-me.html`         | 1:1 consultations ($47/session)                          |
+| `contact.html`              | Instagram + YouTube links                                |
+| `css/style.css`             | All styling (brand colors + fonts at the top in `:root`) |
+| `js/main.js`                | Mobile menu + waitlist form submission                   |
+| `functions/api/waitlist.js` | Cloudflare Pages Function that saves signups to D1       |
+| `schema.sql`                | Database table definition (run once)                     |
 
 ## Deploy to Cloudflare Pages (one-time setup)
 
@@ -50,12 +50,12 @@ Or in the Cloudflare dashboard: **Storage & Databases → D1 → gg-waitlist →
 
 Each placeholder is a `<div class="photo-placeholder" data-photo="...">`. Replace it with `<img src="images/your-photo.webp" alt="...">` (keep the same spot in the HTML). Aim for warm, golden-hour shots. Compress to WebP before adding (e.g. squoosh.app), target under ~200 KB each.
 
-| Page | Shot needed | Orientation |
-|------|------------|-------------|
-| Home hero | Close crop, eye contact, confident & warm | Portrait (4:5) |
+| Page                      | Shot needed                                   | Orientation     |
+| ------------------------- | --------------------------------------------- | --------------- |
+| Home hero                 | Close crop, eye contact, confident & warm     | Portrait (4:5)  |
 | Home "Follow the journey" | 4 Reel thumbnails (screenshot your top Reels) | Vertical (9:16) |
-| My Story top | Candid, warm light, present day | Landscape (3:2) |
-| Course "Who teaches this" | Warm bio portrait | Square (1:1) |
+| My Story top              | Candid, warm light, present day               | Landscape (3:2) |
+| Course "Who teaches this" | Warm bio portrait                             | Square (1:1)    |
 
 ## Local preview
 
