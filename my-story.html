@@ -26,7 +26,15 @@
     <!-- ============ NAV ============ -->
     <header class="nav">
       <div class="nav__inner">
-        <a class="nav__brand" href="index.html">Maria <span>Blair</span></a>
+        <a class="nav__brand" href="index.html">
+          <img
+            class="nav__logo"
+            src="images/mb-logo.png"
+            alt="Maria Blair"
+            width="300"
+            height="147"
+          />
+        </a>
         <ul class="nav__links">
           <li><a href="my-story.html" aria-current="page">My Story</a></li>
           <li><a href="course.html">The Course</a></li>
@@ -34,7 +42,7 @@
           <li>
             <a
               class="btn btn--primary btn--nav"
-              href="https://buy.stripe.com/REPLACE_WITH_CONSULT_LINK"
+              href="https://buy.stripe.com/4gM14feUka1B2NNeDK6sw02"
               target="_blank"
               rel="noopener"
               >Book a Consultation</a
@@ -58,7 +66,7 @@
         <li>
           <a
             class="btn btn--primary"
-            href="https://buy.stripe.com/REPLACE_WITH_CONSULT_LINK"
+            href="https://buy.stripe.com/4gM14feUka1B2NNeDK6sw02"
             target="_blank"
             rel="noopener"
             >Book a Consultation</a
@@ -72,12 +80,13 @@
       <section class="hero">
         <div class="container hero__grid">
           <div class="hero__photo">
-            <div
-              class="photo-placeholder photo-placeholder--portrait"
-              data-photo="Maria — present day, radiant, golden hour"
-              role="img"
-              aria-label="Portrait of Maria Blair today"
-            ></div>
+            <img
+              src="images/cafe.webp"
+              alt="Maria Blair smiling at a cafe with a latte"
+              width="420"
+              height="525"
+              fetchpriority="high"
+            />
           </div>
           <div class="hero__text">
             <p class="eyebrow">My Story</p>
@@ -233,12 +242,15 @@
           </div>
 
           <!-- Mid-story photo -->
-          <div
-            class="photo-placeholder photo-placeholder--landscape story-photo"
-            data-photo="Maria — thriving now, by the water, warm light"
-            role="img"
-            aria-label="Maria today"
-          ></div>
+          <figure class="story-photo">
+            <img
+              src="images/dating-thriving.webp"
+              alt="Maria smiling on a pier by the ocean, holding a bouquet of roses"
+              width="1440"
+              height="1344"
+              loading="lazy"
+            />
+          </figure>
 
           <!-- ============ CHAPTER 3: HOW I DATE NOW ============ -->
           <div class="story-heading">

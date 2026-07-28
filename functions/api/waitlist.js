@@ -12,6 +12,11 @@ export async function onRequestPost({ request, env }) {
     return json({ error: 'Invalid request' }, 400);
   }
 
+  // Honeypot: only bots fill this in. Report success so they don't retry.
+  if (String(data.company || '').trim()) {
+    return json({ ok: true });
+  }
+
   const firstName = String(data.first_name || '').trim().slice(0, 100);
   const email = String(data.email || '').trim().toLowerCase().slice(0, 200);
 

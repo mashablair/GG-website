@@ -28,6 +28,7 @@ document.querySelectorAll('form[data-waitlist]').forEach((form) => {
     const errorEl = form.querySelector('.waitlist__error');
     const firstName = form.first_name.value.trim();
     const email = form.email.value.trim();
+    const company = form.company ? form.company.value.trim() : '';
 
     errorEl.textContent = '';
     button.disabled = true;
@@ -37,7 +38,7 @@ document.querySelectorAll('form[data-waitlist]').forEach((form) => {
       const res = await fetch('/api/waitlist', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ first_name: firstName, email }),
+        body: JSON.stringify({ first_name: firstName, email, company }),
       });
 
       if (!res.ok) throw new Error('Request failed');

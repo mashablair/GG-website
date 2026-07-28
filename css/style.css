@@ -43,6 +43,7 @@ body {
 
 img {
   max-width: 100%;
+  height: auto;
   display: block;
 }
 
@@ -55,7 +56,7 @@ h1, h2, h3 {
   color: var(--charcoal);
 }
 
-h1 { font-size: clamp(1.9rem, 5.5vw, 3.1rem); }
+h1 { font-size: clamp(1.9rem, 5.5vw, 2.6rem); }
 h2 { font-size: clamp(1.6rem, 4.5vw, 2.4rem); }
 h3 { font-size: clamp(1.2rem, 3vw, 1.45rem); }
 
@@ -148,7 +149,7 @@ section {
 
 .nav__inner {
   max-width: var(--max-width);
-  margin: 0 auto;
+  margin: .8rem auto;
   padding: 0 24px;
   height: var(--nav-height);
   display: flex;
@@ -158,16 +159,18 @@ section {
 }
 
 .nav__brand {
-  font-family: var(--font-display);
-  font-size: 1.3rem;
-  font-weight: 600;
-  color: var(--charcoal);
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
   text-decoration: none;
-  letter-spacing: 0.01em;
-  white-space: nowrap;
+  line-height: 0;
 }
 
-.nav__brand span { color: var(--burgundy); }
+.nav__logo {
+  display: block;
+  height: 52px;
+  width: auto;
+}
 
 .nav__links {
   display: none;
@@ -243,6 +246,7 @@ section {
   .nav__links { display: flex; }
   .nav__toggle { display: none; }
   .nav__mobile { display: none !important; }
+  .nav__logo { height: 70px; }
 }
 
 /* ---------- Buttons ---------- */
@@ -345,7 +349,15 @@ section {
   align-items: center;
 }
 
-.hero__photo { max-width: 420px; margin: 0 auto; width: 100%; }
+.hero__photo { margin: 0 auto; width: 100%; }
+
+.hero__photo img {
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  object-position: center 20%;
+  border-radius: 18px;
+}
 
 .hero h1 { margin-bottom: 1.25rem; }
 
@@ -366,7 +378,7 @@ section {
 }
 
 @media (min-width: 860px) {
-  .hero { padding: 88px 0 104px; }
+  .hero { padding: 62px 0; }
   .hero__grid {
     grid-template-columns: 5fr 6fr;
     gap: 64px;
@@ -440,6 +452,63 @@ section {
 
 @media (min-width: 768px) {
   .pillars { grid-template-columns: repeat(3, 1fr); }
+}
+
+/* Full-bleed champagne backdrop */
+
+.method--champagne {
+  position: relative;
+  padding: 88px 0;
+  background-color: var(--cream);
+  background-image: url("../images/champage-bkg.webp");
+  background-size: cover;
+  background-position: 68% center;
+  background-repeat: no-repeat;
+}
+
+/* Softens the photo so the cards and heading stay legible */
+.method--champagne::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(250, 246, 241, 0.86) 0%,
+    rgba(250, 246, 241, 0.62) 45%,
+    rgba(250, 246, 241, 0.88) 100%
+  );
+  pointer-events: none;
+}
+
+.method--champagne > .container {
+  position: relative;
+  z-index: 1;
+}
+
+.method--champagne .pillar {
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border-color: rgba(201, 169, 110, 0.5);
+  box-shadow: 0 10px 30px rgba(45, 42, 38, 0.06);
+}
+
+/* The photo is very wide, so cover crops it to nothing on narrow screens.
+   Show it as a band across the top instead. */
+@media (max-width: 700px) {
+  .method--champagne {
+    background-size: 145% auto;
+    background-position: 72% top;
+  }
+
+  .method--champagne::before {
+    background: linear-gradient(
+      180deg,
+      rgba(250, 246, 241, 0.5) 0%,
+      rgba(250, 246, 241, 0.8) 26%,
+      var(--cream) 46%
+    );
+  }
 }
 
 /* ---------- Instagram / social proof ---------- */
@@ -523,6 +592,15 @@ section {
 .waitlist-form input:focus {
   border-color: var(--gold);
   background: rgba(250, 246, 241, 0.18);
+}
+
+/* Decoy field for bots — never shown to real visitors */
+.hp-field {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
 }
 
 .waitlist-form .btn--light { margin-top: 4px; }
@@ -645,7 +723,56 @@ section {
   color: var(--warm-gray);
   font-size: 1.15rem;
   max-width: 52ch;
+  margin: 0 auto 1rem;
+}
+
+.page-hero .cta-row { margin-top: 2rem; }
+
+.page-hero__photo {
+  max-width: min(100%, 300px);
+  margin: 0 auto 2.5rem;
+}
+
+.page-hero__photo img {
+  width: 100%;
+  height: auto;
+  border-radius: 18px;
+}
+
+/* Split hero: photo + text side by side on desktop, stacked on mobile */
+
+.page-hero--split { text-align: center; }
+
+.page-hero--split .page-hero__grid {
+  display: grid;
+  gap: 32px;
+  align-items: center;
+}
+
+.page-hero--split .page-hero__photo {
+  max-width: min(100%, 320px);
   margin: 0 auto;
+}
+
+.page-hero--split .page-hero__text { text-align: center; }
+
+@media (min-width: 860px) {
+  .page-hero--split .page-hero__grid {
+    grid-template-columns: 5fr 6fr;
+    gap: 56px;
+    text-align: left;
+  }
+  .page-hero--split .page-hero__photo {
+    max-width: 100%;
+    margin: 0;
+  }
+  .page-hero--split .page-hero__text { text-align: left; }
+  .page-hero--split h1,
+  .page-hero--split .page-hero__subline {
+    margin-left: 0;
+    margin-right: 0;
+  }
+  .page-hero--split .cta-row { justify-content: flex-start; }
 }
 
 /* Story page narrative */
@@ -721,6 +848,15 @@ section {
 }
 
 .bio-card .photo-placeholder { max-width: 260px; margin: 0 auto; }
+
+.bio-card__photo {
+  width: 100%;
+  max-width: 260px;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  border-radius: 18px;
+  margin: 0 auto;
+}
 
 @media (min-width: 700px) {
   .bio-card { grid-template-columns: 260px 1fr; }
@@ -855,6 +991,201 @@ section {
   margin-top: 5px;
 }
 
+/* ---------- Full-bleed photo hero ---------- */
+
+.hero--photo {
+  position: relative;
+  padding: 0;
+  min-height: 124vh; /* mobile: room for her face up top AND the text below */
+  display: flex;
+  align-items: flex-end; /* mobile: text sits at the bottom, below her face */
+  overflow: hidden;
+  background: var(--charcoal);
+}
+
+/* One cohesive full-bleed image on every screen */
+.hero__bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 60% 5%; /* mobile: Maria's face framed near the top */
+}
+
+.hero__scrim {
+  position: absolute;
+  inset: 0;
+  /* Mobile: darken the lower portion for the text; keep her face (top) clear */
+  background: linear-gradient(
+    to top,
+    rgba(45, 42, 38, 0.92) 0%,
+    rgba(45, 42, 38, 0.86) 32%,
+    rgba(45, 42, 38, 0.55) 52%,
+    rgba(45, 42, 38, 0.18) 66%,
+    rgba(45, 42, 38, 0) 82%
+  );
+  pointer-events: none;
+}
+
+.hero__content {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  padding-top: 30px;
+  padding-bottom: 44px;
+}
+
+.hero--photo .hero__text { max-width: 640px; }
+
+.hero--photo h1 { color: var(--cream); }
+
+.hero--photo .hero__subline {
+  color: rgba(250, 246, 241, 0.9);
+}
+
+/* Credential caption tied to Maria's photo.
+   Mobile: top-left corner, kept clear of the hero text at the bottom. */
+.hero__badge {
+  position: absolute;
+  top: 18px;
+  left: 20px;
+  z-index: 3;
+  max-width: 82%;
+  margin: 0;
+  padding: 11px 16px;
+  border-radius: 10px;
+  background: rgb(142 139 135 / 55%);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  text-align: left;
+  color: var(--cream);
+}
+
+.hero__badge strong {
+  display: block;
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: var(--cream);
+}
+
+.hero__badge span {
+  display: block;
+  font-size: 0.9rem;
+  letter-spacing: 0.02em;
+  color: rgba(250, 246, 241, 0.9);
+}
+
+/* Secondary button reads as light over the photo */
+.hero--photo .btn--ghost {
+  border-color: rgba(250, 246, 241, 0.55);
+  color: var(--cream);
+}
+
+.hero--photo .btn--ghost:hover {
+  border-color: var(--cream);
+  background: rgba(250, 246, 241, 0.12);
+}
+
+/* Wide screens only: cinematic side-by-side overlay — text on the left,
+   Maria clear on the right, credential caption in the bottom-right beneath her.
+   Below 900px the photo crops too square for this, so those sizes keep the
+   mobile layout (face up top, text over the darkened bottom). */
+@media (min-width: 900px) {
+  .hero--photo {
+    align-items: center;
+    min-height: min(800px, 90vh);
+  }
+
+  .hero__bg { object-position: 85% center; }
+
+  .hero__scrim {
+    background: linear-gradient(
+      90deg,
+      rgba(45, 42, 38, 0.82) 0%,
+      rgba(45, 42, 38, 0.55) 28%,
+      rgba(45, 42, 38, 0.12) 50%,
+      rgba(45, 42, 38, 0) 66%
+    );
+  }
+
+  .hero__content {
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+
+  .hero--photo .hero__text { max-width: 480px; }
+
+  .hero__badge {
+    top: auto;
+    left: auto;
+    right: 32px;
+    bottom: 32px;
+    max-width: 380px;
+    padding: 10px 16px;
+    text-align: right;
+    background: rgba(45, 42, 38, 0.55);
+  }
+
+  .hero__badge span { font-size: 0.92rem; }
+}
+
+/* ---------- Word ribbon (marquee) ---------- */
+
+.marquee {
+  background: var(--blush-light);
+  border-top: 1px solid rgba(201, 169, 110, 0.3);
+  border-bottom: 1px solid rgba(201, 169, 110, 0.3);
+  overflow: hidden;
+  padding: 20px 0;
+}
+
+.marquee__track {
+  display: flex;
+  width: max-content;
+  animation: marquee-scroll 38s linear infinite;
+}
+
+.marquee:hover .marquee__track {
+  animation-play-state: paused;
+}
+
+.marquee__group {
+  display: flex;
+  flex-shrink: 0;
+}
+
+.marquee__group span {
+  font-family: var(--font-body);
+  /* font-weight: 700; */
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-size: clamp(0.95rem, 2vw, 1.3rem);
+  color: var(--charcoal);
+  white-space: nowrap;
+}
+
+/* Gold sparkle separator between words */
+.marquee__group span::after {
+  content: "✦";
+  display: inline-block;
+  margin: 0 clamp(1.2rem, 3.6vw, 2.6rem);
+  color: var(--gold);
+  font-size: 0.62em;
+  font-weight: 400;
+  vertical-align: 0.18em;
+}
+
+@keyframes marquee-scroll {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .marquee__track { animation: none; }
+}
+
 /* ---------- Problem section ---------- */
 
 .problem { background: var(--white); }
@@ -876,12 +1207,24 @@ section {
   font-size: 1.25rem;
   color: var(--burgundy);
   margin-top: 2rem;
+  font-weight: 600;
 }
 
 /* ---------- Become section ---------- */
 
 .become {
   background: var(--blush-light);
+  padding: 0;
+  overflow: hidden;
+}
+
+.become__layout {
+  display: grid;
+  grid-template-columns: 1fr;
+}
+
+.become__content {
+  padding: 72px 24px;
   text-align: center;
 }
 
@@ -905,6 +1248,59 @@ section {
 }
 
 .become .cta-row { margin-top: 2.5rem; }
+
+.become__media {
+  margin: 0;
+  position: relative;
+  min-height: clamp(280px, 55vw, 420px);
+  overflow: hidden;
+}
+
+.become__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 15%;
+}
+
+@media (min-width: 768px) {
+  .become__content { padding: 104px 48px; }
+}
+
+@media (min-width: 900px) {
+  .become__layout {
+    grid-template-columns: 1fr clamp(340px, 44vw, 560px);
+    min-height: min(680px, 82vh);
+    align-items: stretch;
+  }
+
+  .become__content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    text-align: left;
+    padding: 104px clamp(24px, 4vw, 56px);
+    padding-left: max(24px, calc((100vw - var(--max-width)) / 2 + 24px));
+    max-width: 640px;
+  }
+
+  .become__body {
+    margin: 0;
+    max-width: none;
+  }
+
+  .become .cta-row { justify-content: flex-start; }
+
+  .become__media {
+    min-height: 100%;
+  }
+
+  .become__media img {
+    position: absolute;
+    inset: 0;
+  }
+}
 
 /* ---------- Offers (Two ways to work with me) ---------- */
 
@@ -1141,6 +1537,68 @@ section {
 
 .for-her .cta-row { margin-top: 3rem; }
 
+/* Full-bleed cozy backdrop */
+
+.for-her--cozy {
+  position: relative;
+  padding: 88px 0;
+  background-color: var(--cream);
+  background-image: url("../images/cozy-bkg.webp");
+  background-size: cover;
+  background-position: 74% center;
+  background-repeat: no-repeat;
+}
+
+/* Softens the photo so the heading and list stay legible */
+.for-her--cozy::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(250, 246, 241, 0.86) 0%,
+    rgba(250, 246, 241, 0.6) 45%,
+    rgba(250, 246, 241, 0.88) 100%
+  );
+  pointer-events: none;
+}
+
+.for-her--cozy > .container {
+  position: relative;
+  z-index: 1;
+}
+
+/* The list has no cards of its own, so it gets a frosted panel */
+.for-her--cozy .check-list {
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(201, 169, 110, 0.5);
+  border-radius: 18px;
+  padding: 36px 32px;
+  box-shadow: 0 10px 30px rgba(45, 42, 38, 0.06);
+}
+
+/* The photo is very wide, so cover crops it to nothing on narrow screens.
+   Show it as a band across the top instead. */
+@media (max-width: 700px) {
+  .for-her--cozy {
+    background-size: 145% auto;
+    background-position: 74% top;
+  }
+
+  .for-her--cozy::before {
+    background: linear-gradient(
+      180deg,
+      rgba(250, 246, 241, 0.5) 0%,
+      rgba(250, 246, 241, 0.8) 26%,
+      var(--cream) 46%
+    );
+  }
+
+  .for-her--cozy .check-list { padding: 28px 22px; }
+}
+
 /* FAQ accordion */
 
 .faq-section { background: var(--white); }
@@ -1276,8 +1734,16 @@ section {
   margin-top: 0.25rem;
 }
 
-/* Mid-story photo spacing */
-.narrative .story-photo { margin: 3.5rem 0; }
+/* Mid-story photo */
+.narrative .story-photo {
+  margin: 3.5rem auto;
+}
+
+.narrative .story-photo img {
+  width: 100%;
+  height: auto;
+  border-radius: 18px;
+}
 
 .narrative .cta-row { margin-top: 2.5rem; }
 

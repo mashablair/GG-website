@@ -1,0 +1,13 @@
+# Local wrangler / miniflare test state
+.wrangler/
+
+# Exported signup lists — contain real people's email addresses
+waitlist.csv
+
+node_modules/
+.DS_Store
+
+# Full-resolution originals and retired photos. Cloudflare Pages has no ignore
+# file, so keeping these out of git is what keeps them out of the deploy.
+images/_archive/
+.imgopt/

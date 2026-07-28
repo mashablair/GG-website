@@ -25,7 +25,15 @@
   <body>
     <header class="nav">
       <div class="nav__inner">
-        <a class="nav__brand" href="index.html">Maria <span>Blair</span></a>
+        <a class="nav__brand" href="index.html">
+          <img
+            class="nav__logo"
+            src="images/mb-logo.png"
+            alt="Maria Blair"
+            width="300"
+            height="147"
+          />
+        </a>
         <ul class="nav__links">
           <li><a href="my-story.html">My Story</a></li>
           <li><a href="course.html" aria-current="page">The Course</a></li>
@@ -33,7 +41,7 @@
           <li>
             <a
               class="btn btn--primary btn--nav"
-              href="https://buy.stripe.com/REPLACE_WITH_CONSULT_LINK"
+              href="https://buy.stripe.com/4gM14feUka1B2NNeDK6sw02"
               target="_blank"
               rel="noopener"
               >Book a Consultation</a
@@ -57,7 +65,7 @@
         <li>
           <a
             class="btn btn--primary"
-            href="https://buy.stripe.com/REPLACE_WITH_CONSULT_LINK"
+            href="https://buy.stripe.com/4gM14feUka1B2NNeDK6sw02"
             target="_blank"
             rel="noopener"
             >Book a Consultation</a
@@ -67,15 +75,28 @@
     </header>
 
     <main>
-      <section class="page-hero">
-        <div class="container">
-          <p class="eyebrow">The Course</p>
-          <h1>The Intentional Dating Method</h1>
-          <p class="page-hero__subline" style="margin-bottom: 1rem">
-            For women 35+ who want to date with intention, not desperation.
-          </p>
-          <div class="cta-row" style="margin-top: 2rem">
-            <a class="btn btn--primary" href="#enroll">Enroll Now 🐆</a>
+      <section class="page-hero page-hero--split">
+        <div class="container page-hero__grid">
+          <figure class="page-hero__photo">
+            <img
+              src="images/hot-kiss.webp"
+              alt="A couple leaning close in an intimate moment against a wall"
+              width="960"
+              height="1431"
+              fetchpriority="high"
+            />
+          </figure>
+          <div class="page-hero__text">
+            <p class="eyebrow">The Course</p>
+            <h1>The Intentional Dating Method</h1>
+            <p class="page-hero__subline">
+              For women 35+ who want to date with intention, not desperation.
+            </p>
+            <div class="cta-row">
+              <a class="btn btn--primary" href="#waitlist"
+                >Join the Waitlist 🐆</a
+              >
+            </div>
           </div>
         </div>
       </section>
@@ -126,7 +147,7 @@
       </section>
 
       <!-- What you'll learn -->
-      <section class="method" style="padding-top: 72px">
+      <section class="method method--champagne">
         <div class="container">
           <div class="section-header">
             <h2>What you'll learn</h2>
@@ -228,12 +249,14 @@
             <h2>Who teaches this</h2>
           </div>
           <div class="bio-card">
-            <div
-              class="photo-placeholder photo-placeholder--square"
-              data-photo="Maria — warm bio portrait"
-              role="img"
-              aria-label="Photo of Maria Blair"
-            ></div>
+            <img
+              class="bio-card__photo"
+              src="images/profile-photo.webp"
+              alt="Photo of Maria Blair"
+              width="560"
+              height="560"
+              loading="lazy"
+            />
             <div>
               <h3>Maria Blair</h3>
               <p>
@@ -301,25 +324,55 @@
         </div>
       </section>
 
-      <!-- Investment / Enroll -->
-      <section class="enroll" id="enroll">
+      <!-- Investment / Waitlist -->
+      <section class="enroll waitlist" id="waitlist">
         <div class="container container--narrow">
           <p class="eyebrow">The Investment</p>
           <h2>Ready to start living now?</h2>
           <div class="enroll__price">$397</div>
-          <p class="enroll__terms">One payment · 1-year access</p>
+          <p class="enroll__terms">
+            One payment · 1-year access · Doors open soon
+          </p>
           <p class="enroll__context">
             For context: therapy is $150–200 a session. Matchmaking services run
             $3,000–$10,000. The Method is what many, many dates cost me in time
             and confusion — packaged so yours costs a lot less.
           </p>
-          <a
-            class="btn btn--light"
-            href="https://buy.stripe.com/REPLACE_WITH_COURSE_LINK"
-            target="_blank"
-            rel="noopener"
-            >Enroll Now</a
+          <form
+            class="waitlist-form"
+            data-waitlist
+            data-button-label="Join the Waitlist 🐆"
           >
+            <input
+              type="text"
+              name="first_name"
+              placeholder="First name"
+              autocomplete="given-name"
+              required
+            />
+            <input
+              type="email"
+              name="email"
+              placeholder="Your email"
+              autocomplete="email"
+              required
+            />
+            <input
+              type="text"
+              name="company"
+              class="hp-field"
+              tabindex="-1"
+              autocomplete="off"
+              aria-hidden="true"
+            />
+            <button class="btn btn--light" type="submit">
+              Join the Waitlist 🐆
+            </button>
+            <p class="waitlist__error" role="alert"></p>
+          </form>
+          <p class="waitlist__fine-print">
+            Waitlist members get founding-member pricing and first access.
+          </p>
         </div>
       </section>
     </main>

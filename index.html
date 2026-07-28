@@ -24,7 +24,15 @@
     <!-- ============ NAV ============ -->
     <header class="nav">
       <div class="nav__inner">
-        <a class="nav__brand" href="index.html">Maria <span>Blair</span></a>
+        <a class="nav__brand" href="index.html">
+          <img
+            class="nav__logo"
+            src="images/mb-logo.png"
+            alt="Maria Blair"
+            width="300"
+            height="147"
+          />
+        </a>
         <ul class="nav__links">
           <li><a href="my-story.html">My Story</a></li>
           <li><a href="course.html">The Course</a></li>
@@ -32,7 +40,7 @@
           <li>
             <a
               class="btn btn--primary btn--nav"
-              href="https://buy.stripe.com/REPLACE_WITH_CONSULT_LINK"
+              href="https://buy.stripe.com/4gM14feUka1B2NNeDK6sw02"
               target="_blank"
               rel="noopener"
               >Book a Consultation</a
@@ -56,7 +64,7 @@
         <li>
           <a
             class="btn btn--primary"
-            href="https://buy.stripe.com/REPLACE_WITH_CONSULT_LINK"
+            href="https://buy.stripe.com/4gM14feUka1B2NNeDK6sw02"
             target="_blank"
             rel="noopener"
             >Book a Consultation</a
@@ -67,24 +75,20 @@
 
     <main>
       <!-- ============ HERO ============ -->
-      <section class="hero">
-        <div class="container hero__grid">
-          <div class="hero__photo">
-            <div
-              class="photo-placeholder photo-placeholder--portrait photo-placeholder--hero"
-              data-photo="Maria — polished, warm, direct eye contact, golden-hour, expensive setting"
-              role="img"
-              aria-label="Portrait of Maria Blair"
-            >
-              <div class="hero__photo-caption">
-                <strong>Maria Blair, 45</strong>
-                <span
-                  >Coach · Mentor · Biohacker · Creator of the Intentional
-                  Dating Method</span
-                >
-              </div>
-            </div>
-          </div>
+      <section class="hero hero--photo">
+        <img
+          class="hero__bg"
+          src="images/hero-maria.webp"
+          alt="Maria Blair smiling at golden hour by the water"
+          fetchpriority="high"
+        />
+        <div class="hero__scrim"></div>
+        <p class="hero__badge">
+          <strong>Maria Blair</strong>
+          <span>Coach · Mentor · Biohacker</span>
+          <span>Creator of the Intentional Dating Method</span>
+        </p>
+        <div class="container hero__content">
           <div class="hero__text">
             <h1>
               You're Not Broken. You're Just Playing by Rules That Were Never
@@ -98,7 +102,7 @@
             <div class="cta-row cta-row--left">
               <a
                 class="btn btn--primary"
-                href="https://buy.stripe.com/REPLACE_WITH_CONSULT_LINK"
+                href="https://buy.stripe.com/4gM14feUka1B2NNeDK6sw02"
                 target="_blank"
                 rel="noopener"
                 >Book a Private Consultation</a
@@ -110,6 +114,24 @@
           </div>
         </div>
       </section>
+
+      <!-- ============ WORD RIBBON ============ -->
+      <div class="marquee" aria-hidden="true">
+        <div class="marquee__track">
+          <div class="marquee__group">
+            <span>Powerful</span><span>Feminine</span><span>Magnetic</span
+            ><span>Abundant</span><span>Powerful</span><span>Feminine</span
+            ><span>Magnetic</span><span>Abundant</span><span>Powerful</span
+            ><span>Feminine</span><span>Magnetic</span><span>Abundant</span>
+          </div>
+          <div class="marquee__group">
+            <span>Powerful</span><span>Feminine</span><span>Magnetic</span
+            ><span>Abundant</span><span>Powerful</span><span>Feminine</span
+            ><span>Magnetic</span><span>Abundant</span><span>Powerful</span
+            ><span>Feminine</span><span>Magnetic</span><span>Abundant</span>
+          </div>
+        </div>
+      </div>
 
       <!-- ============ THE PROBLEM ============ -->
       <section class="problem">
@@ -143,29 +165,39 @@
 
       <!-- ============ THE WOMAN YOU BECOME ============ -->
       <section class="become">
-        <div class="container container--narrow">
-          <p class="eyebrow">The Woman You Become</p>
-          <div class="become__body">
-            <p class="lead">
-              You open the apps with ease and confidence. You go on a date
-              feeling calm and magnetic — you enjoy yourself and watch a man
-              perform instead of performing for him.
-            </p>
-            <p>
-              You stop chasing. Stop over-explaining. Stop shrinking to make the
-              room comfortable for someone who wasn't going to stay anyway.
-            </p>
-            <p>You have a life you wouldn't leave for the wrong man. 💕</p>
+        <div class="become__layout">
+          <div class="become__content">
+            <p class="eyebrow">The Woman You Become</p>
+            <div class="become__body">
+              <p class="lead">
+                You open the apps with ease and confidence. You go on a date
+                feeling calm and magnetic — you enjoy yourself and watch a man
+                perform instead of performing for him.
+              </p>
+              <p>
+                You stop chasing. Stop over-explaining. Stop shrinking to make
+                the room comfortable for someone who wasn't going to stay
+                anyway.
+              </p>
+              <p>You have a life you wouldn't leave for the wrong man. 💕</p>
+            </div>
+            <div class="cta-row">
+              <a
+                class="btn btn--primary"
+                href="https://buy.stripe.com/4gM14feUka1B2NNeDK6sw02"
+                target="_blank"
+                rel="noopener"
+                >Book Your Consultation</a
+              >
+            </div>
           </div>
-          <div class="cta-row">
-            <a
-              class="btn btn--primary"
-              href="https://buy.stripe.com/REPLACE_WITH_CONSULT_LINK"
-              target="_blank"
-              rel="noopener"
-              >Book Your Consultation</a
-            >
-          </div>
+          <figure class="become__media">
+            <img
+              src="images/hot-couple.webp"
+              alt="Stylish couple posing confidently against a sunlit brick wall"
+              loading="lazy"
+            />
+          </figure>
         </div>
       </section>
 
@@ -285,10 +317,10 @@
               rel="noopener"
             >
               <img
-                src="images/feminineenergy.jpg"
+                src="images/feminineenergy.webp"
                 alt="Instagram reel: feminine energy"
-                width="941"
-                height="1672"
+                width="720"
+                height="1279"
                 loading="lazy"
               />
             </a>
@@ -298,10 +330,10 @@
               rel="noopener"
             >
               <img
-                src="images/happywoman.jpg"
+                src="images/happywoman.webp"
                 alt="Instagram reel: happy woman"
-                width="941"
-                height="1672"
+                width="720"
+                height="1279"
                 loading="lazy"
               />
             </a>
@@ -311,10 +343,10 @@
               rel="noopener"
             >
               <img
-                src="images/noteasygoing.jpg"
+                src="images/noteasygoing.webp"
                 alt="Instagram reel: I am difficult"
-                width="941"
-                height="1672"
+                width="720"
+                height="1279"
                 loading="lazy"
               />
             </a>
@@ -324,10 +356,10 @@
               rel="noopener"
             >
               <img
-                src="images/nodrinks.jpg"
+                src="images/nodrinks.webp"
                 alt="Instagram reel: no drinks"
-                width="941"
-                height="1672"
+                width="720"
+                height="1279"
                 loading="lazy"
               />
             </a>
