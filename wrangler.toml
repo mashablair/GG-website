@@ -1,0 +1,43 @@
+# Cloudflare Pages build configuration for mariablair.com.
+#
+# `pages_build_output_dir` is the important line: it tells Cloudflare to serve
+# the public/ folder, not the repo root. Serving the root would publish
+# everything in it — README.md, schema.sql, migrations/, test/ and the source of
+# every Function. It used to, before the platform moved in here.
+#
+# Keeping this in the repo means the setting travels with the code instead of
+# living only in the dashboard. Note that once this file is deployed, the
+# dashboard's build fields become read-only — change them here instead.
+#
+# `name` must match the Pages project exactly, or a deploy goes to the wrong
+# place (or nowhere).
+
+name = "gg-website"
+pages_build_output_dir = "public"
+compatibility_date = "2026-08-14"
+
+# The one database behind everything: students, what they've bought, how far
+# they've got, sign-in codes, and the course waitlist. Reachable in any Function
+# as env.DB.
+#
+# The name is a leftover from when the platform was only the dating course —
+# D1 databases can't be renamed, and the name is internal, so it stays. It holds
+# every course, not just that one.
+#
+# Schema lives in schema.sql; changes to existing tables go in migrations/.
+#   npx wrangler d1 execute dating-goddess-db --remote --file=schema.sql
+[[d1_databases]]
+binding = "DB"
+database_name = "dating-goddess-db"
+database_id = "474009f5-810c-481a-ac37-41860bace992"
+
+# Who login codes come from. Not secret — it's on every email we send.
+# Deliberately not noreply@: someone locked out of a course she paid for will
+# hit reply, and that shouldn't vanish.
+# CF_ACCOUNT_ID isn't secret either — it's in every dashboard URL. The token
+# that goes with it is, and is set with:
+#   npx wrangler pages secret put CF_EMAIL_TOKEN --project-name gg-website
+[vars]
+CF_ACCOUNT_ID = "a332e0c972ce41f7a06fad53e1ce8adb"
+EMAIL_FROM = "support@mariablair.com"
+EMAIL_FROM_NAME = "Maria Blair"

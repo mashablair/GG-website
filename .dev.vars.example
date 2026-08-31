@@ -1,0 +1,29 @@
+# Copy to .dev.vars and fill in. .dev.vars is gitignored; this file is not, so
+# never put real values here.
+#
+# Get the Stripe values from the dashboard in TEST MODE (see README).
+STRIPE_SECRET_KEY=sk_test_...
+STRIPE_WEBHOOK_SECRET=whsec_...
+
+# Any long random string. Generate one with: openssl rand -base64 32
+# Use a DIFFERENT value in production.
+SESSION_SECRET=
+
+# Only for the test suite — points the Stripe client at a local stand-in.
+# Leave unset for normal development against real Stripe test mode.
+# STRIPE_API_BASE=http://127.0.0.1:8799/v1
+
+# Print login codes to the console instead of sending them. Always on locally,
+# so tests and development can never email a real person.
+EMAIL_DEV_CONSOLE=true
+
+# Lava.top, for buyers in Russia and the CIS. The webhook secret is whatever
+# you configure on their endpoint; the API key is from your Lava account.
+LAVA_WEBHOOK_SECRET=
+LAVA_API_KEY=
+# Only for tests — points at a local stand-in.
+# LAVA_API_BASE=http://127.0.0.1:8797
+# The RUB one-time OFFER id from Lava (not the product id), and the price as
+# you want it shown. Both can also live in catalog.lava in content.js.
+LAVA_OFFER_ID=
+LAVA_PRICE_LABEL=

@@ -1,0 +1,1081 @@
+/* ============================================
+   The Dating Method — course app
+   Same brand as the sales page, quieter. The
+   content is the thing; the chrome gets out of
+   the way.
+   ============================================ */
+
+:root {
+  --rail-width: 300px;
+  --bar-height: 68px;
+}
+
+body.app {
+  background: var(--cream);
+}
+
+/* .btn sets display:inline-block, which beats the UA rule for [hidden] —
+   without this, hiding a button in JS does nothing. */
+[hidden] {
+  display: none !important;
+}
+
+/* ---------- Top bar ---------- */
+
+.app-bar {
+  position: sticky;
+  top: 0;
+  z-index: 200;
+  background: rgba(250, 246, 241, 0.94);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(201, 169, 110, 0.3);
+}
+
+.app-bar__inner {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 20px;
+  height: var(--bar-height);
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.app-bar__brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+  flex-shrink: 0;
+}
+
+.app-bar__brand img {
+  height: 34px;
+  width: auto;
+}
+
+.app-bar__brand span {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 1.05rem;
+  color: var(--burgundy);
+  display: none;
+}
+
+.app-bar__progress {
+  display: none;
+  align-items: center;
+  gap: 12px;
+  flex: 1;
+  max-width: 320px;
+  margin: 0 auto;
+}
+
+.app-bar__progress-label {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--warm-gray);
+  flex-shrink: 0;
+  min-width: 3ch;
+}
+
+.app-bar__links {
+  display: none;
+  align-items: center;
+  gap: 24px;
+  margin-left: auto;
+}
+
+.app-bar__links a {
+  color: var(--charcoal);
+  text-decoration: none;
+  font-size: 0.92rem;
+  font-weight: 500;
+  transition: color 0.2s;
+}
+
+.app-bar__links a:hover {
+  color: var(--burgundy);
+}
+
+.app-bar__account {
+  color: var(--warm-gray) !important;
+  font-size: 0.85rem !important;
+}
+
+.app-bar__toggle {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  width: 44px;
+  height: 44px;
+  padding: 10px;
+  margin-left: auto;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.app-bar__toggle span {
+  display: block;
+  height: 2px;
+  width: 100%;
+  background: var(--charcoal);
+  border-radius: 2px;
+  transition: transform 0.25s, opacity 0.25s;
+}
+
+body.drawer-open .app-bar__toggle span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+body.drawer-open .app-bar__toggle span:nth-child(2) { opacity: 0; }
+body.drawer-open .app-bar__toggle span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+/* ---------- Progress bars ---------- */
+
+.progress-bar {
+  flex: 1;
+  height: 6px;
+  border-radius: 999px;
+  background: rgba(201, 169, 110, 0.25);
+  overflow: hidden;
+}
+
+.progress-bar span {
+  display: block;
+  height: 100%;
+  width: 0;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--gold), var(--burgundy));
+  transition: width 0.4s ease;
+}
+
+.progress-bar--slim { height: 4px; }
+
+.progress-bar--large {
+  height: 10px;
+  max-width: 420px;
+  margin: 0 auto;
+}
+
+/* ---------- Layout ---------- */
+
+.app-body {
+  max-width: 1400px;
+  margin: 0 auto;
+  display: block;
+}
+
+.app-main {
+  padding: 32px 20px 96px;
+  min-width: 0;
+}
+
+/* ---------- Curriculum rail ---------- */
+
+.app-rail {
+  position: fixed;
+  inset: var(--bar-height) 0 0 auto;
+  left: 0;
+  z-index: 190;
+  width: min(88vw, var(--rail-width));
+  background: var(--white);
+  border-right: 1px solid rgba(201, 169, 110, 0.3);
+  padding: 24px 8px 60px 20px;
+  overflow-y: auto;
+  transform: translateX(-102%);
+  transition: transform 0.25s ease;
+}
+
+body.drawer-open .app-rail { transform: translateX(0); }
+
+/* Dims the lesson behind the open drawer, and gives her somewhere to tap to
+   close it. */
+.app-scrim {
+  position: fixed;
+  inset: var(--bar-height) 0 0 0;
+  z-index: 185;
+  background: rgba(45, 42, 38, 0.4);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease;
+}
+
+body.drawer-open .app-scrim {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+body.drawer-open { overflow: hidden; }
+
+/* The nav links inside the drawer — phones only. On desktop the header row
+   carries them, and repeating them here would be clutter. */
+.app-rail__nav {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding-bottom: 18px;
+  margin-bottom: 18px;
+  border-bottom: 1px solid rgba(201, 169, 110, 0.3);
+}
+
+.app-rail__nav a {
+  padding: 12px 8px;
+  border-radius: 10px;
+  text-decoration: none;
+  color: var(--charcoal);
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+.app-rail__nav a:hover { background: var(--blush-light); }
+
+.app-rail__nav .app-bar__account {
+  color: var(--warm-gray) !important;
+  font-size: 0.92rem !important;
+}
+
+.app-rail__heading {
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 1rem;
+}
+
+.curriculum__module {
+  border-bottom: 1px solid rgba(201, 169, 110, 0.22);
+}
+
+.curriculum__module summary {
+  list-style: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 6px 14px 0;
+}
+
+.curriculum__module summary::-webkit-details-marker { display: none; }
+
+.curriculum__num {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 1rem;
+  color: var(--gold);
+  width: 1.6rem;
+  flex-shrink: 0;
+}
+
+.curriculum__module-title {
+  font-family: var(--font-display);
+  font-size: 0.98rem;
+  line-height: 1.3;
+  color: var(--charcoal);
+  flex: 1;
+}
+
+.curriculum__count {
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--warm-gray);
+  flex-shrink: 0;
+}
+
+.curriculum__module ul {
+  list-style: none;
+  padding: 0 0 12px 1.6rem;
+}
+
+.curriculum__lesson {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 9px 10px 9px 8px;
+  border-radius: 10px;
+  text-decoration: none;
+  color: var(--warm-gray);
+  font-size: 0.9rem;
+  line-height: 1.45;
+  transition: background 0.15s, color 0.15s;
+}
+
+.curriculum__lesson:hover {
+  background: var(--blush-light);
+  color: var(--charcoal);
+}
+
+.curriculum__lesson.is-current {
+  background: var(--blush-light);
+  color: var(--burgundy);
+  font-weight: 600;
+}
+
+.curriculum__check {
+  flex-shrink: 0;
+  width: 16px;
+  height: 16px;
+  margin-top: 3px;
+  border-radius: 50%;
+  border: 1.5px solid var(--blush);
+  background: var(--white);
+  position: relative;
+}
+
+.curriculum__lesson.is-done .curriculum__check {
+  background: var(--burgundy);
+  border-color: var(--burgundy);
+}
+
+.curriculum__lesson.is-done .curriculum__check::after {
+  content: "";
+  position: absolute;
+  left: 4px;
+  top: 4px;
+  width: 6px;
+  height: 3px;
+  border-left: 1.5px solid var(--cream);
+  border-bottom: 1.5px solid var(--cream);
+  transform: rotate(-45deg);
+}
+
+.curriculum__lesson.is-done .curriculum__lesson-title {
+  text-decoration: line-through;
+  text-decoration-color: rgba(122, 46, 58, 0.35);
+}
+
+/* ---------- Dashboard ---------- */
+
+.dash-hero {
+  text-align: center;
+  padding: 32px 0 12px;
+}
+
+.dash-hero h1 {
+  margin-bottom: 0.75rem;
+}
+
+.dash-hero__sub {
+  color: var(--warm-gray);
+  max-width: 46ch;
+  margin: 0 auto 2.25rem;
+}
+
+.dash-hero__progress { margin-bottom: 2rem; }
+
+.dash-hero__count {
+  font-size: 0.92rem;
+  color: var(--warm-gray);
+  margin-top: 0.9rem;
+}
+
+.dash-hero__count strong {
+  color: var(--burgundy);
+  font-weight: 600;
+}
+
+.dash-modules { padding: 40px 0 0; }
+
+.dash-modules .section-header { margin-bottom: 2rem; }
+
+.module-grid {
+  display: grid;
+  gap: 18px;
+  grid-template-columns: 1fr;
+}
+
+.module-card {
+  display: block;
+  background: var(--white);
+  border: 1px solid rgba(201, 169, 110, 0.35);
+  border-radius: 18px;
+  padding: 26px 26px 22px;
+  text-decoration: none;
+  color: inherit;
+  transition: transform 0.15s, box-shadow 0.2s, border-color 0.2s;
+}
+
+.module-card:hover {
+  transform: translateY(-2px);
+  border-color: var(--gold);
+  box-shadow: 0 10px 26px rgba(45, 42, 38, 0.07);
+}
+
+.module-card__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.6rem;
+}
+
+.module-card__num {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 1.9rem;
+  line-height: 1;
+  color: var(--gold);
+}
+
+.module-card__done {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--warm-gray);
+  letter-spacing: 0.04em;
+}
+
+.module-card__done.is-done { color: var(--burgundy); }
+
+.module-card h3 { margin-bottom: 0.35rem; }
+
+.module-card__sub {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 0.95rem;
+  color: var(--burgundy);
+  margin-bottom: 0.5rem;
+}
+
+.module-card__summary {
+  color: var(--warm-gray);
+  font-size: 0.95rem;
+  margin-bottom: 1.4rem;
+}
+
+.module-card__meta {
+  display: block;
+  font-size: 0.8rem;
+  color: var(--warm-gray);
+  margin-top: 0.7rem;
+}
+
+.dash-resources { padding: 48px 0 0; }
+
+.dash-resources__card {
+  background: var(--blush-light);
+  border: 1px solid rgba(201, 169, 110, 0.45);
+  border-radius: 18px;
+  padding: 34px 30px;
+  text-align: center;
+}
+
+.dash-resources__card h3 { margin-bottom: 0.6rem; }
+
+.dash-resources__card p {
+  color: var(--warm-gray);
+  margin-bottom: 1.5rem;
+}
+
+/* ---------- Lesson ---------- */
+
+.lesson {
+  max-width: 780px;
+  margin: 0 auto;
+}
+
+.lesson__crumb {
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--warm-gray);
+  margin-bottom: 0.9rem;
+}
+
+.lesson__crumb-num {
+  color: var(--gold);
+  margin-right: 0.6rem;
+}
+
+.lesson h1 { margin-bottom: 0.5rem; }
+
+.lesson__duration {
+  font-size: 0.88rem;
+  color: var(--warm-gray);
+  margin-bottom: 1.75rem;
+}
+
+/* Video */
+
+.video {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border-radius: 16px;
+  overflow: hidden;
+  background: var(--charcoal);
+  margin: 1.5rem 0 2.5rem;
+  box-shadow: 0 14px 40px rgba(45, 42, 38, 0.14);
+}
+
+.video iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
+.video--pending {
+  background:
+    radial-gradient(120% 90% at 20% 15%, rgba(201, 169, 110, 0.35), transparent 60%),
+    radial-gradient(110% 100% at 85% 90%, rgba(122, 46, 58, 0.25), transparent 55%),
+    linear-gradient(150deg, #EFDFC9 0%, #E4C6B8 45%, #D4A0A0 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: none;
+  border: 1px solid rgba(201, 169, 110, 0.5);
+}
+
+.video__pending-inner { text-align: center; }
+
+.video__pending-icon {
+  display: block;
+  font-size: 2rem;
+  margin-bottom: 0.6rem;
+}
+
+.video__pending-inner p {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 1.05rem;
+  color: rgba(94, 32, 43, 0.8);
+}
+
+/* Written part */
+
+.lesson__body p {
+  font-size: 1.08rem;
+  line-height: 1.75;
+  margin-bottom: 1.4rem;
+}
+
+.lesson__body h3 {
+  margin: 2.4rem 0 0.9rem;
+}
+
+.lesson__body ul,
+.lesson__body ol {
+  margin: 0 0 1.5rem 1.3rem;
+}
+
+.lesson__body li {
+  margin-bottom: 0.6rem;
+  line-height: 1.7;
+}
+
+.lesson__body blockquote {
+  margin: 2.25rem 0;
+  padding: 22px 28px;
+  background: var(--blush-light);
+  border-left: 4px solid var(--gold);
+  border-radius: 0 14px 14px 0;
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 1.2rem;
+  line-height: 1.5;
+  color: var(--burgundy);
+}
+
+.lesson__body strong { color: var(--charcoal); }
+
+.lesson__body a { color: var(--burgundy); }
+
+.lesson__pending {
+  color: var(--warm-gray);
+  font-style: italic;
+}
+
+.lesson__figure { margin: 2rem 0; }
+
+.lesson__figure img { border-radius: 16px; width: 100%; }
+
+.lesson__figure figcaption {
+  font-size: 0.86rem;
+  color: var(--warm-gray);
+  text-align: center;
+  margin-top: 0.7rem;
+}
+
+.lesson__downloads {
+  background: var(--white);
+  border: 1px solid rgba(201, 169, 110, 0.4);
+  border-radius: 16px;
+  padding: 24px 26px;
+  margin: 2.5rem 0;
+}
+
+.lesson__downloads h3 { font-size: 1.1rem; margin-bottom: 0.9rem; }
+
+.lesson__downloads ul { list-style: none; }
+
+.lesson__downloads li { margin-bottom: 0.5rem; }
+
+.lesson__downloads a { color: var(--burgundy); }
+
+/* Actions */
+
+.lesson__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 14px;
+  margin: 2.75rem 0 2rem;
+  padding-top: 2rem;
+  border-top: 1px solid rgba(201, 169, 110, 0.3);
+}
+
+.lesson__undo {
+  font-size: 0.85rem;
+  padding: 10px 20px;
+}
+
+.lesson__nav {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  margin-top: 2rem;
+}
+
+.lesson__nav-link {
+  display: block;
+  max-width: 46%;
+  text-decoration: none;
+  color: var(--charcoal);
+  padding: 16px 20px;
+  border: 1px solid rgba(201, 169, 110, 0.4);
+  border-radius: 14px;
+  background: var(--white);
+  transition: border-color 0.2s, transform 0.15s;
+}
+
+.lesson__nav-link:hover {
+  border-color: var(--gold);
+  transform: translateY(-1px);
+}
+
+.lesson__nav-link--next { text-align: right; margin-left: auto; }
+
+.lesson__nav-link span {
+  display: block;
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--warm-gray);
+  margin-bottom: 4px;
+}
+
+.lesson__nav-link strong {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 1rem;
+  line-height: 1.3;
+  color: var(--charcoal);
+}
+
+/* ---------- Sign in ---------- */
+
+.auth {
+  max-width: 420px;
+  margin: 0 auto;
+  text-align: center;
+  padding-top: 32px;
+}
+
+.auth h1 { margin-bottom: 1rem; }
+
+.auth__lead {
+  color: var(--warm-gray);
+  margin-bottom: 2.25rem;
+}
+
+.auth__lead strong {
+  color: var(--charcoal);
+  word-break: break-all;
+}
+
+.auth__form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  text-align: left;
+}
+
+.auth__label {
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--warm-gray);
+}
+
+.auth__input {
+  font-family: var(--font-body);
+  font-size: 1.05rem;
+  padding: 15px 20px;
+  border-radius: 14px;
+  border: 1px solid rgba(201, 169, 110, 0.55);
+  background: var(--white);
+  color: var(--charcoal);
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  width: 100%;
+}
+
+.auth__input:focus {
+  border-color: var(--burgundy);
+  box-shadow: 0 0 0 3px rgba(122, 46, 58, 0.12);
+}
+
+/* Six digits, spaced out so they're easy to check against the email */
+.auth__input--code {
+  font-family: var(--font-display);
+  font-size: 1.9rem;
+  letter-spacing: 0.5em;
+  text-align: center;
+  padding: 16px 12px 16px 22px;
+}
+
+.auth__submit {
+  margin-top: 8px;
+  width: 100%;
+}
+
+.auth__error {
+  font-size: 0.92rem;
+  color: var(--burgundy);
+  background: var(--blush-light);
+  border-radius: 12px;
+  padding: 12px 16px;
+}
+
+.auth__dev {
+  font-size: 0.85rem;
+  color: #8A6D2F;
+  background: rgba(201, 169, 110, 0.16);
+  border: 1px solid rgba(201, 169, 110, 0.5);
+  border-radius: 12px;
+  padding: 12px 16px;
+  margin-bottom: 1.5rem;
+  text-align: left;
+}
+
+.auth__resend {
+  margin-top: 1.25rem;
+}
+
+.auth__resend button {
+  background: none;
+  border: none;
+  padding: 0;
+  font-family: var(--font-body);
+  font-size: 0.92rem;
+  color: var(--burgundy);
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.auth__help {
+  margin-top: 3rem;
+  padding-top: 1.75rem;
+  border-top: 1px solid rgba(201, 169, 110, 0.35);
+}
+
+.auth__help p {
+  font-size: 0.9rem;
+  color: var(--warm-gray);
+}
+
+.auth__help a { color: var(--burgundy); font-weight: 500; }
+
+/* "Not you?" under the remembered address */
+.auth__forget {
+  margin-top: 1rem;
+  font-size: 0.88rem;
+  color: var(--warm-gray);
+  text-align: center;
+}
+
+.auth__forget a { color: var(--burgundy); }
+
+/* ---------- Account ---------- */
+
+.account {
+  max-width: 520px;
+  margin: 0 auto;
+  padding-top: 24px;
+}
+
+.account h1 { margin-bottom: 1.75rem; }
+
+.account__notice {
+  background: var(--blush-light);
+  border-radius: 12px;
+  padding: 12px 16px;
+  font-size: 0.92rem;
+  color: var(--burgundy);
+  margin-bottom: 1.5rem;
+}
+
+.account__form {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 2.5rem;
+}
+
+.account__hint {
+  font-size: 0.85rem;
+  color: var(--warm-gray);
+  line-height: 1.55;
+}
+
+.account__save { align-self: flex-start; margin-top: 6px; }
+
+.account__block {
+  background: var(--white);
+  border: 1px solid rgba(201, 169, 110, 0.4);
+  border-radius: 18px;
+  padding: 24px 26px;
+  margin-bottom: 1.25rem;
+}
+
+.account__block .welcome__email {
+  text-align: left;
+  margin-bottom: 0.75rem;
+}
+
+.account__courses { list-style: none; }
+
+.account__course {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 12px 0;
+  border-bottom: 1px solid rgba(201, 169, 110, 0.25);
+}
+
+.account__course:last-child { border-bottom: none; padding-bottom: 0; }
+
+.account__course strong {
+  display: block;
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+}
+
+.account__meta {
+  display: block;
+  font-size: 0.82rem;
+  color: var(--warm-gray);
+  margin-top: 2px;
+}
+
+.account__course--ended strong { color: var(--warm-gray); }
+
+.account__course--none { color: var(--warm-gray); font-size: 0.95rem; }
+
+.account__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 2rem;
+}
+
+/* ---------- Welcome / post-purchase ---------- */
+
+.welcome {
+  max-width: 620px;
+  margin: 0 auto;
+  text-align: center;
+  padding-top: 24px;
+}
+
+.welcome__mark {
+  font-size: 2.6rem;
+  line-height: 1;
+  margin-bottom: 1.25rem;
+}
+
+.welcome h1 { margin-bottom: 1rem; }
+
+.welcome__lead {
+  color: var(--warm-gray);
+  font-size: 1.1rem;
+  margin: 0 auto 2.25rem;
+}
+
+.welcome__lead p { margin-bottom: 1rem; }
+
+.welcome__card {
+  background: var(--white);
+  border: 1px solid rgba(201, 169, 110, 0.45);
+  border-radius: 18px;
+  padding: 28px 30px;
+  margin-bottom: 2.25rem;
+}
+
+.welcome__label {
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 0.6rem;
+}
+
+.welcome__email {
+  font-family: var(--font-display);
+  font-size: clamp(1.1rem, 3.5vw, 1.35rem);
+  color: var(--burgundy);
+  word-break: break-all;
+  margin-bottom: 0.9rem;
+}
+
+.welcome__note {
+  font-size: 0.92rem;
+  color: var(--warm-gray);
+}
+
+.welcome__cta {
+  font-size: 1.05rem;
+  padding: 16px 40px;
+}
+
+.welcome__reused {
+  font-size: 0.92rem;
+  color: var(--warm-gray);
+  margin-top: 1.5rem;
+}
+
+.welcome__reused a { color: var(--burgundy); }
+
+.welcome__support {
+  margin-top: 3.5rem;
+  padding-top: 2rem;
+  border-top: 1px solid rgba(201, 169, 110, 0.35);
+}
+
+.welcome__support h2 {
+  font-size: 1.15rem;
+  margin-bottom: 0.75rem;
+}
+
+.welcome__support p {
+  font-size: 0.95rem;
+  color: var(--warm-gray);
+  max-width: 46ch;
+  margin: 0 auto;
+}
+
+.welcome__support p + p { margin-top: 0.9rem; }
+
+.account__signout-note {
+  margin-top: 0.9rem;
+  max-width: 46ch;
+}
+
+.account__signout-note a { color: var(--burgundy); }
+
+.welcome__support a {
+  color: var(--burgundy);
+  font-weight: 500;
+}
+
+/* ---------- Resources page ---------- */
+
+.resources-page {
+  max-width: 720px;
+  margin: 0 auto;
+  text-align: center;
+  padding-top: 24px;
+}
+
+.resources-page__intro {
+  color: var(--warm-gray);
+  max-width: 48ch;
+  margin: 1rem auto 2.5rem;
+}
+
+.resource-list {
+  list-style: none;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.resource {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  background: var(--white);
+  border: 1px solid rgba(201, 169, 110, 0.4);
+  border-radius: 14px;
+  padding: 18px 22px;
+}
+
+.resource__icon { font-size: 1.2rem; flex-shrink: 0; }
+
+.resource__label { flex: 1; font-size: 1rem; }
+
+.resource__soon {
+  font-size: 0.78rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--warm-gray);
+  flex-shrink: 0;
+}
+
+.resource--pending { opacity: 0.72; }
+
+/* ---------- Desktop ---------- */
+
+@media (min-width: 900px) {
+  .app-bar__brand span { display: inline; }
+  .app-bar__progress { display: flex; }
+  .app-bar__links { display: flex; }
+  .app-bar__toggle { display: none; }
+
+  .app-body {
+    display: grid;
+    grid-template-columns: var(--rail-width) minmax(0, 1fr);
+    gap: 0;
+  }
+
+  .app-body--wide { display: block; }
+
+  /* Full-width pages don't show the rail on desktop — the header has the links */
+  .app-body--wide .app-rail { display: none; }
+
+  .app-rail__nav { display: none; }
+
+  .app-scrim { display: none; }
+
+  .app-rail {
+    /* Reset the mobile drawer's fixed positioning first — `inset` after `top`
+       would wipe it out. */
+    inset: auto;
+    position: sticky;
+    top: var(--bar-height);
+    height: calc(100vh - var(--bar-height));
+    width: auto;
+    transform: none;
+    padding: 28px 12px 60px 24px;
+  }
+
+  .app-main { padding: 44px 48px 120px; }
+
+  .app-body--wide .app-main {
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 44px 24px 120px;
+  }
+
+  .module-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (min-width: 1200px) {
+  .module-grid { grid-template-columns: repeat(3, 1fr); }
+}

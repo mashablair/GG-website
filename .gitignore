@@ -1,6 +1,10 @@
 # Local wrangler / miniflare test state
 .wrangler/
 
+# Local secrets — Stripe keys, the session signing key, Lava credentials.
+# Never commit this. `.dev.vars.example` is the safe, value-less copy.
+.dev.vars
+
 # Exported signup lists — contain real people's email addresses
 waitlist.csv
 
