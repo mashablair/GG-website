@@ -12,6 +12,12 @@ node_modules/
 .DS_Store
 
 # Full-resolution originals and retired photos. Cloudflare Pages has no ignore
-# file, so keeping these out of git is what keeps them out of the deploy.
-images/_archive/
+# file of its own, so keeping these out of git is what keeps them out of the
+# deploy — and everything under public/ is downloadable by anyone.
+#
+# No slash in the pattern, so it matches at any depth. It used to read
+# "images/_archive/", which a slash anchors to the repo root; when the site
+# moved to public/, that silently stopped matching and 18MB of originals were
+# committed and published before anyone noticed.
+_archive/
 .imgopt/
