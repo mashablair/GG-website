@@ -192,6 +192,25 @@ section {
   color: var(--burgundy);
 }
 
+/* "Log in" — for someone who has already bought something.
+   Deliberately quieter than the marketing links and set off by a hairline, so
+   it reads as utility rather than as another page to browse. It points at
+   /dashboard, not /login: a signed-in student lands straight on her courses,
+   and anyone else is sent to sign in and then delivered there anyway. */
+.nav__links .nav__login {
+  color: var(--warm-gray);
+  font-size: 0.9rem;
+  padding-left: 20px;
+  margin-left: 4px;
+  border-left: 1px solid rgba(201, 169, 110, 0.4);
+}
+
+.nav__links .nav__login:hover { color: var(--burgundy); }
+
+/* In the mobile drawer everything is a full-width row, so the hairline would
+   look like a mistake. Keep it quiet with colour alone. */
+.nav__mobile .nav__login { color: var(--warm-gray); }
+
 .nav__toggle {
   display: flex;
   flex-direction: column;
