@@ -1015,7 +1015,14 @@ section {
 .hero--photo {
   position: relative;
   padding: 0;
-  min-height: 124vh; /* mobile: room for her face up top AND the text below */
+  /* One screen on mobile: her face fills the top, the name card and the button
+     sit at the bottom and are visible without scrolling. This used to be 124vh
+     to fit a headline and two paragraphs; with just the card, that pushed the
+     call to action clean off the screen.
+     The nav is sticky above the hero, so a plain 100svh would start below it
+     and hang the same distance off the bottom — subtract it. svh rather than vh
+     so mobile browsers' collapsing address bar doesn't do the same thing. */
+  min-height: calc(100svh - 92px);
   display: flex;
   align-items: flex-end; /* mobile: text sits at the bottom, below her face */
   overflow: hidden;
@@ -1063,37 +1070,47 @@ section {
   color: rgba(250, 246, 241, 0.9);
 }
 
-/* Credential caption tied to Maria's photo.
-   Mobile: top-left corner, kept clear of the hero text at the bottom. */
+/* The hero statement: Maria's name and what she does, on a frosted card over
+   the photo. This was a small caption pinned to a corner; it's now the h1 and
+   carries the page on its own, so it sits in the normal content flow and the
+   type is scaled up to match. The frosted panel is what makes it readable over
+   a photograph that changes brightness as it crops. */
 .hero__badge {
-  position: absolute;
-  top: 18px;
-  left: 20px;
-  z-index: 3;
-  max-width: 82%;
-  margin: 0;
-  padding: 11px 16px;
-  border-radius: 10px;
+  display: inline-block;
+  margin: 0 0 1.75rem;
+  padding: 22px 28px;
+  border-radius: 14px;
   background: rgb(142 139 135 / 55%);
   backdrop-filter: blur(4px);
   -webkit-backdrop-filter: blur(4px);
   text-align: left;
   color: var(--cream);
+  /* h1 sets a large clamp; the children below define their own sizes, so
+     neutralise it here rather than letting it cascade into the spans. */
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
 }
 
 .hero__badge strong {
   display: block;
   font-family: var(--font-display);
-  font-size: 1.15rem;
+  font-size: clamp(2rem, 6vw, 3.1rem);
   font-weight: 600;
+  line-height: 1.1;
+  margin-bottom: 0.5rem;
   color: var(--cream);
 }
 
 .hero__badge span {
   display: block;
-  font-size: 0.9rem;
+  /* The h1 sets the display serif; the credentials want the body sans against
+     it, or the whole card reads as one undifferentiated block of serif. */
+  font-family: var(--font-body);
+  font-size: clamp(0.95rem, 2.2vw, 1.1rem);
   letter-spacing: 0.02em;
-  color: rgba(250, 246, 241, 0.9);
+  line-height: 1.55;
+  color: rgba(250, 246, 241, 0.92);
 }
 
 /* Secondary button reads as light over the photo */
@@ -1134,20 +1151,8 @@ section {
     padding-bottom: 0;
   }
 
-  .hero--photo .hero__text { max-width: 480px; }
-
-  .hero__badge {
-    top: auto;
-    left: auto;
-    right: 32px;
-    bottom: 32px;
-    max-width: 380px;
-    padding: 10px 16px;
-    text-align: right;
-    background: rgba(45, 42, 38, 0.55);
-  }
-
-  .hero__badge span { font-size: 0.92rem; }
+  /* Wide enough for the name to sit on one line without crowding Maria. */
+  .hero--photo .hero__text { max-width: 560px; }
 }
 
 /* ---------- Word ribbon (marquee) ---------- */
