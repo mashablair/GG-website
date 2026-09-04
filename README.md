@@ -178,6 +178,23 @@ Signed-in pages also carry their own `noindex` meta tag. The header is the
 belt-and-braces version: it applies to redirects and to responses that never
 render a document.
 
+## After changing CSS, bump the version
+
+Every stylesheet is linked as `style.css?v=N`. **When you change a stylesheet,
+increment that number** — in the seven pages under `public/`, and in
+`functions/_lib/render.js` for the app.
+
+It looks like busywork; it isn't. Cloudflare Pages caches CSS for four hours
+while serving fresh HTML, so without it a visitor gets your new markup wearing
+the old stylesheet — which doesn't look like a caching problem, it looks like
+the site is broken. It cost us a full round trip once already: a rebuilt hero
+looked wrong on Maria's screen purely because her browser was four hours behind.
+
+`public/_headers` also asks for revalidation, but Pages appears to ignore
+`Cache-Control` for static assets, so the version query string is what actually
+does the work. Changing the URL makes it a different file as far as every cache
+in the chain is concerned, which is the one approach nothing can override.
+
 ## Local preview
 
 ```
