@@ -1177,24 +1177,33 @@ section {
 
 /* ---------- "Put yourself out there" section ---------- */
 /*
- * Lives on the course page now, in the champagne-background slot. The
- * background therefore belongs to the section wrapper, not to this block —
- * hence a `problem__title` class rather than styling `.problem h2`, so the
- * typography can sit on any background without dragging a white one with it.
+ * A run of plain paragraphs that ends on a one-line punch. Bare <p> has no
+ * spacing anywhere on this site — paragraph rhythm always comes from a
+ * component — so any section of straight prose needs this.
+ *
+ * It carries no background of its own, so it can sit on the champagne photo
+ * (course page) or on flat cream (AI Goddess) without dragging one along.
+ * The last paragraph is styled as the closer, because in this copy it always
+ * is one: "And you need someone who's been exactly where you are",
+ * "That's what this call is for."
  */
 
-.problem__title {
+.prose-block__title {
   text-align: center;
   max-width: 20ch;
   margin: 0 auto 2.5rem;
 }
 
-.problem__body p {
+.prose-block__body p {
   font-size: 1.12rem;
   margin-bottom: 1.5rem;
 }
 
-.problem__body p:last-child {
+.prose-block__body .pull-quote {
+  margin: 2rem auto 2.25rem;
+}
+
+.prose-block__body p:last-child {
   font-family: var(--font-display);
   font-style: italic;
   font-size: 1.25rem;

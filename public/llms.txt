@@ -4,9 +4,12 @@
 
 Maria works with women who are divorced, single after a long relationship, or quietly stuck — and who are ready to date on purpose. She offers a private 1:1 video consultation and an online course. Her approach is warm and direct: coaching and mentorship, not therapy.
 
+Separately, drawing on her eleven years as a software engineer, she teaches non-technical women how to actually use AI, one on one.
+
 ## Work with Maria
 
 - [1:1 Video Consultation — $97 (regular $147)](https://mariablair.com/consultations): A private 60-minute-style video call. You look at your situation together, set goals, and build a clear action plan. Best for the woman who wants direct answers now. Booked via Stripe.
+- [AI Goddess — 1:1 AI session, $97 (regular $147)](https://mariablair.com/ai-goddess): A private session, video or in person, teaching non-technical women to use AI in plain language — ChatGPT, Claude, image generation, and for some a first website, app or automation. Hands-on rather than a lecture; no question is treated as too basic. This is the one offer that is not about dating.
 - [The Intentional Dating Method course — founding price $247 (reg. $397), launching soon](https://mariablair.com/course): An online course teaching women 35+ how to navigate modern dating without losing themselves. Modules cover identity, dating apps, a magnetic profile, images, red flags and scams, and safety and strategy. Currently in waitlist mode — join to get early access and founding-member pricing.
 
 ## The Intentional Dating Method (the philosophy)
@@ -21,11 +24,12 @@ Maria works with women who are divorced, single after a long relationship, or qu
 - [My Story](https://mariablair.com/my-story): Maria's full story — 17-year marriage, the wake-up call, and 60+ intentional dates.
 - [The Course](https://mariablair.com/course): The Intentional Dating Method (waitlist).
 - [Consultations](https://mariablair.com/consultations): Book a private 1:1 video consultation.
+- [AI Goddess](https://mariablair.com/ai-goddess): Book a private 1:1 AI session.
 - [Contact](https://mariablair.com/contact): How to reach Maria.
 
 ## About Maria
 
-- Role: Dating coach and mentor for women 35+; creator of the Intentional Dating Method.
+- Role: Dating coach and mentor for women 35+; creator of the Intentional Dating Method. Also teaches 1:1 AI sessions for non-technical women.
 - Background: 11 years as a software engineer; biohacker; single mom; based in Boca Raton, Florida, USA.
 - Story: Left a 17-year marriage and went on 60+ intentional dates, which became the basis of her method.
 - Brand: Glorious Goddess.
