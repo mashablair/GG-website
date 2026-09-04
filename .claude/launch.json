@@ -4,8 +4,8 @@
     {
       "name": "gg-website",
       "runtimeExecutable": "npx",
-      "runtimeArgs": ["serve", "-l", "3456", "."],
-      "port": 3456
+      "runtimeArgs": ["wrangler", "pages", "dev", "--port", "8788"],
+      "port": 8788
     }
   ]
 }
