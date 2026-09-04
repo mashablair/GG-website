@@ -190,10 +190,11 @@ the old stylesheet — which doesn't look like a caching problem, it looks like
 the site is broken. It cost us a full round trip once already: a rebuilt hero
 looked wrong on Maria's screen purely because her browser was four hours behind.
 
-`public/_headers` also asks for revalidation, but Pages appears to ignore
-`Cache-Control` for static assets, so the version query string is what actually
-does the work. Changing the URL makes it a different file as far as every cache
-in the chain is concerned, which is the one approach nothing can override.
+**Don't bother trying to fix this with a `_headers` file — it was tried and it
+doesn't work.** Pages reads the file (a custom `X-Headers-File` header came
+through fine) but overrides `Cache-Control` on static assets regardless, still
+returning `max-age=14400`. Changing the URL is the one approach nothing in the
+chain can override, because a different URL is simply a different file.
 
 ## Local preview
 
