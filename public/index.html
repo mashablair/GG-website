@@ -225,43 +225,108 @@
           <div class="section-header">
             <h2>Work With Me</h2>
           </div>
-          <div class="offer-grid">
-            <div class="offer-card">
-              <p class="eyebrow">Option 1 · Available Now</p>
-              <h3>Private 1:1 Video Consultation</h3>
-              <div class="offer-card__price">
-                $97 <span class="offer-card__was">$147</span>
+          <!-- Each card's artwork already carries the title, the bullets and
+               (on two of them) the price, so none of that is repeated below.
+               The title lives in the alt text instead — that keeps it readable
+               by Google and by a screen reader without printing it twice.
+               What's underneath adds something the picture doesn't: whether you
+               can buy it today, one line of context, and where to go next.
+               Available things come first. -->
+          <div class="offer-grid offer-grid--art">
+            <article class="offer-card">
+              <img
+                class="offer-card__art"
+                src="images/card-consultations.webp"
+                alt="1:1 Video Consultation — deep work on your question or problem, with clarity, support and a clear action plan. $97, regular price $147."
+                width="1000"
+                height="1000"
+                loading="lazy"
+              />
+              <div class="offer-card__body">
+                <p class="offer-card__status">Available now</p>
+                <p class="offer-card__desc">
+                  The fastest way to get clarity. We talk through your
+                  situation — what's blocking you, what needs to shift — and you
+                  leave knowing your exact next step.
+                </p>
+                <a class="btn btn--primary" href="consultations.html"
+                  >See Consultation Details</a
+                >
               </div>
-              <p class="offer-card__per">Private video call</p>
-              <p class="offer-card__desc">
-                The fastest way to get clarity. We'll talk through your specific
-                situation — what's blocking you, what needs to shift, and your
-                exact next step. This is for the woman who wants direct answers,
-                now.
-              </p>
-              <a class="btn btn--primary" href="consultations.html"
-                >See Consultation Details</a
-              >
-            </div>
+            </article>
 
-            <div class="offer-card offer-card--feature">
-              <p class="eyebrow">Option 2 · Coming Soon</p>
-              <h3>Online Dating for Women 35+</h3>
-              <div class="offer-card__price">
-                $247 <span class="offer-card__was">$397</span>
+            <article class="offer-card">
+              <img
+                class="offer-card__art"
+                src="images/card-ai-goddess.webp"
+                alt="AI Goddess — 1:1 AI training. Learn ChatGPT and Claude in plain English, with no tech background needed. $97, regular price $147."
+                width="1000"
+                height="1000"
+                loading="lazy"
+              />
+              <div class="offer-card__body">
+                <p class="offer-card__status">Available now</p>
+                <p class="offer-card__desc">
+                  AI, demystified — for the woman who's done feeling behind. A
+                  1:1 call, in person or on video, where I meet you exactly
+                  where you are and make it finally make sense.
+                </p>
+                <a
+                  class="btn btn--primary"
+                  href="https://www.instagram.com/maria_blair_goddess"
+                  target="_blank"
+                  rel="noopener"
+                  >Message Me to Book</a
+                >
               </div>
+            </article>
 
-              <p class="offer-card__per">The complete system</p>
-              <p class="offer-card__desc">
-                How to navigate modern dating without losing yourself. Profile
-                strategy, safety, red flags, how to dress, how to show up — and
-                most importantly, how to reclaim the confidence that makes men
-                chase you.
-              </p>
-              <a class="btn btn--primary" href="course.html#waitlist"
-                >Join the Waitlist</a
-              >
-            </div>
+            <article class="offer-card">
+              <img
+                class="offer-card__art"
+                src="images/card-red-flags.webp"
+                alt="Red Flags Playbook — how to read a man's profile, messages and behaviour in under 10 minutes. For women 35+ dating online."
+                width="1000"
+                height="1000"
+                loading="lazy"
+              />
+              <div class="offer-card__body">
+                <p class="offer-card__status offer-card__status--soon">
+                  Coming soon
+                </p>
+                <p class="offer-card__desc">
+                  How to read a man's profile, his messages and his behaviour in
+                  under ten minutes — plus the scammer playbook, and a checklist
+                  that's yours to keep.
+                </p>
+                <!-- No button on purpose: nothing to click until it launches,
+                     and a dead link is worse than none. -->
+              </div>
+            </article>
+
+            <article class="offer-card">
+              <img
+                class="offer-card__art"
+                src="images/card-dating-method.webp"
+                alt="The Dating Method — a feminine guide to online dating for women 35+. Mindset, choosing the right apps, creating a magnetic profile, and dating with safety and confidence."
+                width="1000"
+                height="1000"
+                loading="lazy"
+              />
+              <div class="offer-card__body">
+                <p class="offer-card__status offer-card__status--soon">
+                  Coming soon
+                </p>
+                <p class="offer-card__desc">
+                  The whole system, start to finish — how to date online without
+                  losing yourself. Join the waitlist and you'll hear the moment
+                  doors open.
+                </p>
+                <a class="btn btn--ghost" href="course.html#waitlist"
+                  >Join the Waitlist</a
+                >
+              </div>
+            </article>
           </div>
         </div>
       </section>

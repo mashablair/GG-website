@@ -1,0 +1,21 @@
+# Cloudflare Pages reads this file and applies these headers to matching paths.
+#
+# WHY THIS EXISTS
+# Pages caches CSS and JS for four hours by default, while HTML is always
+# fresh. That combination is the worst one for editing a site: you get the new
+# markup styled by the old stylesheet, which looks exactly like a bug. It cost
+# us a round trip — a hero rebuilt correctly looked broken on Maria's screen
+# because her browser was four hours behind on style.css.
+#
+# max-age=0 + must-revalidate doesn't mean "don't cache". The browser keeps the
+# file and asks "has this changed?" on each visit; unchanged files come back as
+# a 304 with no body. One small round trip, and edits are never invisible.
+#
+# Images are deliberately left alone. They're the heavy assets, they change
+# rarely, and they keep the default long cache.
+
+/css/*
+  Cache-Control: public, max-age=0, must-revalidate
+
+/js/*
+  Cache-Control: public, max-age=0, must-revalidate

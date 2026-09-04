@@ -1380,6 +1380,87 @@ section {
   width: 100%;
 }
 
+/* ---------- Offer cards led by artwork ---------- */
+/*
+ * Scoped to .offer-grid--art because course.html still uses the plain text
+ * cards above, and these change the padding model completely: the artwork runs
+ * edge to edge, so the padding lives on the body instead of the card.
+ *
+ * Each image is a finished promo graphic — title, bullets, tagline, sometimes
+ * the price — so the text underneath deliberately doesn't repeat any of it.
+ */
+
+.offer-grid--art {
+  gap: 28px;
+}
+
+/* Two across only from 900px. At 768 these squares get small enough that the
+   type inside the artwork stops being readable, which defeats the point. */
+@media (min-width: 768px) and (max-width: 899px) {
+  .offer-grid--art { grid-template-columns: 1fr; max-width: 460px; margin-inline: auto; }
+}
+
+.offer-grid--art .offer-card {
+  padding: 0;
+  overflow: hidden;
+  text-align: left;
+  transition: transform 0.18s, box-shadow 0.18s;
+}
+
+.offer-grid--art .offer-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 28px rgba(45, 42, 38, 0.1);
+}
+
+.offer-card__art {
+  display: block;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+}
+
+.offer-card__body {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  padding: 24px 26px 26px;
+}
+
+/* Can she buy this today, or not? The single most useful thing the picture
+   can't tell her. */
+.offer-card__status {
+  align-self: flex-start;
+  margin-bottom: 0.85rem;
+  padding: 5px 13px;
+  border-radius: 999px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--burgundy);
+  background: var(--blush-light);
+  border: 1px solid rgba(212, 160, 160, 0.6);
+}
+
+.offer-card__status--soon {
+  color: #8a6d2f;
+  background: rgba(201, 169, 110, 0.16);
+  border-color: rgba(201, 169, 110, 0.5);
+}
+
+.offer-grid--art .offer-card__desc {
+  margin-bottom: 1.5rem;
+  font-size: 0.98rem;
+  line-height: 1.65;
+}
+
+/* Cards with no button — Red Flags, until it launches — shouldn't leave a gap
+   where one would be. */
+.offer-grid--art .offer-card__desc:last-child {
+  margin-bottom: 0;
+  margin-top: auto;
+}
+
 /* ---------- Testimonials carousel ---------- */
 
 .testimonials { background: var(--white); }
