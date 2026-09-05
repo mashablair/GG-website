@@ -6,6 +6,7 @@
 // question you can answer in one request.
 
 import { catalog } from '../_lib/catalog.js';
+import { emailIsConfigured } from '../_lib/email.js';
 import { lavaIsConfigured, lavaCheckoutReady } from '../_lib/lava.js';
 
 export function onRequestGet({ env }) {
@@ -21,6 +22,12 @@ export function onRequestGet({ env }) {
     settings: {
       emailFrom: env.EMAIL_FROM || null,
       emailConsoleMode: env.EMAIL_DEV_CONSOLE === 'true',
+      // Where "someone joined the waitlist" goes. This is the exact failure
+      // this endpoint was built for: with NOTIFY_EMAIL missing the signup
+      // still saves and the woman still sees "you're on the list", so nothing
+      // looks wrong — Maria simply never hears about it.
+      notifyEmail: env.NOTIFY_EMAIL || null,
+      waitlistNotifyReady: Boolean(env.NOTIFY_EMAIL) && emailIsConfigured(env),
       stripeKey: Boolean(env.STRIPE_SECRET_KEY),
       // 'test' means no real money can move. Check this before a launch.
       stripeMode: env.STRIPE_SECRET_KEY
