@@ -97,6 +97,39 @@ npx wrangler d1 execute dating-goddess-db --remote --command "INSERT INTO studen
 
 ---
 
+## Looking at the course waitlist
+
+People who asked to be told when the course opens. They are **not** students —
+there's no account and nothing to sign into, so they never appear in the queries
+above.
+
+```
+npx wrangler d1 execute dating-goddess-db --remote --command "SELECT id, first_name, email, source, created_at FROM waitlist ORDER BY created_at DESC"
+```
+
+How many, and when the last one arrived:
+
+```
+npx wrangler d1 execute dating-goddess-db --remote --command "SELECT COUNT(*) AS total, MAX(created_at) AS latest FROM waitlist"
+```
+
+Export it to a spreadsheet (`waitlist.csv` is gitignored — it holds real
+people's email addresses, so don't commit it or email it around):
+
+```
+npx wrangler d1 execute dating-goddess-db --remote --json --command "SELECT first_name, email, created_at FROM waitlist ORDER BY created_at" | python3 -c "import sys,json,csv;rows=json.load(sys.stdin)[0]['results'];w=csv.DictWriter(open('waitlist.csv','w',newline=''),fieldnames=['first_name','email','created_at']);w.writeheader();w.writerows(rows);print(f'{len(rows)} rows -> waitlist.csv')"
+```
+
+`created_at` is **UTC**, not Florida time — subtract 4 hours in summer, 5 in
+winter.
+
+> **There is a second, older database called `gg-waitlist`.** It's from before
+> the merge and holds one row from July. Nothing writes to it any more; the live
+> form writes to `dating-goddess-db`. Don't go looking in it and conclude the
+> form is broken.
+
+---
+
 ## Secrets
 
 List what's set (names only — values are never shown):
