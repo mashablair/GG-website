@@ -91,6 +91,60 @@ Maria`;
   return { subject: `${code} is your sign-in code`, text, html };
 }
 
+/**
+ * The "someone joined the waitlist" email, sent to Maria rather than to a
+ * customer. Everything she needs is in the subject line, because it may well be
+ * read as a phone notification and never opened.
+ */
+export function waitlistSignupEmail({ firstName, email, source, total }) {
+  const where = source ? sourcePage(source) : null;
+
+  const text = `${firstName} joined the waitlist.
+
+Email:  ${email}${where ? `\nFrom:   ${where}` : ''}
+Total:  ${total} ${total === 1 ? 'person' : 'people'} on the list
+
+Reply to this email to write to her directly.`;
+
+  const html = `
+<div style="font-family:-apple-system,'Helvetica Neue',sans-serif;font-size:16px;line-height:1.6;color:#2D2A26;max-width:480px;margin:0 auto;padding:32px 24px">
+  <p style="font-family:Georgia,serif;font-size:24px;color:#7A2E3A;margin:0 0 24px">${escapeHtml(
+    firstName
+  )} joined the waitlist.</p>
+  <table style="border-collapse:collapse;font-size:15px">
+    <tr><td style="padding:4px 16px 4px 0;color:#6B6560">Email</td><td><a href="mailto:${escapeHtml(
+      email
+    )}" style="color:#7A2E3A">${escapeHtml(email)}</a></td></tr>
+    ${
+      where
+        ? `<tr><td style="padding:4px 16px 4px 0;color:#6B6560">From</td><td>${escapeHtml(
+            where
+          )}</td></tr>`
+        : ''
+    }
+    <tr><td style="padding:4px 16px 4px 0;color:#6B6560">Total</td><td>${total} ${
+      total === 1 ? 'person' : 'people'
+    } on the list</td></tr>
+  </table>
+</div>`;
+
+  return {
+    // The whole point of the subject is that it works as a lock-screen preview.
+    subject: `New waitlist signup: ${firstName} (${email})`,
+    text,
+    html,
+  };
+}
+
+/** "https://mariablair.com/course?x=1" -> "/course". Never throws on junk. */
+function sourcePage(source) {
+  try {
+    return new URL(source).pathname || '/';
+  } catch {
+    return null;
+  }
+}
+
 function escapeHtml(str) {
   return String(str ?? '')
     .replace(/&/g, '&amp;')

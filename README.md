@@ -70,7 +70,7 @@ all of `functions/` — is not.
 | `functions/_middleware.js` | The gate, and what stays out of search results |
 | `functions/dashboard.js` | `/dashboard` — everything she's bought |
 | `functions/learn/[[path]].js` | Lesson pages, module links, resources |
-| `functions/api/waitlist.js` | The course waitlist |
+| `functions/api/waitlist.js` | The course waitlist, and the email telling Maria |
 | `functions/api/webhooks/` | Stripe and Lava |
 | `wrangler.toml` | Build output dir and the database binding |
 | `schema.sql` | The database, as a fresh one would be built |
@@ -88,6 +88,30 @@ all of `functions/` — is not.
 sign-in codes, and the waitlist. The name is a leftover from when the platform
 was only the dating course; D1 databases can't be renamed and the name is
 internal, so it stays.
+
+It really is one database. There was briefly a second — `gg-waitlist`, from
+before the platform moved in — and finding a stale row in it is a good way to
+conclude the live form is broken when it isn't.
+
+## When someone joins the waitlist
+
+She's written to `waitlist`, and Maria gets an email at `NOTIFY_EMAIL`
+(`wrangler.toml`, under `[vars]` — change it there and redeploy).
+
+Three things about that email are deliberate:
+
+- **It's sent after the database write, inside `waitUntil`.** The signup is
+  saved and the response is already on its way back before any mail is
+  attempted, and a send failure is caught and logged. A mail outage costs a
+  notification, never a subscriber.
+- **Only genuinely new people trigger it.** `email` is `UNIQUE`, so
+  re-submitting the form updates a row rather than adding one; the endpoint asks
+  whether the address is already known *before* inserting, because afterwards
+  the two cases are indistinguishable.
+- **The subject line carries the name and the address**, because it's likely to
+  be read as a phone notification and never opened.
+
+Delete the `NOTIFY_EMAIL` line and notifications stop. Nothing else changes.
 
 ## Adding a whole course
 

@@ -37,7 +37,12 @@ database_id = "474009f5-810c-481a-ac37-41860bace992"
 # CF_ACCOUNT_ID isn't secret either — it's in every dashboard URL. The token
 # that goes with it is, and is set with:
 #   npx wrangler pages secret put CF_EMAIL_TOKEN --project-name gg-website
+#
+# NOTIFY_EMAIL is where "someone joined the waitlist" goes. Change it here and
+# redeploy — it's a plain address, not a secret. Remove the line and the
+# notifications simply stop; nothing else breaks.
 [vars]
 CF_ACCOUNT_ID = "a332e0c972ce41f7a06fad53e1ce8adb"
 EMAIL_FROM = "support@mariablair.com"
 EMAIL_FROM_NAME = "Maria Blair"
+NOTIFY_EMAIL = "mashablair@gmail.com"
