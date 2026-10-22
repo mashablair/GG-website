@@ -1078,6 +1078,20 @@ section {
   color: rgba(250, 246, 241, 0.92);
 }
 
+/* The one-line story under the name card: the first sentence a new visitor
+   reads, so it's set larger than body text and sits directly on the photo. */
+.hero__story {
+  margin: 0 0 1.5rem;
+  max-width: 520px;
+  font-family: var(--font-display);
+  font-size: clamp(1.25rem, 3.4vw, 1.6rem);
+  line-height: 1.35;
+  color: var(--cream);
+  text-shadow: 0 1px 12px rgba(45, 42, 38, 0.45);
+}
+
+.hero--photo .cta-row { gap: 12px; }
+
 /* Secondary button reads as light over the photo */
 .hero--photo .btn--ghost {
   border-color: rgba(250, 246, 241, 0.55);
@@ -1437,6 +1451,27 @@ section {
 .offer-grid--art .offer-card__desc:last-child {
   margin-bottom: 0;
   margin-top: auto;
+}
+
+/* The free guide: full width, text only, warm background. */
+.offer-grid--art .offer-card--guide {
+  grid-column: 1 / -1;
+  background: var(--blush-light);
+  border-color: rgba(212, 160, 160, 0.6);
+}
+
+.offer-card--guide .offer-card__body {
+  padding: 30px 30px 32px;
+}
+
+.offer-card__title {
+  font-size: clamp(1.5rem, 4vw, 1.9rem);
+  margin-bottom: 0.6rem;
+  color: var(--burgundy);
+}
+
+@media (min-width: 900px) {
+  .offer-card--guide .btn { align-self: flex-start; width: auto; }
 }
 
 /* ---------- Testimonials carousel ---------- */
@@ -1924,3 +1959,16 @@ section {
 }
 
 .enroll .btn--light { font-size: 1.05rem; padding: 16px 40px; }
+
+/* ---------- My Story: free guide box ---------- */
+
+.story-guide {
+  margin-top: 2.5rem;
+  padding: 26px 28px;
+  border-radius: 16px;
+  background: var(--blush-light);
+  border: 1px solid rgba(212, 160, 160, 0.6);
+}
+
+.story-guide .eyebrow { margin-bottom: 0.5rem; }
+.story-guide p { margin-bottom: 1.1rem; }
