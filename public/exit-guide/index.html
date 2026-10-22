@@ -16,168 +16,194 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;1,500&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/style.css?v=5">
 <style>
-  /* Same palette and fonts as css/style.css */
-  :root {
-    --cream: #FAF6F1;
-    --blush: #F3E4E4;
-    --blush-deep: #D4A0A0;
-    --burgundy: #7A2E3A;
-    --burgundy-dark: #5E202B;
-    --gold: #C9A96E;
-    --ink: #2D2A26;
-    --muted: #6B6560;
-    --card: #FFFFFF;
+  .guide {
+    --blush: #F3E4E4; --blush-deep: #D4A0A0; --burgundy: #7A2E3A; --burgundy-dark: #5E202B;
+    --gold: #C9A96E; --ink: #2D2A26; --muted: #6B6560; --card: #FFFFFF;
     --serif: "Playfair Display", Georgia, serif;
     --sans: "DM Sans", -apple-system, "Helvetica Neue", sans-serif;
+    font-family: var(--sans); font-size: 18px; line-height: 1.65; color: var(--ink);
   }
-  * { box-sizing: border-box; }
-  html { -webkit-text-size-adjust: 100%; }
-  body {
-    margin: 0;
-    background: var(--cream);
-    color: var(--ink);
-    font-family: var(--sans);
-    font-size: 18px;
-    line-height: 1.65;
-  }
-  a { color: var(--burgundy); }
-  .wrap { max-width: 680px; margin: 0 auto; padding: 0 20px; }
+  .guide h1, .guide h2, .guide h3 { font-weight: normal; }
+  .guide-disclaimer { padding: 8px 0 40px; text-align: center; font-size: 14px; color: var(--muted, #6B6560); }
 
-  .quick-exit {
-    position: fixed; top: 12px; right: 12px; z-index: 10;
-    background: var(--ink); color: #fff; border: 0; border-radius: 999px;
-    padding: 9px 16px; font: 600 14px var(--sans); cursor: pointer;
-    box-shadow: 0 2px 8px rgba(0,0,0,.2);
-  }
-  .quick-exit:focus-visible { outline: 3px solid var(--gold); outline-offset: 2px; }
+  .guide a { color: var(--burgundy); }
+  .guide .wrap { max-width: 680px; margin: 0 auto; padding: 0 20px; }
 
-  header.hero {
+
+  .guide .guide-hero {
     background: linear-gradient(180deg, var(--blush) 0%, var(--cream) 100%);
     padding: 72px 0 40px;
     text-align: center;
   }
-  .eyebrow {
+  .guide .eyebrow {
     font: 600 13px var(--sans); letter-spacing: .14em; text-transform: uppercase;
     color: var(--gold); margin: 0 0 12px;
   }
-  h1 {
+  .guide h1 {
     font-family: var(--serif); font-weight: normal; color: var(--burgundy);
     font-size: clamp(36px, 8vw, 54px); line-height: 1.1; margin: 0 0 16px;
   }
-  .sub { color: var(--muted); font-size: 19px; margin: 0 auto; max-width: 520px; }
-  .hero-actions { margin-top: 24px; }
-  .btn-download::before { content: "\2193\00a0"; }
-  .print-only { display: none; }
-  .get-pdf { padding-top: 12px; }
-  .pdf-card {
+  .guide .sub { color: var(--muted); font-size: 19px; margin: 0 auto; max-width: 520px; }
+  .guide .hero-actions { margin-top: 24px; }
+  .guide .btn-download::before { content: "\2193\00a0"; }
+  .guide .print-only { display: none; }
+  .guide .get-pdf { padding-top: 12px; }
+  .guide .pdf-card {
     background: var(--card); border: 2px solid var(--blush-deep); border-radius: 18px;
     padding: 28px 24px; text-align: center;
   }
-  .pdf-card > p { max-width: 520px; margin-left: auto; margin-right: auto; }
-  .pdf-form { display: grid; gap: 10px; max-width: 420px; margin: 20px auto 14px; }
-  .pdf-form input {
+  .guide .pdf-card > p { max-width: 520px; margin-left: auto; margin-right: auto; }
+  .guide .pdf-form { display: grid; gap: 10px; max-width: 420px; margin: 20px auto 14px; }
+  .guide .pdf-form input {
     font: 17px var(--sans); padding: 14px 16px; border-radius: 12px;
     border: 1.5px solid var(--blush-deep); background: var(--cream); color: var(--ink);
   }
-  .pdf-form input:focus { outline: none; border-color: var(--burgundy); background: #fff; }
-  .pdf-form .btn { border: 0; cursor: pointer; font: 600 17px var(--sans); }
-  .pdf-form .btn[disabled] { opacity: .6; cursor: wait; }
-  .pdf-error { color: var(--burgundy); font-size: 15px; margin: 0; min-height: 0; }
-  .pdf-done { max-width: 460px; margin: 18px auto 6px; }
-  .hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
-  .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+  .guide .pdf-form input:focus { outline: none; border-color: var(--burgundy); background: #fff; }
+  .guide .pdf-form .btn { border: 0; cursor: pointer; font: 600 17px var(--sans); }
+  .guide .pdf-form .btn[disabled] { opacity: .6; cursor: wait; }
+  .guide .pdf-error { color: var(--burgundy); font-size: 15px; margin: 0; min-height: 0; }
+  .guide .pdf-done { max-width: 460px; margin: 18px auto 6px; }
+  .guide .hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+  .guide .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 
 
-  section { padding: 36px 0; }
-  h2 {
+  .guide section { padding: 36px 0; }
+  .guide h2 {
     font-family: var(--serif); font-weight: normal; color: var(--burgundy);
     font-size: clamp(26px, 5.5vw, 32px); line-height: 1.2; margin: 0 0 16px;
   }
-  p { margin: 0 0 16px; }
-  .letter p:first-child::first-letter {
+  .guide p { margin: 0 0 16px; }
+  .guide .letter p:first-child::first-letter {
     font-family: var(--serif); color: var(--burgundy);
     float: left; font-size: 64px; line-height: .9; padding: 6px 10px 0 0;
   }
-  .pull {
+  .guide .pull {
     font-family: var(--serif); font-style: italic; color: var(--burgundy);
     font-size: 22px; border-left: 3px solid var(--gold); padding-left: 16px; margin: 24px 0 0;
   }
 
-  .safety {
+  .guide .safety {
     background: var(--card); border: 2px solid var(--burgundy); border-radius: 14px;
     padding: 24px 22px;
   }
-  .safety h2 { margin-bottom: 12px; }
-  .help { list-style: none; padding: 0; margin: 16px 0; display: grid; gap: 10px; }
-  .help a {
+  .guide .safety h2 { margin-bottom: 12px; }
+  .guide .help { list-style: none; padding: 0; margin: 16px 0; display: grid; gap: 10px; }
+  .guide .help a {
     display: block; text-decoration: none; background: var(--burgundy); color: #fff;
     border-radius: 10px; padding: 14px 16px; font-weight: 600;
   }
-  .help a span { display: block; font-weight: 400; font-size: 15px; opacity: .9; }
-  .help a:hover { background: var(--burgundy-dark); }
-  .small { font-size: 15px; color: var(--muted); }
+  .guide .help a span { display: block; font-weight: 400; font-size: 15px; opacity: .9; }
+  .guide .help a:hover { background: var(--burgundy-dark); }
+  .guide .small { font-size: 15px; color: var(--muted); }
 
-  ol.steps { list-style: none; counter-reset: step; padding: 0; margin: 24px 0 0; display: grid; gap: 14px; }
-  ol.steps li {
+  .guide ol.steps { list-style: none; counter-reset: step; padding: 0; margin: 24px 0 0; display: grid; gap: 14px; }
+  .guide ol.steps li {
     counter-increment: step; position: relative;
     background: var(--card); border-radius: 14px; padding: 20px 20px 20px 72px;
     box-shadow: 0 1px 3px rgba(110,31,46,.08);
   }
-  ol.steps li::before {
+  .guide ol.steps li::before {
     content: counter(step); position: absolute; left: 20px; top: 18px;
     width: 36px; height: 36px; border-radius: 50%;
     background: var(--blush); color: var(--burgundy);
     font: 600 18px/36px var(--serif); text-align: center;
   }
-  ol.steps h3 { font: 600 19px/1.3 var(--sans); margin: 0 0 6px; color: var(--ink); }
-  ol.steps p { margin: 0; color: var(--muted); }
+  .guide ol.steps h3 { font: 600 19px/1.3 var(--sans); margin: 0 0 6px; color: var(--ink); }
+  .guide ol.steps p { margin: 0; color: var(--muted); }
 
-  .fears { display: grid; gap: 14px; margin-top: 20px; }
-  .fear { border-top: 1px solid var(--blush-deep); padding-top: 14px; }
-  .fear h3 { font-family: var(--serif); font-weight: normal; font-style: italic; color: var(--burgundy); font-size: 21px; margin: 0 0 6px; }
-  .fear p { margin: 0; }
+  .guide .fears { display: grid; gap: 14px; margin-top: 20px; }
+  .guide .fear { border-top: 1px solid var(--blush-deep); padding-top: 14px; }
+  .guide .fear h3 { font-family: var(--serif); font-weight: normal; font-style: italic; color: var(--burgundy); font-size: 21px; margin: 0 0 6px; }
+  .guide .fear p { margin: 0; }
 
-  .next { background: var(--blush); border-radius: 18px; padding: 32px 24px; text-align: center; }
-  .next p { max-width: 520px; margin-left: auto; margin-right: auto; }
-  .btn {
+  .guide .next { background: var(--blush); border-radius: 18px; padding: 32px 24px; text-align: center; }
+  .guide .next p { max-width: 520px; margin-left: auto; margin-right: auto; }
+  .guide .btn {
     display: inline-block; text-decoration: none; border-radius: 999px;
     padding: 14px 26px; font-weight: 600; margin: 6px 4px;
   }
-  .btn-primary { background: var(--burgundy); color: #fff; }
-  .btn-primary:hover { background: var(--burgundy-dark); }
-  .btn-ghost { border: 2px solid var(--burgundy); color: var(--burgundy); }
-  .sig { font-family: var(--serif); font-style: italic; font-size: 22px; color: var(--burgundy); margin-top: 20px; }
+  .guide .btn-primary { background: var(--burgundy); color: #fff; }
+  .guide .btn-primary:hover { background: var(--burgundy-dark); }
+  .guide .btn-ghost { border: 2px solid var(--burgundy); color: var(--burgundy); }
+  .guide .sig { font-family: var(--serif); font-style: italic; font-size: 22px; color: var(--burgundy); margin-top: 20px; }
 
-  footer { padding: 32px 0 48px; text-align: center; font-size: 14px; color: var(--muted); }
 
   @page { margin: 16mm 14mm; }
   @media print {
-    .quick-exit, .btn, .hero-actions, .get-pdf { display: none !important; }
-    .print-only { display: block; }
-    .screen-only { display: none; }
-    body { background: #fff; font-size: 12pt; }
-    header.hero { background: none; padding-top: 0; }
-    ol.steps li, .safety, .next, .fear { box-shadow: none; break-inside: avoid; }
-    h2, h3 { break-after: avoid; }
-    section { padding: 18px 0; }
-  }
-</style>
+    .nav, .footer, .guide .btn, .hero-actions, .get-pdf { display: none !important; }
+    .guide .print-only { display: block; }
+    .guide .screen-only { display: none; }
+  </style>
 </head>
 <body>
+    <!-- ============ NAV ============ -->
+    <header class="nav">
+      <div class="nav__inner">
+        <a class="nav__brand" href="/index.html">
+          <img
+            class="nav__logo"
+            src="/images/mg-logo.png"
+            alt="Maria Blair"
+            width="440"
+            height="125"
+          />
+        </a>
+        <ul class="nav__links">
+          <li><a href="/my-story.html">My Story</a></li>
+          <li><a href="/course.html">The Course</a></li>
+          <li><a href="/consultations.html">Consultations</a></li>
+          <li><a href="/ai-goddess.html">AI Goddess</a></li>
+          <li><a class="nav__login" href="/dashboard">Log in</a></li>
+          <li>
+            <a
+              class="btn btn--primary btn--nav"
+              href="https://buy.stripe.com/4gM14feUka1B2NNeDK6sw02"
+              target="_blank"
+              rel="noopener"
+              >Book a Consultation</a
+            >
+          </li>
+        </ul>
+        <button
+          class="nav__toggle"
+          aria-label="Menu"
+          aria-expanded="false"
+          aria-controls="mobile-menu"
+        >
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+      <ul class="nav__mobile" id="mobile-menu">
+        <li><a href="/my-story.html">My Story</a></li>
+        <li><a href="/course.html">The Course</a></li>
+        <li><a href="/consultations.html">Consultations</a></li>
+        <li><a href="/ai-goddess.html">AI Goddess</a></li>
+        <li><a href="/contact.html">Contact</a></li>
+        <li><a class="nav__login" href="/dashboard">Log in</a></li>
+        <li>
+          <a
+            class="btn btn--primary"
+            href="https://buy.stripe.com/4gM14feUka1B2NNeDK6sw02"
+            target="_blank"
+            rel="noopener"
+            >Book a Consultation</a
+          >
+        </li>
+      </ul>
+    </header>
 
-<button class="quick-exit" type="button" id="quickExit" aria-label="Leave this page quickly">Leave this page</button>
-
-<header class="hero">
+<main class="guide">
+<section class="guide-hero">
   <div class="wrap">
     <p class="eyebrow">A free guide from Maria Blair</p>
     <h1>How to Prepare Your Exit</h1>
     <p class="sub">Seven quiet steps to get ready to leave an unhappy marriage, on your own terms.</p>
     <p class="hero-actions"><a class="btn btn-primary btn-download" href="#get-pdf">Get the PDF</a></p>
   </div>
-</header>
+</section>
 
-<main>
   <section class="letter">
     <div class="wrap">
       <h2>A note from me</h2>
@@ -198,7 +224,7 @@
           <li><a href="sms:88788?&amp;body=START">Text START to 88788<span>Or chat online at thehotline.org</span></a></li>
           <li><a href="tel:911">In an emergency, call 911</a></li>
         </ul>
-        <p class="small">They'll help you make a plan that fits your situation. Use a phone or computer he can't check, and clear your history after.<span class="screen-only"> The "Leave this page" button at the top takes you to a weather site in one tap.</span></p>
+        <p class="small">They'll help you make a plan that fits your situation. Use a phone or computer he can't check, and clear your history after.</p>
         <p class="small">If you're simply unhappy, not unsafe, keep reading. The steps below are what I wish someone had handed me.</p>
       </div>
     </div>
@@ -299,11 +325,61 @@
   </section>
 </main>
 
-<footer>
-  <div class="wrap">
-    <p>&copy; 2026 Maria Blair &middot; <a href="/">mariablair.com</a>. This guide shares my personal experience. It isn't legal, financial, or mental health advice.</p>
-  </div>
-</footer>
+<p class="guide-disclaimer container container--narrow">This guide shares my personal experience. It isn't legal, financial, or mental health advice.</p>
+
+    <!-- ============ FOOTER ============ -->
+    <footer class="footer">
+      <div class="container footer__inner">
+        <nav aria-label="Footer">
+          <ul>
+            <li><a href="/my-story.html">My Story</a></li>
+            <li><a href="/course.html">The Course</a></li>
+            <li><a href="/consultations.html">Consultations</a></li>
+            <li><a href="/ai-goddess.html">AI Goddess</a></li>
+            <li><a href="/exit-guide/" aria-current="page">Free Exit Guide</a></li>
+            <li><a href="/contact.html">Contact</a></li>
+            <li><a href="/dashboard">Log in</a></li>
+          </ul>
+        </nav>
+        <div class="footer__social">
+          <a
+            href="https://www.instagram.com/maria_blair_goddess"
+            target="_blank"
+            rel="noopener"
+            aria-label="Instagram"
+          >
+            <svg viewBox="0 0 24 24">
+              <path
+                d="M12 2.2c3.2 0 3.6 0 4.9.1 1.2.1 1.8.2 2.2.4.6.2 1 .5 1.4.9.4.4.7.8.9 1.4.2.4.4 1 .4 2.2.1 1.3.1 1.7.1 4.9s0 3.6-.1 4.9c-.1 1.2-.2 1.8-.4 2.2-.2.6-.5 1-.9 1.4-.4.4-.8.7-1.4.9-.4.2-1 .4-2.2.4-1.3.1-1.7.1-4.9.1s-3.6 0-4.9-.1c-1.2-.1-1.8-.2-2.2-.4-.6-.2-1-.5-1.4-.9-.4-.4-.7-.8-.9-1.4-.2-.4-.4-1-.4-2.2C2.2 15.6 2.2 15.2 2.2 12s0-3.6.1-4.9c.1-1.2.2-1.8.4-2.2.2-.6.5-1 .9-1.4.4-.4.8-.7 1.4-.9.4-.2 1-.4 2.2-.4C8.4 2.2 8.8 2.2 12 2.2zm0 1.8c-3.1 0-3.5 0-4.8.1-1.1.1-1.5.2-1.9.3-.5.2-.8.4-1.1.7-.3.3-.5.6-.7 1.1-.1.4-.3.8-.3 1.9-.1 1.2-.1 1.6-.1 4.8s0 3.5.1 4.8c.1 1.1.2 1.5.3 1.9.2.5.4.8.7 1.1.3.3.6.5 1.1.7.4.1.8.3 1.9.3 1.2.1 1.6.1 4.8.1s3.5 0 4.8-.1c1.1-.1 1.5-.2 1.9-.3.5-.2.8-.4 1.1-.7.3-.3.5-.6.7-1.1.1-.4.3-.8.3-1.9.1-1.2.1-1.6.1-4.8s0-3.5-.1-4.8c-.1-1.1-.2-1.5-.3-1.9-.2-.5-.4-.8-.7-1.1-.3-.3-.6-.5-1.1-.7-.4-.1-.8-.3-1.9-.3-1.2-.1-1.6-.1-4.8-.1zm0 3.1a4.9 4.9 0 1 1 0 9.8 4.9 4.9 0 0 1 0-9.8zm0 8.1a3.2 3.2 0 1 0 0-6.4 3.2 3.2 0 0 0 0 6.4zm6.2-8.3a1.1 1.1 0 1 1-2.3 0 1.1 1.1 0 0 1 2.3 0z"
+              />
+            </svg>
+            Instagram
+          </a>
+          <a
+            href="https://www.youtube.com/@GloriousGoddessOver35"
+            target="_blank"
+            rel="noopener"
+            aria-label="YouTube"
+          >
+            <svg viewBox="0 0 24 24">
+              <path
+                d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.4.6A3 3 0 0 0 .5 6.2 31.3 31.3 0 0 0 0 12c0 2 .2 3.9.5 5.8a3 3 0 0 0 2.1 2.1c1.9.6 9.4.6 9.4.6s7.5 0 9.4-.6a3 3 0 0 0 2.1-2.1c.3-1.9.5-3.8.5-5.8s-.2-3.9-.5-5.8zM9.5 15.6V8.4L15.8 12l-6.3 3.6z"
+              />
+            </svg>
+            YouTube
+          </a>
+        </div>
+        <nav class="footer__legal-links" aria-label="Legal">
+          <a href="/privacy.html">Privacy Policy</a>
+          <a href="/terms.html">Terms</a>
+        </nav>
+        <p class="footer__legal">
+          © 2026 Glorious Goddess<br />Built with love in Boca Raton 🌴
+        </p>
+      </div>
+    </footer>
+
+
 
 <script>
   var form = document.getElementById('pdfForm');
@@ -342,12 +418,7 @@
       err.textContent = "That didn't go through. Try again in a moment, or DM me on Instagram and I'll send it to you.";
     });
   });
-  document.getElementById('quickExit').addEventListener('click', function () {
-    window.location.replace('https://weather.com');
-  });
-  document.addEventListener('keydown', function (e) {
-    if (e.key === 'Escape') window.location.replace('https://weather.com');
-  });
 </script>
+<script src="/js/main.js"></script>
 </body>
 </html>
