@@ -69,6 +69,25 @@
   .hero-actions { margin-top: 24px; }
   .btn-download::before { content: "\2193\00a0"; }
   .print-only { display: none; }
+  .get-pdf { padding-top: 12px; }
+  .pdf-card {
+    background: var(--card); border: 2px solid var(--blush-deep); border-radius: 18px;
+    padding: 28px 24px; text-align: center;
+  }
+  .pdf-card > p { max-width: 520px; margin-left: auto; margin-right: auto; }
+  .pdf-form { display: grid; gap: 10px; max-width: 420px; margin: 20px auto 14px; }
+  .pdf-form input {
+    font: 17px var(--sans); padding: 14px 16px; border-radius: 12px;
+    border: 1.5px solid var(--blush-deep); background: var(--cream); color: var(--ink);
+  }
+  .pdf-form input:focus { outline: none; border-color: var(--burgundy); background: #fff; }
+  .pdf-form .btn { border: 0; cursor: pointer; font: 600 17px var(--sans); }
+  .pdf-form .btn[disabled] { opacity: .6; cursor: wait; }
+  .pdf-error { color: var(--burgundy); font-size: 15px; margin: 0; min-height: 0; }
+  .pdf-done { max-width: 460px; margin: 18px auto 6px; }
+  .hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+  .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
 
   section { padding: 36px 0; }
   h2 {
@@ -134,7 +153,7 @@
 
   @page { margin: 16mm 14mm; }
   @media print {
-    .quick-exit, .btn, .hero-actions { display: none !important; }
+    .quick-exit, .btn, .hero-actions, .get-pdf { display: none !important; }
     .print-only { display: block; }
     .screen-only { display: none; }
     body { background: #fff; font-size: 12pt; }
@@ -154,7 +173,7 @@
     <p class="eyebrow">A free guide from Maria Blair</p>
     <h1>How to Prepare Your Exit</h1>
     <p class="sub">Seven quiet steps to get ready to leave an unhappy marriage, on your own terms.</p>
-    <p class="hero-actions"><a class="btn btn-primary btn-download" href="how-to-prepare-your-exit.pdf" download>Download the PDF</a></p>
+    <p class="hero-actions"><a class="btn btn-primary btn-download" href="#get-pdf">Get the PDF</a></p>
   </div>
 </header>
 
@@ -216,7 +235,7 @@
         </li>
         <li>
           <h3>Take a peek at dating sites.</h3>
-          <p>Not to jump in. Just to see it with your own eyes: there are plenty of men out there, good quality men. Knowing that takes away the "no one will want me" fear.</p>
+          <p>Not to jump in. Just to see it with your own eyes: there are plenty of men out there, good quality men. Knowing that takes away the "no one will want me" fear. If he checks your phone or computer, wait, or look only on a device he can't see.</p>
         </li>
       </ol>
     </div>
@@ -246,6 +265,25 @@
     </div>
   </section>
 
+  <section class="get-pdf" id="get-pdf">
+    <div class="wrap">
+      <div class="pdf-card">
+        <h2>Get the PDF</h2>
+        <p>Save the guide to your phone and come back to it when you need it. I'll also send you my letters about starting over. Unsubscribe anytime.</p>
+        <form class="pdf-form" id="pdfForm" novalidate>
+          <label class="sr-only" for="pdf-name">First name</label>
+          <input id="pdf-name" name="first_name" type="text" placeholder="First name" autocomplete="given-name" required>
+          <label class="sr-only" for="pdf-email">Email</label>
+          <input id="pdf-email" name="email" type="email" placeholder="Email" autocomplete="email" required>
+          <div class="hp" aria-hidden="true"><label>Company <input name="company" type="text" tabindex="-1" autocomplete="off"></label></div>
+          <button class="btn btn-primary" type="submit">Send me the guide</button>
+          <p class="pdf-error" role="alert"></p>
+        </form>
+        <p class="small">Use an email he can't read. <a href="/privacy">Privacy</a></p>
+      </div>
+    </div>
+  </section>
+
   <section>
     <div class="wrap">
       <div class="next">
@@ -253,8 +291,7 @@
         <p>Pick one step from the list and do it this week. Just one. That's how every exit starts.</p>
         <p>Dating is not the goal here. Your beautiful, exciting life is the goal. The right man is part of it, when you're ready.</p>
         <a class="btn btn-primary" href="/consultations">Book a private consultation</a>
-        <a class="btn btn-ghost btn-download" href="how-to-prepare-your-exit.pdf" download>Save the PDF</a>
-        <a class="btn btn-ghost" href="https://www.instagram.com/maria_blair_goddess" target="_blank" rel="noopener">Follow on Instagram</a>
+                <a class="btn btn-ghost" href="https://www.instagram.com/maria_blair_goddess" target="_blank" rel="noopener">Follow on Instagram</a>
         <p class="sig">With love, Maria</p>
         <p class="print-only">Private consultations: mariablair.com/consultations<br>Instagram: @maria_blair_goddess</p>
       </div>
@@ -269,6 +306,42 @@
 </footer>
 
 <script>
+  var form = document.getElementById('pdfForm');
+  if (form) form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    var btn = form.querySelector('button');
+    var err = form.querySelector('.pdf-error');
+    var name = form.first_name.value.trim();
+    var email = form.email.value.trim();
+    err.textContent = '';
+    if (!name || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      err.textContent = 'Please add your first name and a valid email.';
+      return;
+    }
+    btn.disabled = true; btn.textContent = 'One sec\u2026';
+    fetch('/api/guide', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ first_name: name, email: email, company: form.company.value })
+    }).then(function (res) {
+      return res.json().then(function (data) {
+        if (!res.ok || !data.pdf) throw new Error('failed');
+        var done = document.createElement('div');
+        done.className = 'pdf-done';
+        var p = document.createElement('p');
+        p.textContent = 'Here it is, ' + name + '. I also sent a copy to your inbox.';
+        var a = document.createElement('a');
+        a.className = 'btn btn-primary btn-download';
+        a.href = data.pdf; a.setAttribute('download', 'How to Prepare Your Exit - Maria Blair.pdf');
+        a.textContent = 'Download the PDF';
+        done.appendChild(p); done.appendChild(a);
+        form.replaceWith(done);
+      });
+    }).catch(function () {
+      btn.disabled = false; btn.textContent = 'Send me the guide';
+      err.textContent = "That didn't go through. Try again in a moment, or DM me on Instagram and I'll send it to you.";
+    });
+  });
   document.getElementById('quickExit').addEventListener('click', function () {
     window.location.replace('https://weather.com');
   });

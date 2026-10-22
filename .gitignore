@@ -7,6 +7,7 @@
 
 # Exported signup lists — contain real people's email addresses
 waitlist.csv
+leads.csv
 
 node_modules/
 .DS_Store

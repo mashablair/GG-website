@@ -130,6 +130,40 @@ winter.
 
 ---
 
+## Looking at the free-guide list
+
+Women who gave their name and email for the exit guide PDF (`/exit-guide`). A
+separate list from the course waitlist, in the `leads` table. You get an email
+the first time each address signs up.
+
+Everyone still subscribed, newest first:
+
+```
+npx wrangler d1 execute dating-goddess-db --remote --command "SELECT first_name, email, created_at FROM leads WHERE list = 'exit-guide' AND unsubscribed_at IS NULL ORDER BY created_at DESC"
+```
+
+How many:
+
+```
+npx wrangler d1 execute dating-goddess-db --remote --command "SELECT COUNT(*) AS subscribed FROM leads WHERE list = 'exit-guide' AND unsubscribed_at IS NULL"
+```
+
+Export to `leads.csv` (gitignore it, it holds real addresses):
+
+```
+npx wrangler d1 execute dating-goddess-db --remote --json --command "SELECT first_name, email, created_at FROM leads WHERE list = 'exit-guide' AND unsubscribed_at IS NULL ORDER BY created_at" | python3 -c "import sys,json,csv;rows=json.load(sys.stdin)[0]['results'];w=csv.DictWriter(open('leads.csv','w',newline=''),fieldnames=['first_name','email','created_at']);w.writeheader();w.writerows(rows);print(f'{len(rows)} rows -> leads.csv')"
+```
+
+**Never email anyone with `unsubscribed_at` set.** Every email to this list
+needs the unsubscribe link. `unsubscribeLink()` in `functions/api/guide.js`
+builds it.
+
+The PDF lives at `public/exit-guide/pdf/k7q3m-how-to-prepare-your-exit.pdf`. The
+odd name is deliberate: nothing links to it, so the only way to get it is the
+form. If you rename it, change `GUIDE_PDF_PATH` in `functions/api/guide.js` too.
+
+---
+
 ## Secrets
 
 List what's set (names only — values are never shown):

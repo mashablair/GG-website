@@ -112,3 +112,15 @@ CREATE TABLE IF NOT EXISTS waitlist (
   source      TEXT,
   created_at  TEXT NOT NULL DEFAULT (datetime('now'))
 );
+
+-- Free-resource signups (the exit guide). See migrations/0002-leads.sql.
+CREATE TABLE IF NOT EXISTS leads (
+  id               INTEGER PRIMARY KEY AUTOINCREMENT,
+  list             TEXT NOT NULL,
+  first_name       TEXT NOT NULL,
+  email            TEXT NOT NULL,
+  source           TEXT,
+  created_at       TEXT NOT NULL DEFAULT (datetime('now')),
+  unsubscribed_at  TEXT,
+  UNIQUE (email, list)
+);
