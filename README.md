@@ -1,4 +1,4 @@
-# mariablair.com — Glorious Goddess 🐆
+# dating-goddess.com — Glorious Goddess 🐆
 
 Maria's whole web presence in one place: the marketing site **and** the teaching
 platform behind it. Plain HTML, CSS and JavaScript with Cloudflare Pages
@@ -9,7 +9,7 @@ accounts, payments, access and video. Marketing sites like dating-goddess.com
 stay dumb and static: they tell a story, hand the buyer to a payment link, and
 she lands back here to sign in and learn.
 
-Live at **https://mariablair.com**.
+Live at **https://dating-goddess.com**.
 
 See [COMMANDS.md](COMMANDS.md) for everything you'll need to run day to day.
 

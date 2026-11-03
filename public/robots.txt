@@ -1,4 +1,4 @@
-# robots.txt for mariablair.com — Glorious Goddess 🐆
+# robots.txt for dating-goddess.com — Glorious Goddess 🐆
 # Everyone is welcome to crawl this site, including AI assistants and
 # answer engines. Nothing here is blocked.
 
@@ -54,4 +54,4 @@ Allow: /
 User-agent: cohere-ai
 Allow: /
 
-Sitemap: https://mariablair.com/sitemap.xml
+Sitemap: https://dating-goddess.com/sitemap.xml

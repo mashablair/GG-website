@@ -1,4 +1,4 @@
--- mariablair.com — the one database (Cloudflare D1 / SQLite)
+-- dating-goddess.com — the one database (Cloudflare D1 / SQLite)
 --
 -- Apply it with:
 --   npx wrangler d1 execute dating-goddess-db --remote --file=schema.sql

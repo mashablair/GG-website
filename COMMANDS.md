@@ -208,7 +208,7 @@ Look at the Status column. `Failure` means the site is still running older code.
 Quick check of what's configured on the live site:
 
 ```
-curl -s https://mariablair.com/api/health
+curl -s https://dating-goddess.com/api/health
 ```
 
 ---
@@ -328,7 +328,7 @@ git show --stat
 
 ## When something's wrong
 
-1. **`curl -s https://mariablair.com/api/health`** — is the
+1. **`curl -s https://dating-goddess.com/api/health`** — is the
    configuration all there?
 2. **`npx wrangler pages deployment list --project-name gg-website`**
    — did the last build actually succeed?

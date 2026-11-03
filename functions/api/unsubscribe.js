@@ -56,6 +56,6 @@ function page(title, message) {
   h1{font:600 30px/1.2 Georgia,serif;color:#7A2E3A;margin:0 0 16px}
   a{color:#7A2E3A}
 </style></head>
-<body><main><h1>${title}</h1><p>${message}</p><p><a href="/">mariablair.com</a></p></main></body></html>`;
+<body><main><h1>${title}</h1><p>${message}</p><p><a href="/">dating-goddess.com</a></p></main></body></html>`;
   return new Response(html, { headers: { 'Content-Type': 'text/html; charset=utf-8' } });
 }

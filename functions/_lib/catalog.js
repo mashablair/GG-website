@@ -40,7 +40,7 @@ export const products = {
     type: 'service',
     title: 'Private 1:1 Video Consultation',
     tagline: 'A private video call with Maria.',
-    salesUrl: 'https://mariablair.com/consultations',
+    salesUrl: 'https://dating-goddess.com/consultations',
   },
 };
 

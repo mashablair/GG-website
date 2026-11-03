@@ -1,4 +1,4 @@
-// Glorious Goddess — mariablair.com
+// Glorious Goddess — dating-goddess.com
 
 // ---------- Mobile nav ----------
 const toggle = document.querySelector('.nav__toggle');

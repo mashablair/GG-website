@@ -20,12 +20,46 @@ export async function onRequest(context) {
   const { request } = context;
   const url = new URL(request.url);
 
+  const moved = toCanonicalHost(request, url);
+  if (moved) return moved;
+
   if (needsAccount(url.pathname)) {
     const denied = await gate(context, url);
     if (denied) return withNoindex(denied, url);
   }
 
   return withNoindex(await context.next(), url);
+}
+
+/**
+ * The site moved from mariablair.com to dating-goddess.com in November 2026.
+ * The old domain stays attached so every old link, receipt, email and search
+ * result still lands — each request is sent to the same path on the new one.
+ * www. goes to the bare domain the same way.
+ *
+ * Payment webhooks are the one exception: Stripe doesn't follow redirects, so a
+ * webhook still aimed at the old address is answered right here instead of
+ * bounced. That keeps purchases working even if a dashboard is missed.
+ */
+const CANONICAL_HOST = 'dating-goddess.com';
+const OLD_HOSTS = new Set([
+  'mariablair.com',
+  'www.mariablair.com',
+  'www.dating-goddess.com',
+]);
+
+function toCanonicalHost(request, url) {
+  if (!OLD_HOSTS.has(url.hostname)) return null;
+  if (url.pathname.startsWith('/api/webhooks/')) return null;
+
+  // 301 can turn a POST into a GET; 308 keeps the method and body.
+  const safe = request.method === 'GET' || request.method === 'HEAD';
+  return new Response(null, {
+    status: safe ? 301 : 308,
+    headers: {
+      Location: `https://${CANONICAL_HOST}${url.pathname}${url.search}`,
+    },
+  });
 }
 
 /** Everything a signed-in student owns lives behind one of these. */
@@ -92,7 +126,7 @@ async function gate(context, url) {
 }
 
 /**
- * The parts of mariablair.com that are an application, not a website.
+ * The parts of dating-goddess.com that are an application, not a website.
  *
  * This site is now both things at once. The marketing pages — the homepage, My
  * Story, the course and consultation pages — are the whole point of the SEO and

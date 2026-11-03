@@ -1,4 +1,4 @@
-# Cloudflare Pages build configuration for mariablair.com.
+# Cloudflare Pages build configuration for dating-goddess.com.
 #
 # `pages_build_output_dir` is the important line: it tells Cloudflare to serve
 # the public/ folder, not the repo root. Serving the root would publish

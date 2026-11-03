@@ -217,7 +217,7 @@ Reply to this email to write to her directly.`;
   return { subject: `New guide download: ${firstName} (${email})`, text, html };
 }
 
-/** "https://mariablair.com/course?x=1" -> "/course". Never throws on junk. */
+/** "https://dating-goddess.com/course?x=1" -> "/course". Never throws on junk. */
 function sourcePage(source) {
   try {
     return new URL(source).pathname || '/';
