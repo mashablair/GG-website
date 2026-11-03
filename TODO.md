@@ -1,5 +1,46 @@
 # To do
 
+## Switch Stripe from test to live — due by December 15, 2026
+
+The site still runs on Stripe's **test** keys (`/api/health` says
+`stripeMode: "test"`). Real money is taken fine by the live Payment Links, but
+the site never hears about it, so **a real buyer gets no account and no course
+access**. Held off on purpose on November 3, 2026: the course is still behind
+the waitlist. Do this before anything that should create an account goes on
+sale.
+
+**To do it:**
+
+1. **Map the live prices.** In `functions/_lib/catalog.js` → `byStripePrice`, add
+   the live price ids next to the test ones (they sit side by side, nothing is
+   swapped): the Dating Method course ($247) → `'dating'`, and the Private
+   Consultation ($97) → `'consult-60'`. Price ids are on each product's page in
+   the live Stripe dashboard (`price_…`).
+2. **Create a live webhook** in Stripe (live mode → Workbench → Webhooks → Add
+   destination): URL `https://dating-goddess.com/api/webhooks/stripe`, with the
+   same 5 events as the test one — `checkout.session.completed`,
+   `checkout.session.async_payment_succeeded`,
+   `checkout.session.async_payment_failed`, `checkout.session.expired`,
+   `charge.refunded`.
+3. **Swap the secrets in Cloudflare** (Maria pastes these — they're secret):
+   ```
+   npx wrangler pages secret put STRIPE_SECRET_KEY --project-name gg-website      # the live sk_live_… key
+   npx wrangler pages secret put STRIPE_WEBHOOK_SECRET --project-name gg-website  # the new live webhook's whsec_…
+   ```
+   Keep the test keys in the local `.dev.vars`, so the tests still run.
+4. **Point the live Payment Links at the site.** For each one that should create
+   an account, set "After payment → Don't show confirmation page → redirect to"
+   `https://dating-goddess.com/welcome?session_id={CHECKOUT_SESSION_ID}`.
+   - The Dating Method Course currently redirects to the retired
+     `dating-goddess-course.pages.dev/welcome` — must change.
+   - Private Consultation currently shows Stripe's own message — change it if
+     consultations should appear on the buyer's dashboard.
+5. **Redeploy** (any push to `main`) so the new secrets are picked up.
+6. **Check:** `curl -s https://dating-goddess.com/api/health` shows
+   `stripeMode: "live"`; make one real purchase of the cheapest product, confirm
+   the account and dashboard appear and the webhook delivery succeeded in
+   Stripe, then refund it and confirm access is removed.
+
 ## Bring Lava.top payments back — due by December 15, 2026
 
 Lava (rouble card / СБП checkout for buyers in Russia and the CIS) was switched
