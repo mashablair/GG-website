@@ -26,13 +26,19 @@ function offerId(env) {
   return env.LAVA_OFFER_ID || catalog.lava.offerId;
 }
 
+/** Switched on in the catalog, and actually able to create an invoice. */
+function canSell(env) {
+  const open = catalog.lava.checkoutOpen || env.LAVA_CHECKOUT_OPEN === 'true';
+  return open && lavaCheckoutReady(env, { offerId: offerId(env) });
+}
+
 export function onRequestGet({ env }) {
-  if (!lavaCheckoutReady(env, { offerId: offerId(env) })) return html(unavailablePage());
+  if (!canSell(env)) return html(unavailablePage());
   return html(formPage(undefined, env));
 }
 
 export async function onRequestPost({ request, env }) {
-  if (!lavaCheckoutReady(env, { offerId: offerId(env) })) return html(unavailablePage());
+  if (!canSell(env)) return html(unavailablePage());
 
   const form = await request.formData();
   const email = normalizeEmail(form.get('email'));

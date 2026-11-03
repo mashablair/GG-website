@@ -123,6 +123,13 @@ export const catalog = {
   // look alike. The invoice call needs the offer; byLavaProduct below matches
   // on the product.
   lava: {
+    // The off switch. While false, /pay/lava shows the "Скоро" page (email me
+    // instead) and nothing links to it — but the webhook, /pay/complete and
+    // all of this config stay in place, so turning it back on is this one line.
+    // Switched off Nov 3, 2026: the Lava dashboard's webhook still points at
+    // the retired dating-goddess-course.pages.dev and needs re-registering
+    // first (see TODO.md). Tests turn it on with LAVA_CHECKOUT_OPEN=true.
+    checkoutOpen: false,
     offerId: '3454c7ea-2a85-48f7-ba39-06447388fbca', // the one-time OFFER id — used to create the invoice
     // (LAVA_OFFER_ID overrides this, which is how tests set it)
     productId: 'c7507de8-f478-4e3d-9910-7e424e6e8231', // the PRODUCT id — also appears in byLavaProduct below

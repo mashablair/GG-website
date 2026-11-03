@@ -53,6 +53,8 @@ export function onRequestGet({ env }) {
       lavaApiKey: Boolean(env.LAVA_API_KEY),
       lavaWebhookSecret: Boolean(env.LAVA_WEBHOOK_SECRET),
       lavaWebhooksReady: lavaIsConfigured(env),
+      // Off by default (catalog.lava.checkoutOpen) — see TODO.md.
+      lavaCheckoutOpen: Boolean(lava.checkoutOpen || env.LAVA_CHECKOUT_OPEN === 'true'),
       lavaCheckoutReady: lavaCheckoutReady(env, lava),
       // The offer is the price; the product is what the webhook names. Both
       // must be set, and a mapped product is what turns a payment into access.

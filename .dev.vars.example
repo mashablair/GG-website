@@ -27,3 +27,5 @@ LAVA_API_KEY=
 # you want it shown. Both can also live in catalog.lava in content.js.
 LAVA_OFFER_ID=
 LAVA_PRICE_LABEL=
+# Lava checkout is switched off in catalog.js; this turns it on locally for tests.
+LAVA_CHECKOUT_OPEN=true
