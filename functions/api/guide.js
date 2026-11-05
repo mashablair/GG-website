@@ -3,9 +3,8 @@
 // A free guide's PDF, in exchange for a first name and an email. The form
 // sends `guide` (a key of GUIDES below); no key means the exit guide, so the
 // original form keeps working unchanged.
-//   - exit-guide: reading it online stays free (/exit-guide); the PDF is emailed.
-//   - let-go: /let-go is just the sign-up page; the PDF is emailed.
-//   - stop-chasing: reading it online stays free (/stop-chasing); the PDF is emailed.
+// Every guide works the same way: /<key> is just a sign-up page, and the PDF
+// is emailed. The full text lives only in the PDF (sources in guides-src/).
 //
 // The PDF link only ever goes out by email, never in this response, so a fake
 // address gets nothing and every lead on the list is a real inbox.
