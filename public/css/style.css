@@ -1972,3 +1972,28 @@ section {
 
 .story-guide .eyebrow { margin-bottom: 0.5rem; }
 .story-guide p { margin-bottom: 1.1rem; }
+
+/* Curriculum: part labels and module descriptions (course page) */
+.module-part {
+  font-family: var(--font-body);
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--burgundy);
+  margin: 2.25rem 0 0.5rem;
+}
+.module-part:first-child { margin-top: 0; }
+.module__desc {
+  display: block;
+  margin-top: 6px;
+  font-family: var(--font-body);
+  font-size: 0.98rem;
+  line-height: 1.5;
+  color: var(--warm-gray);
+}
+.testimonials__note {
+  margin-top: 0.75rem;
+  font-size: 0.95rem;
+  color: var(--warm-gray);
+}
