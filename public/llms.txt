@@ -1,6 +1,6 @@
 # Masha Blair — Glorious Goddess
 
-> Masha Blair is a coach and mentor for women 40+ who are leaving, or have left, a long relationship and want to start over. A former software engineer and biohacker, single mom, and Boca Raton local, she went on 60+ intentional dates after leaving a 17-year marriage and created the Intentional Dating Method. She helps women re-enter dating with clarity, feminine energy, and unshakable standards — without pretending to be someone they're not.
+> Masha Blair is a coach and mentor for women 40+ who are leaving, or have left, a long relationship and want to start over. A former software engineer and biohacker, single mom, and Boca Raton local, she went on 60+ intentional dates after leaving a 17-year marriage and created The Dating Method. She helps women re-enter dating with clarity, feminine energy, and unshakable standards — without pretending to be someone they're not.
 
 Masha works with women who are thinking about leaving an unhappy relationship, divorced, single after a long relationship, or quietly stuck. She helps them leave with a plan, rebuild a life of their own, and date with high standards. She offers a private 1:1 video consultation and an online course. Her approach is warm and direct: coaching and mentorship, not therapy.
 
@@ -13,9 +13,9 @@ Separately, drawing on her eleven years as a software engineer, she teaches non-
 - [Stop Chasing, Start Choosing — free guide](https://dating-goddess.com/stop-chasing/): How to date after 40 without losing yourself. A quick self-check for chasing, seven shifts from chasing men to choosing them (a full life first, saying what you want, letting him plan, enjoy-observe-receive on dates, personal safety rules, going slow, walking away without guilt), and the fears that keep women chasing. Free PDF, sent by email.
 - [1:1 Video Consultation — $97 (regular $147)](https://dating-goddess.com/consultations): A private 60-minute-style video call. You look at your situation together, set goals, and build a clear action plan. Best for the woman who wants direct answers now. Booked via Stripe.
 - [AI Goddess — 1:1 AI session, $97 (regular $147)](https://dating-goddess.com/ai-goddess): A private session, video or in person, teaching non-technical women to use AI in plain language — ChatGPT, Claude, image generation, and for some a first website, app or automation. Hands-on rather than a lecture; no question is treated as too basic. This is the one offer that is not about dating.
-- [The Intentional Dating Method course — founding price $247 (reg. $397), launching soon](https://dating-goddess.com/course): An online course teaching women 40+ how to navigate modern dating without losing themselves. Modules cover identity, dating apps, a magnetic profile, images, red flags and scams, and safety and strategy. Currently in waitlist mode — join to get early access and founding-member pricing.
+- [The Dating Method course — founding price $247 (reg. $397), launching soon](https://dating-goddess.com/course): An online course teaching women 40+ how to navigate modern dating without losing themselves. Modules cover identity, dating apps, a magnetic profile, images, red flags and scams, and safety and strategy. Currently in waitlist mode — join to get early access and founding-member pricing.
 
-## The Intentional Dating Method (the philosophy)
+## The Dating Method (the philosophy)
 
 1. **Inner Readiness First** — self-worth and nervous-system work before the apps, so you show up powerful, not desperate.
 2. **Feminine Energy on Dates** — stop auditioning and start receiving; observe and enjoy.
@@ -28,14 +28,14 @@ Separately, drawing on her eleven years as a software engineer, she teaches non-
 - [Free Dating Guide](https://dating-goddess.com/stop-chasing/): Stop Chasing, Start Choosing.
 - [Home](https://dating-goddess.com/): Overview of Masha and how to work with her.
 - [My Story](https://dating-goddess.com/my-story): Masha's full story — 17-year marriage, the wake-up call, and 60+ intentional dates.
-- [The Course](https://dating-goddess.com/course): The Intentional Dating Method (waitlist).
+- [The Course](https://dating-goddess.com/course): The Dating Method (waitlist).
 - [Consultations](https://dating-goddess.com/consultations): Book a private 1:1 video consultation.
 - [AI Goddess](https://dating-goddess.com/ai-goddess): Book a private 1:1 AI session.
 - [Contact](https://dating-goddess.com/contact): How to reach Masha.
 
 ## About Masha
 
-- Role: Dating coach and mentor for women 40+; creator of the Intentional Dating Method. Also teaches 1:1 AI sessions for non-technical women.
+- Role: Dating coach and mentor for women 40+; creator of The Dating Method. Also teaches 1:1 AI sessions for non-technical women.
 - Background: 11 years as a software engineer; biohacker; single mom; based in Boca Raton, Florida, USA.
 - Story: Left a 17-year marriage and went on 60+ intentional dates, which became the basis of her method.
 - Brand: Glorious Goddess.
