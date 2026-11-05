@@ -23,6 +23,9 @@ export async function onRequest(context) {
   const moved = toCanonicalHost(request, url);
   if (moved) return moved;
 
+  const toAi = toAiConsulting(request, url);
+  if (toAi) return toAi;
+
   if (needsAccount(url.pathname)) {
     const denied = await gate(context, url);
     if (denied) return withNoindex(denied, url);
@@ -32,21 +35,26 @@ export async function onRequest(context) {
 }
 
 /**
- * The site moved from mariablair.com to dating-goddess.com in November 2026.
- * The old domain stays attached so every old link, receipt, email and search
- * result still lands — each request is sent to the same path on the new one.
- * www. goes to the bare domain the same way.
+ * dating-goddess.com is the canonical domain for the dating site (Masha Blair).
+ * www.dating-goddess.com goes to the bare domain the same way.
  *
- * Payment webhooks are the one exception: Stripe doesn't follow redirects, so a
- * webhook still aimed at the old address is answered right here instead of
- * bounced. That keeps purchases working even if a dashboard is missed.
+ * mariablair.com is Maria Blair's AI consulting brand, not the dating site.
+ * Pages there redirect to https://mariablairai.com/ (the AI site's root, not
+ * the same path, so old dating paths don't 404 on the AI site).
+ *
+ * The exception is anything a woman may still have a mariablair.com link to
+ * from before the move: emails sent then carry unsubscribe links, guide PDF
+ * links, sign-in links and course links. Those (KEEP_ON_DATING_SITE) go to the
+ * same path on dating-goddess.com, so they keep working. Unsubscribe in
+ * particular has to keep working; it's what the privacy policy promises.
+ *
+ * Payment webhooks are answered right here instead of bounced: Stripe doesn't
+ * follow redirects. That keeps purchases working even if a dashboard is missed.
  */
 const CANONICAL_HOST = 'dating-goddess.com';
-const OLD_HOSTS = new Set([
-  'mariablair.com',
-  'www.mariablair.com',
-  'www.dating-goddess.com',
-]);
+const OLD_HOSTS = new Set(['www.dating-goddess.com']);
+const AI_HOSTS = new Set(['mariablair.com', 'www.mariablair.com']);
+const AI_CONSULTING_URL = 'https://mariablairai.com/';
 
 function toCanonicalHost(request, url) {
   if (!OLD_HOSTS.has(url.hostname)) return null;
@@ -60,6 +68,33 @@ function toCanonicalHost(request, url) {
       Location: `https://${CANONICAL_HOST}${url.pathname}${url.search}`,
     },
   });
+}
+
+function toAiConsulting(request, url) {
+  if (!AI_HOSTS.has(url.hostname)) return null;
+  if (url.pathname.startsWith('/api/webhooks/')) return null;
+
+  // 301 can turn a POST into a GET; 308 keeps the method and body.
+  const safe = request.method === 'GET' || request.method === 'HEAD';
+  const location = keepOnDatingSite(url.pathname)
+    ? `https://${CANONICAL_HOST}${url.pathname}${url.search}`
+    : AI_CONSULTING_URL;
+  return new Response(null, {
+    status: safe ? 301 : 308,
+    headers: { Location: location },
+  });
+}
+
+/** Links from old emails that must keep working on the dating site. */
+function keepOnDatingSite(pathname) {
+  return (
+    pathname.startsWith('/api/') || // unsubscribe, sign-in, guide signup
+    /^\/[^/]+\/pdf\//.test(pathname) || // free guide PDFs
+    ['/login', '/logout', '/welcome', '/dashboard', '/account', '/learn'].some(
+      (p) => pathname === p || pathname.startsWith(p + '/')
+    ) ||
+    pathname.startsWith('/pay/')
+  );
 }
 
 /** Everything a signed-in student owns lives behind one of these. */
