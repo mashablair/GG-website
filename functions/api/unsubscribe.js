@@ -42,14 +42,14 @@ export async function onRequestGet({ request, env }) {
 
   return page(
     "You're unsubscribed",
-    "You won't get any more emails from me. If you ever want them back, just download a free guide again. Wishing you a beautiful new chapter. Maria"
+    "You won't get any more emails from me. If you ever want them back, just download a free guide again. Wishing you a beautiful new chapter. Masha"
   );
 }
 
 function page(title, message) {
   const html = `<!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="robots" content="noindex"><title>${title} | Maria Blair</title>
+<meta name="robots" content="noindex"><title>${title} | Masha Blair</title>
 <style>
   body{margin:0;background:#FAF6F1;color:#2D2A26;font:17px/1.65 -apple-system,"Helvetica Neue",sans-serif}
   main{max-width:520px;margin:12vh auto;padding:0 20px;text-align:center}

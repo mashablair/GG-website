@@ -1,6 +1,6 @@
 # dating-goddess.com — Glorious Goddess 🐆
 
-Maria's whole web presence in one place: the marketing site **and** the teaching
+Masha's whole web presence in one place: the marketing site **and** the teaching
 platform behind it. Plain HTML, CSS and JavaScript with Cloudflare Pages
 Functions — no framework, no build step.
 
@@ -63,14 +63,14 @@ all of `functions/` — is not.
 | `public/css/course.css` | The course app |
 | `public/js/main.js` | Marketing-site behaviour (nav, carousel, waitlist form) |
 | `public/js/course.js` | The mobile curriculum drawer |
-| `functions/_lib/catalog.js` | **Everything Maria sells** — courses, services, prices |
+| `functions/_lib/catalog.js` | **Everything Masha sells** — courses, services, prices |
 | `functions/_lib/courses/dating.js` | **The Dating Method — modules, lessons, video, text** |
 | `functions/_lib/render.js` | The page shell every signed-in page uses |
 | `functions/_lib/access.js` | Granting and checking access — payment-provider-neutral |
 | `functions/_middleware.js` | The gate, and what stays out of search results |
 | `functions/dashboard.js` | `/dashboard` — everything she's bought |
 | `functions/learn/[[path]].js` | Lesson pages, module links, resources |
-| `functions/api/waitlist.js` | The course waitlist, and the email telling Maria |
+| `functions/api/waitlist.js` | The course waitlist, and the email telling Masha |
 | `functions/api/webhooks/` | Stripe and Lava |
 | `wrangler.toml` | Build output dir and the database binding |
 | `schema.sql` | The database, as a fresh one would be built |
@@ -95,7 +95,7 @@ conclude the live form is broken when it isn't.
 
 ## When someone joins the waitlist
 
-She's written to `waitlist`, and Maria gets an email at `NOTIFY_EMAIL`
+She's written to `waitlist`, and Masha gets an email at `NOTIFY_EMAIL`
 (`wrangler.toml`, under `[vars]` — change it there and redeploy).
 
 Three things about that email are deliberate:
@@ -212,7 +212,7 @@ It looks like busywork; it isn't. Cloudflare Pages caches CSS for four hours
 while serving fresh HTML, so without it a visitor gets your new markup wearing
 the old stylesheet — which doesn't look like a caching problem, it looks like
 the site is broken. It cost us a full round trip once already: a rebuilt hero
-looked wrong on Maria's screen purely because her browser was four hours behind.
+looked wrong on Masha's screen purely because her browser was four hours behind.
 
 **Don't bother trying to fix this with a `_headers` file — it was tried and it
 doesn't work.** Pages reads the file (a custom `X-Headers-File` header came

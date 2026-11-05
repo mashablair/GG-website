@@ -116,8 +116,8 @@ export function shell({
   const showSidebar = sidebar && Boolean(course);
 
   const brandHref = bare ? "/" : courseSlug ? `/learn/${courseSlug}` : "/dashboard";
-  const brandName = course ? course.title : "Maria Blair";
-  const suffix = course ? course.title : "Maria Blair";
+  const brandName = course ? course.title : "Masha Blair";
+  const suffix = course ? course.title : "Masha Blair";
   const links = navLinks(courseSlug);
 
   // A course's own home page is titled after the course, and the suffix is too
