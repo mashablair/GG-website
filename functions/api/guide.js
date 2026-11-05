@@ -1,10 +1,13 @@
 // Cloudflare Pages Function: POST /api/guide
 //
-// The free exit guide's PDF, in exchange for a first name and an email.
-// Reading the guide online stays free (/exit-guide); this is only the download.
+// A free guide's PDF, in exchange for a first name and an email. The form
+// sends `guide` (a key of GUIDES below); no key means the exit guide, so the
+// original form keeps working unchanged.
+//   - exit-guide: reading it online stays free (/exit-guide); this is the download.
+//   - let-go: the PDF is only available here (/let-go is just the sign-up page).
 //
 // What happens:
-//   1. She's saved to `leads` on the "exit-guide" list — separate from the
+//   1. She's saved to `leads` on that guide's list — separate from the
 //      course waitlist, see migrations/0002-leads.sql.
 //   2. The response carries the PDF link, so she can download it right away.
 //   3. She's emailed the same link from Maria, with an unsubscribe link.
@@ -17,10 +20,24 @@ import { sendEmail, guideDeliveryEmail, guideSignupEmail } from '../_lib/email.j
 import { hmacHex } from '../_lib/crypto.js';
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-const LIST = 'exit-guide';
 
-// Not linked from any page — it's handed out here, after the form.
-export const GUIDE_PDF_PATH = '/exit-guide/pdf/k7q3m-how-to-prepare-your-exit.pdf';
+// The PDFs aren't linked from any page — they're handed out here, after the form.
+// `list` is the leads list; `title` goes in the emails.
+export const GUIDES = {
+  'exit-guide': {
+    list: 'exit-guide',
+    title: 'How to Prepare Your Exit',
+    pdf: '/exit-guide/pdf/k7q3m-how-to-prepare-your-exit.pdf',
+  },
+  'let-go': {
+    list: 'let-go',
+    title: 'How to Let Go of an Ex',
+    pdf: '/let-go/pdf/w9h2t-how-to-let-go-of-an-ex.pdf',
+  },
+};
+
+// Kept for anything that still imports the old single path.
+export const GUIDE_PDF_PATH = GUIDES['exit-guide'].pdf;
 
 // The table is created on first use so the form works on the first deploy,
 // before anyone has run the migration by hand. Cheap: it's a no-op once it exists.
@@ -43,12 +60,19 @@ export async function onRequestPost({ request, env, waitUntil }) {
     return json({ error: 'Invalid request' }, 400);
   }
 
+  const guideKey = String(data.guide || 'exit-guide');
+  const guide = Object.hasOwn(GUIDES, guideKey) ? GUIDES[guideKey] : null;
+  if (!guide) {
+    return json({ error: 'Unknown guide' }, 400);
+  }
+  const LIST = guide.list;
+
   const url = new URL(request.url);
-  const pdfUrl = `${url.origin}${GUIDE_PDF_PATH}`;
+  const pdfUrl = `${url.origin}${guide.pdf}`;
 
   // Honeypot: only bots fill this in. Report success, write and send nothing.
   if (String(data.company || '').trim()) {
-    return json({ ok: true, pdf: GUIDE_PDF_PATH });
+    return json({ ok: true, pdf: guide.pdf });
   }
 
   const firstName = String(data.first_name || '').trim().slice(0, 100);
@@ -95,7 +119,7 @@ export async function onRequestPost({ request, env, waitUntil }) {
   const unsubscribeUrl = await unsubscribeLink(env, url.origin, email);
 
   waitUntil(
-    sendEmail(env, { to: email, ...guideDeliveryEmail({ firstName, pdfUrl, unsubscribeUrl }) }).catch(
+    sendEmail(env, { to: email, ...guideDeliveryEmail({ guide: guideKey, firstName, pdfUrl, unsubscribeUrl }) }).catch(
       (err) => console.error('guide delivery email failed:', err.message)
     )
   );
@@ -104,12 +128,12 @@ export async function onRequestPost({ request, env, waitUntil }) {
     waitUntil(
       sendEmail(env, {
         to: env.NOTIFY_EMAIL,
-        ...guideSignupEmail({ firstName, email, source, total }),
+        ...guideSignupEmail({ title: guide.title, firstName, email, source, total }),
       }).catch((err) => console.error('guide notification failed:', err.message))
     );
   }
 
-  return json({ ok: true, pdf: GUIDE_PDF_PATH });
+  return json({ ok: true, pdf: guide.pdf });
 }
 
 /**

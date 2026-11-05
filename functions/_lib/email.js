@@ -140,7 +140,8 @@ Reply to this email to write to her directly.`;
  * The free guide, sent to the woman who asked for it. Written as a note from
  * Maria rather than a receipt: it's the first email she'll ever get from her.
  */
-export function guideDeliveryEmail({ firstName, pdfUrl, unsubscribeUrl }) {
+export function guideDeliveryEmail({ guide = 'exit-guide', firstName, pdfUrl, unsubscribeUrl }) {
+  if (guide === 'let-go') return letGoDeliveryEmail({ firstName, pdfUrl, unsubscribeUrl });
   const text = `Hi ${firstName},
 
 Here's your copy of How to Prepare Your Exit:
@@ -183,11 +184,58 @@ Don't want my letters? Unsubscribe in one click: ${unsubscribeUrl}`;
   return { subject: 'Your guide: How to Prepare Your Exit', text, html };
 }
 
+/** The let-go guide's delivery email. Same shape as the exit guide's. */
+function letGoDeliveryEmail({ firstName, pdfUrl, unsubscribeUrl }) {
+  const text = `Hi ${firstName},
+
+Here's your copy of How to Let Go of an Ex and Break the Emotional Attachment:
+${pdfUrl}
+
+Don't try to do it all tonight. Pick one step and do it this week: mute him,
+write the real list, or send the boundary text. That's how letting go starts.
+
+You're not a backup plan. Either he chooses you and shows it, or he's already
+gone. Choose yourself. Not out of anger. Out of self-respect.
+
+If he scares you or won't respect your "no," please read the safety note at the
+end. The National Domestic Violence Hotline is 1-800-799-7233, 24/7 and
+confidential.
+
+I left a 17-year marriage at 44. Every now and then I'll send you a letter
+about starting over: leaving, rebuilding, and dating again with high
+standards. You can reply to any of them. I read every one.
+
+With love,
+Maria
+
+—
+Don't want my letters? Unsubscribe in one click: ${unsubscribeUrl}`;
+
+  const html = `
+<div style="font-family:-apple-system,'Helvetica Neue',sans-serif;font-size:16px;line-height:1.65;color:#2D2A26;max-width:520px;margin:0 auto;padding:32px 24px">
+  <p>Hi ${escapeHtml(firstName)},</p>
+  <p>Here's your copy of <strong>How to Let Go of an Ex and Break the Emotional Attachment</strong>.</p>
+  <p style="margin:28px 0"><a href="${escapeHtml(
+    pdfUrl
+  )}" style="display:inline-block;background:#7A2E3A;color:#FAF6F1;text-decoration:none;font-weight:600;padding:14px 28px;border-radius:999px">Download the guide (PDF)</a></p>
+  <p>Don't try to do it all tonight. Pick one step and do it this week: mute him, write the real list, or send the boundary text. That's how letting go starts.</p>
+  <p style="font-family:Georgia,serif;font-style:italic;color:#7A2E3A;font-size:18px">You're not a backup plan. Either he chooses you and shows it, or he's already gone.</p>
+  <p style="background:#F3E4E4;border-radius:12px;padding:14px 16px;font-size:15px">If he scares you or won't respect your "no," please read the safety note at the end of the guide. The National Domestic Violence Hotline is <strong>1-800-799-7233</strong>, 24/7 and confidential.</p>
+  <p>I left a 17-year marriage at 44. Every now and then I'll send you a letter about starting over: leaving, rebuilding, and dating again with high standards. You can reply to any of them. I read every one.</p>
+  <p style="font-family:Georgia,serif;font-style:italic;color:#7A2E3A;font-size:19px">With love,<br>Maria</p>
+  <p style="color:#6B6560;font-size:13px;border-top:1px solid #eadfd8;padding-top:16px;margin-top:32px">Don't want my letters? <a href="${escapeHtml(
+    unsubscribeUrl
+  )}" style="color:#6B6560">Unsubscribe in one click</a>.</p>
+</div>`;
+
+  return { subject: 'Your guide: How to Let Go of an Ex', text, html };
+}
+
 /** "Someone downloaded the guide", sent to Maria. Same shape as the waitlist one. */
-export function guideSignupEmail({ firstName, email, source, total }) {
+export function guideSignupEmail({ title = 'How to Prepare Your Exit', firstName, email, source, total }) {
   const where = source ? sourcePage(source) : null;
 
-  const text = `${firstName} downloaded the exit guide.
+  const text = `${firstName} downloaded ${title}.
 
 Email:  ${email}${where ? `\nFrom:   ${where}` : ''}
 Total:  ${total} ${total === 1 ? 'woman' : 'women'} on the guide list
@@ -198,7 +246,7 @@ Reply to this email to write to her directly.`;
 <div style="font-family:-apple-system,'Helvetica Neue',sans-serif;font-size:16px;line-height:1.6;color:#2D2A26;max-width:480px;margin:0 auto;padding:32px 24px">
   <p style="font-family:Georgia,serif;font-size:24px;color:#7A2E3A;margin:0 0 24px">${escapeHtml(
     firstName
-  )} downloaded the exit guide.</p>
+  )} downloaded ${escapeHtml(title)}.</p>
   <table style="border-collapse:collapse;font-size:15px">
     <tr><td style="padding:4px 16px 4px 0;color:#6B6560">Email</td><td><a href="mailto:${escapeHtml(
       email
@@ -214,7 +262,7 @@ Reply to this email to write to her directly.`;
   </table>
 </div>`;
 
-  return { subject: `New guide download: ${firstName} (${email})`, text, html };
+  return { subject: `New guide download (${title}): ${firstName} (${email})`, text, html };
 }
 
 /** "https://dating-goddess.com/course?x=1" -> "/course". Never throws on junk. */
