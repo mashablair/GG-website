@@ -3,18 +3,22 @@
 // A free guide's PDF, in exchange for a first name and an email. The form
 // sends `guide` (a key of GUIDES below); no key means the exit guide, so the
 // original form keeps working unchanged.
-//   - exit-guide: reading it online stays free (/exit-guide); this is the download.
-//   - let-go: the PDF is only available here (/let-go is just the sign-up page).
+//   - exit-guide: reading it online stays free (/exit-guide); the PDF is emailed.
+//   - let-go: /let-go is just the sign-up page; the PDF is emailed.
+//
+// The PDF link only ever goes out by email, never in this response, so a fake
+// address gets nothing and every lead on the list is a real inbox.
 //
 // What happens:
 //   1. She's saved to `leads` on that guide's list — separate from the
 //      course waitlist, see migrations/0002-leads.sql.
-//   2. The response carries the PDF link, so she can download it right away.
-//   3. She's emailed the same link from Maria, with an unsubscribe link.
+//   2. The response just says it worked; the page tells her to check her inbox.
+//   3. She's emailed the PDF link from Maria, with an unsubscribe link.
 //   4. Maria is told, but only the first time an address signs up.
 //
-// Steps 3 and 4 run in waitUntil and can't fail the signup: she has the PDF
-// the moment step 1 succeeds, and a mail outage costs an email, never a lead.
+// Steps 3 and 4 run in waitUntil and can't fail the signup: a mail outage
+// costs an email, never a lead. The page tells her who to write to if the
+// email doesn't arrive.
 
 import { sendEmail, guideDeliveryEmail, guideSignupEmail } from '../_lib/email.js';
 import { hmacHex } from '../_lib/crypto.js';
@@ -72,7 +76,7 @@ export async function onRequestPost({ request, env, waitUntil }) {
 
   // Honeypot: only bots fill this in. Report success, write and send nothing.
   if (String(data.company || '').trim()) {
-    return json({ ok: true, pdf: guide.pdf });
+    return json({ ok: true });
   }
 
   const firstName = String(data.first_name || '').trim().slice(0, 100);
@@ -133,7 +137,7 @@ export async function onRequestPost({ request, env, waitUntil }) {
     );
   }
 
-  return json({ ok: true, pdf: guide.pdf });
+  return json({ ok: true });
 }
 
 /**

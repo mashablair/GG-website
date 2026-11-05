@@ -65,6 +65,7 @@
   .guide .pdf-form .btn[disabled] { opacity: .6; cursor: wait; }
   .guide .pdf-error { color: var(--burgundy); font-size: 15px; margin: 0; min-height: 0; }
   .guide .pdf-done { max-width: 460px; margin: 18px auto 6px; }
+  .guide .pdf-done-title { font-family: var(--serif); color: var(--burgundy); font-size: 24px; margin: 0 0 8px; }
   .guide .hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
   .guide .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 
@@ -295,7 +296,7 @@
     <div class="wrap">
       <div class="pdf-card">
         <h2>Get the PDF</h2>
-        <p>Save the guide to your phone and come back to it when you need it. I'll also send you my letters about starting over. Unsubscribe anytime.</p>
+        <p>Get the guide in your inbox to save on your phone and come back to when you need it. I'll also send you my letters about starting over. Unsubscribe anytime.</p>
         <form class="pdf-form" id="pdfForm" novalidate>
           <label class="sr-only" for="pdf-name">First name</label>
           <input id="pdf-name" name="first_name" type="text" placeholder="First name" autocomplete="given-name" required>
@@ -402,16 +403,23 @@
       body: JSON.stringify({ first_name: name, email: email, company: form.company.value })
     }).then(function (res) {
       return res.json().then(function (data) {
-        if (!res.ok || !data.pdf) throw new Error('failed');
+        if (!res.ok || !data.ok) throw new Error('failed');
         var done = document.createElement('div');
         done.className = 'pdf-done';
+        var h = document.createElement('p');
+        h.className = 'pdf-done-title';
+        h.textContent = 'Check your inbox, ' + name + '!';
         var p = document.createElement('p');
-        p.textContent = 'Here it is, ' + name + '. I also sent a copy to your inbox.';
-        var a = document.createElement('a');
-        a.className = 'btn btn-primary btn-download';
-        a.href = data.pdf; a.setAttribute('download', 'How to Prepare Your Exit - Maria Blair.pdf');
-        a.textContent = 'Download the PDF';
-        done.appendChild(p); done.appendChild(a);
+        p.textContent = 'I just sent the guide to ' + email + '. It should arrive in a minute or two.';
+        var help = document.createElement('p');
+        help.className = 'small';
+        help.appendChild(document.createTextNode("Don't see it? Check your spam or Promotions tab. Still nothing? Email me at "));
+        var m = document.createElement('a');
+        m.href = 'mailto:mashablair@gmail.com?subject=' + encodeURIComponent('Please send me the free guide');
+        m.textContent = 'mashablair@gmail.com';
+        help.appendChild(m);
+        help.appendChild(document.createTextNode(" and I'll send it to you."));
+        done.appendChild(h); done.appendChild(p); done.appendChild(help);
         form.replaceWith(done);
       });
     }).catch(function () {
