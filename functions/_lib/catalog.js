@@ -93,8 +93,8 @@ export const support = {
   // Instagram. Replies to login emails land here too.
   // TODO: switch to an address on dating-goddess.com once Email Routing is set up.
   email: 'mashablair@gmail.com',
-  instagram: 'https://www.instagram.com/maria_blair_goddess',
-  instagramHandle: '@maria_blair_goddess',
+  instagram: 'https://www.instagram.com/masha_blair_goddess',
+  instagramHandle: '@masha_blair_goddess',
 };
 
 // ---------- Which purchase unlocks which product ----------
