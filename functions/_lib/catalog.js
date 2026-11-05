@@ -1,5 +1,5 @@
 // ============================================
-// THE CATALOG — everything Maria sells
+// THE CATALOG — everything Masha sells
 // ============================================
 //
 // One entry per product. A product is either:
@@ -39,7 +39,7 @@ export const products = {
     slug: 'consult-60',
     type: 'service',
     title: 'Private 1:1 Video Consultation',
-    tagline: 'A private video call with Maria.',
+    tagline: 'A private video call with Masha.',
     salesUrl: 'https://dating-goddess.com/consultations',
   },
 };
@@ -91,9 +91,10 @@ export const support = {
   // Email leads: it's easier for an upset customer than a DM, it gives you a
   // record of the conversation, and it reaches you even if she isn't on
   // Instagram. Replies to login emails land here too.
-  email: 'support@mariablair.com',
-  instagram: 'https://www.instagram.com/maria_blair_goddess',
-  instagramHandle: '@maria_blair_goddess',
+  // TODO: switch to an address on dating-goddess.com once Email Routing is set up.
+  email: 'mashablair@gmail.com',
+  instagram: 'https://www.instagram.com/masha_blair_goddess',
+  instagramHandle: '@masha_blair_goddess',
 };
 
 // ---------- Which purchase unlocks which product ----------

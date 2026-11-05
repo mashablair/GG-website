@@ -4,7 +4,7 @@
 -- The free exit guide (/exit-guide) gives the PDF in exchange for a first name
 -- and an email. Those signups are a different list from the course waitlist —
 -- a woman who wanted a free guide hasn't asked to hear about the course launch,
--- and the waitlist count in Maria's notification email shouldn't jump because
+-- and the waitlist count in Masha's notification email shouldn't jump because
 -- of her. So they get their own table, keyed by (email, list) so one address
 -- can sit on more than one free resource later.
 --

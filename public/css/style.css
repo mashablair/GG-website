@@ -1001,7 +1001,7 @@ section {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: 60% 5%; /* mobile: Maria's face framed near the top */
+  object-position: 60% 5%; /* mobile: Masha's face framed near the top */
 }
 
 .hero__scrim {
@@ -1035,7 +1035,7 @@ section {
   color: rgba(250, 246, 241, 0.9);
 }
 
-/* The hero statement: Maria's name and what she does, on a frosted card over
+/* The hero statement: Masha's name and what she does, on a frosted card over
    the photo. This was a small caption pinned to a corner; it's now the h1 and
    carries the page on its own, so it sits in the normal content flow and the
    type is scaled up to match. The frosted panel is what makes it readable over
@@ -1104,7 +1104,7 @@ section {
 }
 
 /* Wide screens only: cinematic side-by-side overlay — text on the left,
-   Maria clear on the right, credential caption in the bottom-right beneath her.
+   Masha clear on the right, credential caption in the bottom-right beneath her.
    Below 900px the photo crops too square for this, so those sizes keep the
    mobile layout (face up top, text over the darkened bottom). */
 @media (min-width: 900px) {
@@ -1130,7 +1130,7 @@ section {
     padding-bottom: 0;
   }
 
-  /* Wide enough for the name to sit on one line without crowding Maria. */
+  /* Wide enough for the name to sit on one line without crowding Masha. */
   .hero--photo .hero__text { max-width: 560px; }
 }
 
@@ -1869,7 +1869,7 @@ section {
    Course page — sales additions
    ============================================ */
 
-/* A note from Maria */
+/* A note from Masha */
 .note-from-me {
   font-size: 1.2rem;
   line-height: 1.75;

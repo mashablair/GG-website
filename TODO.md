@@ -22,7 +22,7 @@ sale.
    `checkout.session.async_payment_succeeded`,
    `checkout.session.async_payment_failed`, `checkout.session.expired`,
    `charge.refunded`.
-3. **Swap the secrets in Cloudflare** (Maria pastes these — they're secret):
+3. **Swap the secrets in Cloudflare** (Masha pastes these — they're secret):
    ```
    npx wrangler pages secret put STRIPE_SECRET_KEY --project-name gg-website      # the live sk_live_… key
    npx wrangler pages secret put STRIPE_WEBHOOK_SECRET --project-name gg-website  # the new live webhook's whsec_…

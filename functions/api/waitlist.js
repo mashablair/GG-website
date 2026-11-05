@@ -1,5 +1,5 @@
 // Cloudflare Pages Function: POST /api/waitlist
-// Stores waitlist signups in a D1 database bound as "DB", and emails Maria.
+// Stores waitlist signups in a D1 database bound as "DB", and emails Masha.
 // See README.md for the one-time D1 setup steps.
 
 import { sendEmail, waitlistSignupEmail } from '../_lib/email.js';
@@ -16,7 +16,7 @@ export async function onRequestPost({ request, env, waitUntil }) {
 
   // Honeypot: only bots fill this in. Report success so they don't retry.
   // Nothing is written and nothing is sent — this is also what keeps the
-  // notification from becoming a way to spam Maria's inbox.
+  // notification from becoming a way to spam Masha's inbox.
   if (String(data.company || '').trim()) {
     return json({ ok: true });
   }
@@ -58,7 +58,7 @@ export async function onRequestPost({ request, env, waitUntil }) {
   }
 
   // She's on the list — that part is done and saved. The notification is a
-  // convenience for Maria, so it must not be able to fail the signup or make
+  // convenience for Masha, so it must not be able to fail the signup or make
   // the woman wait for an SMTP round trip. waitUntil lets the response go back
   // immediately while the send finishes in the background, and the catch means
   // a mail outage costs a notification, never a subscriber.

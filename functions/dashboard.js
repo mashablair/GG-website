@@ -59,7 +59,7 @@ function dashboardPage(profile, doneByCourse) {
     </section>
 
     ${ended.length ? endedBlock(ended) : ''}
-    ${moreFromMaria(profile.enrollments)}
+    ${moreFromMasha(profile.enrollments)}
 
     ${supportBlock('Something missing?', "If you've bought something that isn't showing here, tell me and I'll put it right.")}
   `;
@@ -141,7 +141,7 @@ function endedBlock(ended) {
  * Only shown when there's actually something to show, so it never renders an
  * empty "buy more" shelf — and never nags someone who already has everything.
  */
-function moreFromMaria(enrollments) {
+function moreFromMasha(enrollments) {
   const has = new Set(enrollments.map((e) => e.course_slug));
   const rest = Object.values(products).filter((p) => !has.has(p.slug));
   if (!rest.length) return '';
