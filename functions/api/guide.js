@@ -5,6 +5,7 @@
 // original form keeps working unchanged.
 //   - exit-guide: reading it online stays free (/exit-guide); the PDF is emailed.
 //   - let-go: /let-go is just the sign-up page; the PDF is emailed.
+//   - stop-chasing: reading it online stays free (/stop-chasing); the PDF is emailed.
 //
 // The PDF link only ever goes out by email, never in this response, so a fake
 // address gets nothing and every lead on the list is a real inbox.
@@ -37,6 +38,11 @@ export const GUIDES = {
     list: 'let-go',
     title: 'How to Let Go of an Ex',
     pdf: '/let-go/pdf/w9h2t-how-to-let-go-of-an-ex.pdf',
+  },
+  'stop-chasing': {
+    list: 'stop-chasing',
+    title: 'Stop Chasing, Start Choosing',
+    pdf: '/stop-chasing/pdf/r4v8n-stop-chasing-start-choosing.pdf',
   },
 };
 

@@ -142,6 +142,7 @@ Reply to this email to write to her directly.`;
  */
 export function guideDeliveryEmail({ guide = 'exit-guide', firstName, pdfUrl, unsubscribeUrl }) {
   if (guide === 'let-go') return letGoDeliveryEmail({ firstName, pdfUrl, unsubscribeUrl });
+  if (guide === 'stop-chasing') return stopChasingDeliveryEmail({ firstName, pdfUrl, unsubscribeUrl });
   const text = `Hi ${firstName},
 
 Here's your copy of How to Prepare Your Exit:
@@ -229,6 +230,44 @@ Don't want my letters? Unsubscribe in one click: ${unsubscribeUrl}`;
 </div>`;
 
   return { subject: 'Your guide: How to Let Go of an Ex', text, html };
+}
+
+/** The Stop Chasing guide's delivery email. Same shape as the exit guide's. */
+function stopChasingDeliveryEmail({ firstName, pdfUrl, unsubscribeUrl }) {
+  const text = `Hi ${firstName},
+
+Here's your copy of Stop Chasing, Start Choosing:
+${pdfUrl}
+
+You don't need all seven shifts before your next date. Pick one and practice
+it. Choosing is a muscle, and it gets stronger every time you use it.
+
+I left a 17-year marriage at 44, took a year to heal, and then went on more
+than 60 dates. Every now and then I'll send you a letter about starting over
+and dating with high standards. You can reply to any of them. I read every one.
+
+With love,
+Masha
+
+—
+Don't want my letters? Unsubscribe in one click: ${unsubscribeUrl}`;
+
+  const html = `
+<div style="font-family:-apple-system,'Helvetica Neue',sans-serif;font-size:16px;line-height:1.65;color:#2D2A26;max-width:520px;margin:0 auto;padding:32px 24px">
+  <p>Hi ${escapeHtml(firstName)},</p>
+  <p>Here's your copy of <strong>Stop Chasing, Start Choosing</strong>.</p>
+  <p style="margin:28px 0"><a href="${escapeHtml(
+    pdfUrl
+  )}" style="display:inline-block;background:#7A2E3A;color:#FAF6F1;text-decoration:none;font-weight:600;padding:14px 28px;border-radius:999px">Download the guide (PDF)</a></p>
+  <p>You don't need all seven shifts before your next date. Pick one and practice it. Choosing is a muscle, and it gets stronger every time you use it.</p>
+  <p>I left a 17-year marriage at 44, took a year to heal, and then went on more than 60 dates. Every now and then I'll send you a letter about starting over and dating with high standards. You can reply to any of them. I read every one.</p>
+  <p style="font-family:Georgia,serif;font-style:italic;color:#7A2E3A;font-size:19px">With love,<br>Masha</p>
+  <p style="color:#6B6560;font-size:13px;border-top:1px solid #eadfd8;padding-top:16px;margin-top:32px">Don't want my letters? <a href="${escapeHtml(
+    unsubscribeUrl
+  )}" style="color:#6B6560">Unsubscribe in one click</a>.</p>
+</div>`;
+
+  return { subject: 'Your guide: Stop Chasing, Start Choosing', text, html };
 }
 
 /** "Someone downloaded the guide", sent to Masha. Same shape as the waitlist one. */
