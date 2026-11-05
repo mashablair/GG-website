@@ -1,0 +1,252 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>How to Let Go of an Ex and Break the Emotional Attachment | Maria Blair</title>
+<style>
+  @font-face { font-family: "Playfair Display"; font-weight: 500; font-style: normal; src: url(playfair-display-latin-500-normal.woff2); }
+  @font-face { font-family: "Playfair Display"; font-weight: 500; font-style: italic; src: url(playfair-display-latin-500-italic.woff2); }
+  @font-face { font-family: "Playfair Display"; font-weight: 600; font-style: normal; src: url(playfair-display-latin-600-normal.woff2); }
+  @font-face { font-family: "Playfair Display"; font-weight: 600; font-style: italic; src: url(playfair-display-latin-600-italic.woff2); }
+  @font-face { font-family: "DM Sans"; font-weight: 400; src: url(dm-sans-latin-400-normal.woff2); }
+  @font-face { font-family: "DM Sans"; font-weight: 500; src: url(dm-sans-latin-500-normal.woff2); }
+  @font-face { font-family: "DM Sans"; font-weight: 600; src: url(dm-sans-latin-600-normal.woff2); }
+  @font-face { font-family: "DM Sans"; font-weight: 700; src: url(dm-sans-latin-700-normal.woff2); }
+
+  :root {
+    --cream: #FAF6F1; --blush: #F3E4E4; --blush-deep: #D4A0A0; --burgundy: #7A2E3A;
+    --gold: #C9A96E; --ink: #2D2A26; --muted: #6B6560;
+    --serif: "Playfair Display", Georgia, serif;
+    --sans: "DM Sans", "Helvetica Neue", sans-serif;
+  }
+  @page { size: letter; margin: 16mm 16mm 18mm; }
+  @page :first { margin: 0; }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; background: #fff; }
+  body { font-family: var(--sans); font-size: 11pt; line-height: 1.55; color: var(--ink); -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+
+  /* Cover */
+  .cover {
+    height: 279.4mm; width: 215.9mm; page-break-after: always;
+    background: linear-gradient(180deg, var(--blush) 0%, var(--cream) 70%);
+    display: flex; flex-direction: column; justify-content: center; padding: 0 24mm; position: relative;
+  }
+  .cover .logo { position: absolute; top: 20mm; left: 24mm; width: 44mm; }
+  .eyebrow { font: 600 9pt var(--sans); letter-spacing: .16em; text-transform: uppercase; color: var(--gold); margin: 0 0 10pt; }
+  .cover h1 { font-family: var(--serif); font-weight: 500; color: var(--burgundy); font-size: 40pt; line-height: 1.08; margin: 0 0 18pt; }
+  .cover h1 em { font-style: italic; }
+  .cover .sub { font-size: 14pt; color: var(--muted); max-width: 125mm; margin: 0; }
+  .cover .rule { width: 28mm; height: 2px; background: var(--gold); margin: 26pt 0 14pt; }
+  .cover .by { font-family: var(--serif); font-style: italic; font-size: 14pt; color: var(--burgundy); margin: 0; }
+  .cover .leo { position: absolute; bottom: 18mm; left: 24mm; font-size: 9pt; color: var(--muted); }
+
+  h2 { font-family: var(--serif); font-weight: 500; color: var(--burgundy); font-size: 21pt; line-height: 1.2; margin: 0 0 10pt; break-after: avoid; }
+  h3 { font: 600 12pt/1.35 var(--sans); margin: 0 0 4pt; color: var(--ink); break-after: avoid; }
+  p { margin: 0 0 9pt; }
+  section { margin: 0 0 22pt; }
+  .page { page-break-before: always; }
+  .kicker { font: 600 8.5pt var(--sans); letter-spacing: .14em; text-transform: uppercase; color: var(--gold); margin: 0 0 4pt; }
+
+  .letter p.lead::first-letter { font-family: var(--serif); color: var(--burgundy); float: left; font-size: 40pt; line-height: .9; padding: 3pt 6pt 0 0; }
+  .pull { font-family: var(--serif); font-style: italic; color: var(--burgundy); font-size: 15pt; line-height: 1.4; border-left: 3px solid var(--gold); padding-left: 12pt; margin: 14pt 0 0; }
+
+  .card { background: var(--cream); border-radius: 10pt; padding: 14pt 16pt; break-inside: avoid; }
+  .card + .card { margin-top: 9pt; }
+  .card.blush { background: var(--blush); }
+  .card p:last-child { margin-bottom: 0; }
+
+  ul.ticks { list-style: none; padding: 0; margin: 8pt 0 10pt; }
+  ul.ticks li { position: relative; padding-left: 16pt; margin: 0 0 5pt; }
+  ul.ticks li::before { content: ""; position: absolute; left: 2pt; top: 7pt; width: 6pt; height: 6pt; border-radius: 50%; background: var(--blush-deep); }
+
+  ol.steps { list-style: none; counter-reset: step; padding: 0; margin: 12pt 0 0; }
+  ol.steps > li { counter-increment: step; position: relative; padding: 0 0 0 36pt; margin: 0 0 11pt; break-inside: avoid; }
+  ol.steps > li::before {
+    content: counter(step); position: absolute; left: 0; top: -1pt; width: 24pt; height: 24pt; border-radius: 50%;
+    background: var(--blush); color: var(--burgundy); font: 600 12pt/24pt var(--serif); text-align: center;
+  }
+  ol.steps p { margin: 0 0 5pt; }
+
+  .script { font-family: var(--serif); font-style: italic; color: var(--burgundy); font-size: 12pt; line-height: 1.5; background: #fff; border: 1.5px solid var(--blush-deep); border-radius: 10pt; padding: 10pt 14pt; margin: 6pt 0 6pt; }
+  .small { font-size: 9.5pt; color: var(--muted); }
+
+  .write { border-bottom: 1px solid var(--blush-deep); height: 20pt; }
+
+  .safety { border: 2px solid var(--burgundy); border-radius: 10pt; padding: 12pt 16pt; break-inside: avoid; }
+  .safety h3 { color: var(--burgundy); }
+
+  .next { background: var(--blush); border-radius: 12pt; padding: 18pt 20pt; text-align: center; break-inside: avoid; }
+  .next p { max-width: 140mm; margin-left: auto; margin-right: auto; }
+  .sig { font-family: var(--serif); font-style: italic; font-size: 16pt; color: var(--burgundy); margin: 12pt 0 4pt; }
+  .links { font-size: 10pt; color: var(--muted); margin: 0; }
+  .disclaimer { font-size: 8.5pt; color: var(--muted); text-align: center; margin-top: 14pt; }
+</style>
+</head>
+<body>
+
+<div class="cover">
+  <img class="logo" src="mg-logo.png" alt="Maria Blair">
+  <p class="eyebrow">A free mini-guide from Maria Blair</p>
+  <h1>How to Let Go of an Ex <em>and Break the Emotional Attachment</em></h1>
+  <p class="sub">For the woman who keeps hoping he'll choose her, whether he's already gone or only halfway out the door.</p>
+  <div class="rule"></div>
+  <p class="by">With love, Maria 🐆</p>
+  <p class="leo">dating-goddess.com · @maria_blair_goddess</p>
+</div>
+
+<section class="letter">
+  <p class="kicker">A note from me</p>
+  <h2>You are not a backup plan.</h2>
+  <p class="lead">I left a 17-year marriage at 44. I know how hard it is to stop hoping. Hoping he'll change. Hoping he'll wake up one day and choose you the way he used to.</p>
+  <p>Here's what I learned: hope is not a plan. And waiting for a man to decide if you're worth it is not love. It's a slow form of self-disrespect, and it costs you your self-worth, one day at a time.</p>
+  <p>This guide is for two women. The one whose man is still here, but not really here anymore. And the one who's already apart from him, but still can't get him out of her head. If you're either of them, read on. I'll show you exactly what I did.</p>
+  <p class="pull">Choose yourself. Not out of anger. Out of self-respect.</p>
+</section>
+
+<section>
+  <p class="kicker">First, the truth</p>
+  <h2>Why you can't just "get over him"</h2>
+  <p>You're not weak and you're not crazy. Here's what's actually happening.</p>
+  <div class="card">
+    <h3>The hope loop</h3>
+    <p>He pulls away, then gives you a little warmth. A sweet text. One good weekend. Your heart lights up, and you're hooked again. Those small, unpredictable rewards are exactly what keeps the attachment alive. Brain-scan studies of people going through a breakup show the same reward and craving systems that drive addiction. That's why it feels like withdrawal. Because it is.</p>
+  </div>
+  <div class="card">
+    <h3>The habit</h3>
+    <p>He was in your morning coffee, your weekend plans, your "I have to tell him about this." Your mind keeps reaching for him out of habit, the same way your hand reaches for your phone.</p>
+  </div>
+  <div class="card">
+    <h3>The future you planned</h3>
+    <p>You're not only missing him. You're missing the life you pictured with him: the trips, the family, growing old together. That dream needs to be grieved too.</p>
+  </div>
+  <p style="margin-top:10pt">Once you see the mechanics, you can stop blaming yourself and start breaking the loop.</p>
+</section>
+
+<section class="page">
+  <p class="kicker">Part one</p>
+  <h2>If he's still here, but already leaving</h2>
+  <p>Some men don't leave out loud. They leave quietly, little by little, and let you do all the work of holding things together. Be honest with yourself. Does this sound familiar?</p>
+  <ul class="ticks">
+    <li>You're always the one making plans, texting first, fixing the mood.</li>
+    <li>He's "busy," "stressed," "not in a good place," for months.</li>
+    <li>He stopped talking about the future, or changes the subject when you do.</li>
+    <li>He's affectionate when he needs something, and distant the rest of the time.</li>
+    <li>You feel like you're auditioning for a role you already have.</li>
+    <li>You go to bed anxious, checking his face for clues.</li>
+  </ul>
+  <p>If you checked two or more, you already know. Here's my rule:</p>
+  <div class="card blush">
+    <p style="font-family:var(--serif);font-style:italic;color:var(--burgundy);font-size:14pt;line-height:1.4;margin:0">Either he chooses you and shows it, or he's already gone. A man you have to convince will never make you feel calm, valued, and safe.</p>
+  </div>
+
+  <h3 style="margin-top:16pt">What to do instead of begging</h3>
+  <ol class="steps">
+    <li>
+      <h3>Stop convincing.</h3>
+      <p>No more long talks, letters, ultimatums you don't keep, or trying harder to be "enough." The more you chase, the further he goes, and the smaller you feel.</p>
+    </li>
+    <li>
+      <h3>Have one honest conversation. Just one.</h3>
+      <p>Calm, short, no drama. Something like:</p>
+      <p class="script">"I feel like you're not here anymore. I'm not going to beg you to stay. If you want this, I need to see it. If you don't, I'd rather know now."</p>
+    </li>
+    <li>
+      <h3>Then watch what he does, not what he says.</h3>
+      <p>Words are easy. Effort is the answer. Give it a few weeks, not a few years. Decide your timeline privately, for yourself.</p>
+    </li>
+    <li>
+      <h3>If he's gone, open the door and let him go.</h3>
+      <p>You don't have to fight for someone who isn't fighting for you. Letting him go isn't losing. It's refusing to be the woman he keeps just because he doesn't want to be alone. If you're married and ready to leave, start with my free guide <em>How to Prepare Your Exit</em>.</p>
+    </li>
+  </ol>
+</section>
+
+<section class="page">
+  <p class="kicker">Part two</p>
+  <h2>The 7-step letting-go plan</h2>
+  <p>For when it's over, or when you've decided it is. You don't have to be perfect. You just have to keep choosing yourself, one day at a time.</p>
+  <ol class="steps">
+    <li>
+      <h3>Set a no-contact window. Mine was six months.</h3>
+      <p>After my separation, my ex and I decided to stay friendly. Today we have a genuinely good relationship. But for the first six months, I kept contact to the absolute minimum: only decisions about our daughter and practical things like car insurance. For everything else, I asked him to respect my boundaries. I was clear, polite, and firm. He understood. And it worked.</p>
+      <p>You can say:</p>
+      <p class="script">"I need space to heal. For the next six months, please let's keep contact to what's necessary. This isn't about hurting you. It's what I need to move on."</p>
+      <p>If you have kids or business together, keep it short and practical, like a colleague. No "how are you," no late-night calls, no "just checking in."</p>
+    </li>
+    <li>
+      <h3>Remove the triggers.</h3>
+      <p>Mute or unfollow him. Archive the chat. Put the photos and gifts in a box, out of sight. Stop checking his profile, his friends' stories, his "last seen." Every "just one look" restarts the clock.</p>
+    </li>
+    <li>
+      <h3>Write the real list.</h3>
+      <p>Your mind will replay the highlight reel: the best trip, the sweetest moment. Write down the truth instead. The nights you cried. The times he made you feel small. What you gave up. Keep it on your phone and read it every time you miss him.</p>
+    </li>
+    <li>
+      <h3>Grieve the future, not just the man.</h3>
+      <p>Let yourself be sad about the life you planned. Cry, journal, talk to your girlfriends. Grief that's allowed moves through you. Grief that's pushed down comes back as texting him at midnight.</p>
+    </li>
+    <li>
+      <h3>Get support, and expect the numbness.</h3>
+      <p>After my separation I felt emotionally numb for a while. It's scary, and it's normal. A good therapist helped me more than anything. She helps you understand why you attached the way you did, so you don't repeat it with the next man.</p>
+    </li>
+    <li>
+      <h3>Create big emotions in your real life.</h3>
+      <p>It's so easy to get huge, cheap emotions from a relationship, even a bad one. It's much harder to create big emotions in your own life. Do it anyway. A trip, a dance class, a new body, a business, new friends. Fill the hours he used to take up with things that make you feel alive.</p>
+    </li>
+    <li>
+      <h3>Don't date to forget him.</h3>
+      <p>A new man is not a cure for an old one. It took me a full year after my separation before I went on my first date, and I'm glad I waited. Date when you're ready to choose, not when you're desperate to stop hurting.</p>
+    </li>
+  </ol>
+</section>
+
+<section>
+  <p class="kicker">Be ready</p>
+  <h2>When he comes back (they often do)</h2>
+  <p>The "I miss you" text. The "Can we talk?" The holiday message out of nowhere. It usually arrives right when you start feeling better. Before you answer, ask yourself three questions:</p>
+  <ul class="ticks">
+    <li><strong>What's actually different?</strong> Not his words. His actions, over time.</li>
+    <li><strong>Is he choosing me, or is he lonely?</strong> Missing you is not the same as choosing you.</li>
+    <li><strong>How will I feel next week?</strong> Calm and valued, or anxious and checking my phone again?</li>
+  </ul>
+  <p>If you're in your no-contact window, you don't owe him a reply. Silence is an answer. If you do answer, keep it short:</p>
+  <p class="script">"I'm glad you're doing okay. I'm focusing on my own life right now."</p>
+</section>
+
+<section>
+  <p class="kicker">The finish line</p>
+  <h2>How you'll know you're free</h2>
+  <ul class="ticks">
+    <li>You think of him and there's no punch in the stomach.</li>
+    <li>You stop checking. Not because you're forcing yourself, but because you forgot to.</li>
+    <li>You can genuinely wish him well.</li>
+    <li>Your day is full of things you love, and he's just not in it.</li>
+  </ul>
+  <p>It doesn't happen in a straight line. Some days you'll take two steps back. That's okay. Keep going.</p>
+
+  <h3 style="margin-top:14pt">Your reflection</h3>
+  <p class="small">What am I still hoping he'll do? And what would I do for myself if I stopped waiting?</p>
+  <div class="write"></div><div class="write"></div><div class="write"></div>
+</section>
+
+<section>
+  <div class="safety">
+    <h3>If he scares you</h3>
+    <p class="small" style="margin:0">If he threatens you, follows you, controls your money or phone, or won't respect your "no," letting go needs a safety plan. Please don't do it alone. National Domestic Violence Hotline: <strong>1-800-799-7233</strong> (24/7, free and confidential), text START to 88788, or chat at thehotline.org. In an emergency, call 911.</p>
+  </div>
+</section>
+
+<section>
+  <div class="next">
+    <p class="kicker" style="text-align:center">Your next step</p>
+    <h2>Choose yourself today.</h2>
+    <p>Pick one step from this guide and do it this week. Mute him. Write the list. Send the boundary text. One step is how every new chapter starts.</p>
+    <p>If you want help walking through it, book a private consultation with me. We'll look at your situation together.</p>
+    <p class="sig">With love, Maria</p>
+    <p class="links">Private consultations: dating-goddess.com/consultations<br>Ready to leave a marriage? Free guide: dating-goddess.com/exit-guide<br>Instagram: @maria_blair_goddess</p>
+  </div>
+  <p class="disclaimer">This guide shares my personal experience. It isn't professional, legal, or mental health advice.</p>
+</section>
+
+</body>
+</html>
