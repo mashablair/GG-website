@@ -23,6 +23,9 @@ export async function onRequest(context) {
   const moved = toCanonicalHost(request, url);
   if (moved) return moved;
 
+  const toAi = toAiConsulting(request, url);
+  if (toAi) return toAi;
+
   if (needsAccount(url.pathname)) {
     const denied = await gate(context, url);
     if (denied) return withNoindex(denied, url);
@@ -32,21 +35,21 @@ export async function onRequest(context) {
 }
 
 /**
- * The site moved from mariablair.com to dating-goddess.com in November 2026.
- * The old domain stays attached so every old link, receipt, email and search
- * result still lands — each request is sent to the same path on the new one.
- * www. goes to the bare domain the same way.
+ * dating-goddess.com is the canonical Glorious Goddess domain.
+ * www.dating-goddess.com goes to the bare domain the same way.
+ *
+ * mariablair.com is Maria Blair's AI consulting brand, not Glorious Goddess.
+ * It now redirects to https://mariablairai.com/ (the AI consulting site root,
+ * not the same path, so old GG paths do not 404 on the AI site).
  *
  * Payment webhooks are the one exception: Stripe doesn't follow redirects, so a
  * webhook still aimed at the old address is answered right here instead of
  * bounced. That keeps purchases working even if a dashboard is missed.
  */
 const CANONICAL_HOST = 'dating-goddess.com';
-const OLD_HOSTS = new Set([
-  'mariablair.com',
-  'www.mariablair.com',
-  'www.dating-goddess.com',
-]);
+const OLD_HOSTS = new Set(['www.dating-goddess.com']);
+const AI_HOSTS = new Set(['mariablair.com', 'www.mariablair.com']);
+const AI_CONSULTING_URL = 'https://mariablairai.com/';
 
 function toCanonicalHost(request, url) {
   if (!OLD_HOSTS.has(url.hostname)) return null;
@@ -58,6 +61,20 @@ function toCanonicalHost(request, url) {
     status: safe ? 301 : 308,
     headers: {
       Location: `https://${CANONICAL_HOST}${url.pathname}${url.search}`,
+    },
+  });
+}
+
+function toAiConsulting(request, url) {
+  if (!AI_HOSTS.has(url.hostname)) return null;
+  if (url.pathname.startsWith('/api/webhooks/')) return null;
+
+  // 301 can turn a POST into a GET; 308 keeps the method and body.
+  const safe = request.method === 'GET' || request.method === 'HEAD';
+  return new Response(null, {
+    status: safe ? 301 : 308,
+    headers: {
+      Location: AI_CONSULTING_URL,
     },
   });
 }
