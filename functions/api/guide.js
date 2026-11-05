@@ -13,8 +13,8 @@
 //   1. She's saved to `leads` on that guide's list — separate from the
 //      course waitlist, see migrations/0002-leads.sql.
 //   2. The response just says it worked; the page tells her to check her inbox.
-//   3. She's emailed the PDF link from Maria, with an unsubscribe link.
-//   4. Maria is told, but only the first time an address signs up.
+//   3. She's emailed the PDF link from Masha, with an unsubscribe link.
+//   4. Masha is told, but only the first time an address signs up.
 //
 // Steps 3 and 4 run in waitUntil and can't fail the signup: a mail outage
 // costs an email, never a lead. The page tells her who to write to if the

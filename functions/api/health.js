@@ -25,7 +25,7 @@ export function onRequestGet({ env }) {
       // Where "someone joined the waitlist" goes. This is the exact failure
       // this endpoint was built for: with NOTIFY_EMAIL missing the signup
       // still saves and the woman still sees "you're on the list", so nothing
-      // looks wrong — Maria simply never hears about it.
+      // looks wrong — Masha simply never hears about it.
       notifyEmail: env.NOTIFY_EMAIL || null,
       waitlistNotifyReady: Boolean(env.NOTIFY_EMAIL) && emailIsConfigured(env),
       stripeKey: Boolean(env.STRIPE_SECRET_KEY),
