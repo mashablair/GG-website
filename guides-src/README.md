@@ -18,5 +18,5 @@ google-chrome --headless=new --no-pdf-header-footer --allow-file-access-from-fil
 ```
 
 Then refresh the cover image the sign-up page shows (`public/<guide>/guide-cover.jpg`)
-from page 1 of the new PDF. Keep the PDF file names: nothing links to them, so the
+from page 1 of the new PDF (each guide starts with a designed cover page). Keep the PDF file names: nothing links to them, so the
 only way to get one is the form, and `GUIDES` in `functions/api/guide.js` points at them.

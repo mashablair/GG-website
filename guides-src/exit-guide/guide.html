@@ -136,9 +136,42 @@
     .nav, .footer, .guide .btn, .hero-actions, .get-pdf { display: none !important; }
     .guide .print-only { display: block; }
     .guide .screen-only { display: none; }
-  </style>
+  
+  /* Designed first page, matching the let-go guide. Print only. */
+  .pdf-cover { display: none; }
+  @page :first { margin: 0; }
+  @media print {
+    .guide .guide-hero { display: none !important; }
+    .pdf-cover {
+      display: flex; flex-direction: column; justify-content: center; position: relative;
+      height: 279.4mm; width: 215.9mm; box-sizing: border-box; padding: 0 24mm;
+      break-after: page; page-break-after: always;
+      background: linear-gradient(180deg, #F3E4E4 0%, #FAF6F1 70%);
+      -webkit-print-color-adjust: exact; print-color-adjust: exact;
+      font-family: "DM Sans", "Helvetica Neue", sans-serif;
+    }
+    .pdf-cover .logo { position: absolute; top: 20mm; left: 24mm; width: 44mm; }
+    .pdf-cover .eyebrow { font: 600 9pt "DM Sans", sans-serif; letter-spacing: .16em; text-transform: uppercase; color: #C9A96E; margin: 0 0 10pt; }
+    .pdf-cover h1 { font-family: "Playfair Display", Georgia, serif; font-weight: 500; color: #7A2E3A; font-size: 40pt; line-height: 1.08; margin: 0 0 18pt; }
+    .pdf-cover h1 em { font-style: italic; }
+    .pdf-cover .sub { font-size: 14pt; line-height: 1.5; color: #6B6560; max-width: 125mm; margin: 0; }
+    .pdf-cover .rule { width: 28mm; height: 2px; background: #C9A96E; margin: 26pt 0 14pt; }
+    .pdf-cover .by { font-family: "Playfair Display", Georgia, serif; font-style: italic; font-size: 14pt; color: #7A2E3A; margin: 0; }
+    .pdf-cover .leo { position: absolute; bottom: 18mm; left: 24mm; font-size: 9pt; color: #6B6560; margin: 0; }
+  }
+</style>
 </head>
 <body>
+<div class="pdf-cover">
+  <img class="logo" src="../../public/images/masha-blair-logo.png" alt="Masha Blair">
+  <p class="eyebrow">A free guide from Masha Blair</p>
+  <h1>How to Prepare <em>Your Exit</em></h1>
+  <p class="sub">Seven quiet steps to get ready to leave an unhappy marriage, on your own terms. Even if you're not ready to leave today.</p>
+  <div class="rule"></div>
+  <p class="by">With love, Masha 🐆</p>
+  <p class="leo">dating-goddess.com · @masha_blair_goddess</p>
+</div>
+
     <!-- ============ NAV ============ -->
     <header class="nav">
       <div class="nav__inner">
