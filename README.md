@@ -1,251 +1,148 @@
-# dating-goddess.com — Glorious Goddess 🐆
+# Glorious Goddess · Digital Course Platform
 
-Masha's whole web presence in one place: the marketing site **and** the teaching
-platform behind it. Plain HTML, CSS and JavaScript with Cloudflare Pages
-Functions — no framework, no build step.
+A responsive marketing website and server-rendered learning platform for an independent education business. The project connects public course discovery with passwordless sign-in, purchase-based access, lesson navigation, and progress tracking.
 
-This is the **hub** in the "one brain, many faces" plan. Exactly one place holds
-accounts, payments, access and video. Marketing sites like dating-goddess.com
-stay dumb and static: they tell a story, hand the buyer to a payment link, and
-she lands back here to sign in and learn.
+**HTML · CSS · JavaScript · Cloudflare Pages Functions · Cloudflare D1**
 
-Live at **https://dating-goddess.com**.
+[Visit the public website](https://dating-goddess.com) · [Architecture](#architecture) · [Run locally](#run-locally) · [Tests](#tests)
 
-See [COMMANDS.md](COMMANDS.md) for everything you'll need to run day to day.
+> **Portfolio context:** This is a business website with an implemented learning platform, not an open demo account. Public pages can be explored without signing in. Student pages require an account and the appropriate enrollment. Course availability, checkout configuration, and email-provider setup are operational concerns separate from the features present in this repository.
 
-## The two halves
+## The product problem
 
-| | |
-| --- | --- |
-| **The website** | `/`, `/my-story`, `/course`, `/consultations`, `/contact`, plus the legal pages. Public, indexed, and the target of all the SEO and AI-discoverability work. |
-| **The platform** | `/login`, `/dashboard`, `/learn/…`, `/account`, `/api/…`. Private, `noindex`, and where anyone who has bought something actually goes. |
+A small education business needs more than a landing page: customers must be able to return after buying, find their content, continue learning, and understand their account status. This project keeps that journey on one domain without introducing a front-end framework or a client-side application build.
 
-They share a domain, a database, a stylesheet and a deploy. What separates them
-is the URL, and that separation is enforced in exactly two places:
-`APP_PREFIXES` in `functions/_middleware.js` (what stays out of Google) and the
-gate in the same file (what needs an account).
+The public site communicates the brand and offerings. The application handles the stateful parts: identity, enrollment, account history, and lesson progress.
 
-## How the URLs work
+## What the application includes
 
-| URL | What it is |
-| --- | --- |
-| `/` | The homepage |
-| `/my-story`, `/course`, `/consultations`, `/contact` | Marketing |
-| `/login` | Sign in — a six-digit code by email, no password |
-| `/dashboard` | **Everything she's bought** — the front door once signed in |
-| `/learn/<course>` | One course's module grid |
-| `/learn/<course>/<module>/<lesson>` | A lesson |
-| `/learn/<course>/resources` | That course's downloads |
-| `/account` | Her details and purchase history |
-| `/welcome` | Where Stripe sends her after paying |
-| `/api/waitlist` | The course waitlist form |
-| `/api/webhooks/stripe`, `/api/webhooks/lava` | Payment providers telling us things |
+- **Public marketing pages** for the brand story, course, consultations, and contact, with responsive navigation and shared visual styling.
+- **Passwordless student sign-in** using an emailed six-digit code and a signed session cookie.
+- **A student dashboard** showing purchased products and course progress, with an account page for profile and purchase history.
+- **Course and lesson navigation** driven by a shared product catalog, including a mobile curriculum drawer and previous/next lesson links.
+- **Per-course access checks** so enrollment in one product does not unlock another.
+- **Persistent progress** with repeat-safe completion and undo actions.
+- **Payment-provider adapters** for Stripe and Lava.top that normalize purchases into a common enrollment model.
+- **Waitlist and guide-request endpoints**, including website guide unsubscribe handling. These endpoints are not evidence that a separate marketing automation service is configured or running.
 
-Access is checked **per course**, from the URL. Owning one course grants nothing
-in another.
+## Engineering highlights
 
-## It holds many courses, not one
+### Server-rendered flows, small browser surface
 
-A student signs in once and sees everything she's bought — courses and
-consultations — on a single dashboard. Adding a second course is a new file plus
-one line in the catalog; routing, the gate, the dashboard, progress and the
-account page all read from it. See **Adding a whole course** below.
+Public pages are static HTML. Pages requiring account or enrollment data are rendered by Pages Functions. Lesson completion uses a normal form POST and redirect rather than depending on a client-side state-management layer. CSS and selective browser JavaScript provide the responsive presentation and interactions.
 
-## What's where
+### Centralized authorization with explicit endpoint checks
 
-Everything under `public/` is served to the world. Everything else — including
-all of `functions/` — is not.
+[`functions/_middleware.js`](functions/_middleware.js) gates `/dashboard`, `/account`, and `/learn/…`. Course access is checked against the course named in the URL, using current database state rather than trusting an enrollment snapshot in a cookie. The progress endpoint performs its own session, course, lesson, and enrollment validation because it sits outside the lesson-route gate.
 
-| Path | What it is |
-| --- | --- |
-| `public/*.html` | The marketing pages |
-| `public/css/style.css` | Brand styles, shared by both halves |
-| `public/css/course.css` | The course app |
-| `public/js/main.js` | Marketing-site behaviour (nav, carousel, waitlist form) |
-| `public/js/course.js` | The mobile curriculum drawer |
-| `functions/_lib/catalog.js` | **Everything Masha sells** — courses, services, prices |
-| `functions/_lib/courses/dating.js` | **The Dating Method — modules, lessons, video, text** |
-| `functions/_lib/render.js` | The page shell every signed-in page uses |
-| `functions/_lib/access.js` | Granting and checking access — payment-provider-neutral |
-| `functions/_middleware.js` | The gate, and what stays out of search results |
-| `functions/dashboard.js` | `/dashboard` — everything she's bought |
-| `functions/learn/[[path]].js` | Lesson pages, module links, resources |
-| `functions/api/waitlist.js` | The course waitlist, and the email telling Masha |
-| `functions/api/webhooks/` | Stripe and Lava |
-| `wrangler.toml` | Build output dir and the database binding |
-| `schema.sql` | The database, as a fresh one would be built |
-| `migrations/` | Changes to a database that already exists |
-| `test/` | End-to-end tests — 190 checks across five suites |
+### Repeat-safe purchase and progress handling
 
-> **Why `public/` matters.** The deploy used to serve the repo root, which meant
-> `schema.sql`, `README.md` and the source of every Function were downloadable
-> from the live site. `pages_build_output_dir = "public"` in `wrangler.toml` is
-> what fixed that — don't move servable files back out of it.
+[`functions/_lib/access.js`](functions/_lib/access.js) separates enrollment logic from individual payment providers. Purchases are keyed by provider, transaction, and course, so repeated deliveries do not create duplicate enrollments. Checkout login redemption is one-time. Completion is keyed by student, course, and lesson, making repeated submissions harmless.
 
-## One database
+### Clear boundaries between public pages and the application
 
-`dating-goddess-db` holds students, what they've bought, how far they've got,
-sign-in codes, and the waitlist. The name is a leftover from when the platform
-was only the dating course; D1 databases can't be renamed and the name is
-internal, so it stays.
+Only `public/` is the static deployment output. Function source and database files are not part of that static output. Account and learning routes receive `noindex` headers, and preview hosts are excluded from indexing. **Indexing controls are not access controls:** the session and enrollment checks provide authorization.
 
-It really is one database. There was briefly a second — `gg-waitlist`, from
-before the platform moved in — and finding a stale row in it is a good way to
-conclude the live form is broken when it isn't.
+## Architecture
 
-## When someone joins the waitlist
+```text
+Browser
+  ├─ Public pages ─────────────── static HTML / CSS / JavaScript
+  └─ Account and course routes ─ Cloudflare Pages Functions
+                                   ├─ Session + enrollment middleware
+                                   ├─ Catalog-driven page rendering
+                                   └─ Cloudflare D1
+                                       students / enrollments / progress
+                                       login codes / waitlist / guide leads
 
-She's written to `waitlist`, and Masha gets an email at `NOTIFY_EMAIL`
-(`wrangler.toml`, under `[vars]` — change it there and redeploy).
-
-Three things about that email are deliberate:
-
-- **It's sent after the database write, inside `waitUntil`.** The signup is
-  saved and the response is already on its way back before any mail is
-  attempted, and a send failure is caught and logged. A mail outage costs a
-  notification, never a subscriber.
-- **Only genuinely new people trigger it.** `email` is `UNIQUE`, so
-  re-submitting the form updates a row rather than adding one; the endpoint asks
-  whether the address is already known *before* inserting, because afterwards
-  the two cases are indistinguishable.
-- **The subject line carries the name and the address**, because it's likely to
-  be read as a phone notification and never opened.
-
-Delete the `NOTIFY_EMAIL` line and notifications stop. Nothing else changes.
-
-## Adding a whole course
-
-Three steps, and nothing outside them needs touching.
-
-1. **Write the content.** Copy `functions/_lib/courses/dating.js` to
-   `functions/_lib/courses/<name>.js`, rename its two exports, and put your
-   modules and lessons in it.
-2. **Add it to the catalog.** In `functions/_lib/catalog.js`, import the file
-   and add one entry to `products`:
-
-   ```js
-   brand: {
-     slug: 'brand',
-     type: 'course',
-     title: brandCourse.title,
-     tagline: brandCourse.tagline,
-     content: brandCourse,
-     resources: brandResources,
-     salesUrl: 'https://wherever-it-is-sold.com',
-   },
-   ```
-3. **Map the payment.** Add the Stripe price id (and the Lava product id, if it
-   sells there) to the maps at the bottom of the same file.
-
-It's then live at `/learn/brand` and appears on the dashboard of anyone who buys
-it. `type: 'service'` is the other option — a consultation, which shows on her
-dashboard as something she bought but has no lessons to open.
-
-**One thing to be careful about.** While there is exactly one course, an
-unrecognised Stripe price still falls back to it, so payments work before you've
-filled the ids in. That fallback switches itself off the moment a second course
-exists — with two, a guess could hand someone the wrong one. So when you add
-course number two, fill in the real price ids at the same time, or purchases
-will be refused rather than mis-granted.
-
-## Adding a lesson
-
-Open the course's file — `functions/_lib/courses/dating.js` — and add an object
-to a module's `lessons` array:
-
-```js
-{
-  slug: 'what-to-say-first',
-  title: 'What to say first',
-  video: 'abc123...',        // the Cloudflare Stream video ID
-  duration: '9 min',
-  body: `<p>Your words here.</p>`,
-  images: [],
-  resources: [],
-}
+Payment provider callbacks ── provider adapters ── shared enrollment logic
 ```
 
-Leave `video: null` and the lesson shows a "being edited right now" card instead
-of a broken player. Leave `body: ''` and it shows a friendly note instead of an
-empty page. Reordering is just moving things around in the file — the sidebar,
-the dashboard, the progress bars and the next/previous links all follow.
+| Area | Main files |
+| --- | --- |
+| Public presentation | `public/*.html`, `public/css/style.css`, `public/js/main.js` |
+| Learning UI | `public/css/course.css`, `public/js/course.js`, `functions/learn/[[path]].js` |
+| Shared page rendering | `functions/_lib/render.js` |
+| Product catalog | `functions/_lib/catalog.js` |
+| Sessions and authorization | `functions/_lib/session.js`, `functions/_middleware.js`, `functions/_lib/access.js` |
+| Dashboard and progress | `functions/dashboard.js`, `functions/api/progress.js` |
+| Payments | `functions/api/webhooks/` |
+| Storage | `schema.sql`, `migrations/` |
+| Runtime configuration | `wrangler.toml`, `.dev.vars.example` |
+| Flow tests | `test/` |
 
-## Who can see what
+## Run locally
 
-`functions/_middleware.js` is the only gate, and it runs before everything else:
-anything under `/learn` needs a signed-in student with an active enrollment **in
-the course named in the URL**. A new page under `/learn` is protected
-automatically — there's nowhere to forget.
+Prerequisites: Node.js/npm for the Wrangler CLI. The integration suites also use Bash, Python 3, and curl.
 
-`/dashboard` and `/account` need only a signed-in student, whatever she owns.
-That's deliberate: someone whose access was refunded still needs somewhere to go
-and see what happened.
-
-Access is re-checked from the database on every request rather than trusted from
-the cookie, so a refund takes effect on her next page load.
-
-One endpoint sits outside the gate and so checks for itself: `POST
-/api/progress` takes the course from the submitted form and verifies both that
-the lesson exists in it and that she owns it.
-
-## Search engines
-
-The marketing pages are indexed. The app is not.
-
-`APP_PREFIXES` in `functions/_middleware.js` lists the paths that get
-`X-Robots-Tag: noindex` — `/login`, `/dashboard`, `/learn`, `/account`,
-`/welcome`, `/pay`, `/api`. Matching is by prefix, so a new page under one of
-them is covered the moment it exists. Preview builds on `*.pages.dev` are
-noindex in their entirety, so they can never compete with the real domain.
-
-Signed-in pages also carry their own `noindex` meta tag. The header is the
-belt-and-braces version: it applies to redirects and to responses that never
-render a document.
-
-## After changing CSS, bump the version
-
-Every stylesheet is linked as `style.css?v=N`. **When you change a stylesheet,
-increment that number** — in the seven pages under `public/`, and in
-`functions/_lib/render.js` for the app.
-
-It looks like busywork; it isn't. Cloudflare Pages caches CSS for four hours
-while serving fresh HTML, so without it a visitor gets your new markup wearing
-the old stylesheet — which doesn't look like a caching problem, it looks like
-the site is broken. It cost us a full round trip once already: a rebuilt hero
-looked wrong on Masha's screen purely because her browser was four hours behind.
-
-**Don't bother trying to fix this with a `_headers` file — it was tried and it
-doesn't work.** Pages reads the file (a custom `X-Headers-File` header came
-through fine) but overrides `Cache-Control` on static assets regardless, still
-returning `max-age=14400`. Changing the URL is the one approach nothing in the
-chain can override, because a different URL is simply a different file.
-
-## Local preview
-
+```bash
+git clone https://github.com/mashablair/GG-website.git
+cd GG-website
+cp .dev.vars.example .dev.vars
 ```
+
+Configure **local-only** values in `.dev.vars`. Keep `EMAIL_DEV_CONSOLE=true` so sign-in codes are printed locally instead of sent. Use a separate random session secret and test/mock payment configuration, never production credentials. `.dev.vars` is gitignored.
+
+Initialize an isolated local database, then start the development server:
+
+```bash
+npx wrangler d1 execute dating-goddess-db --local --file=schema.sql
 npx wrangler pages dev
 ```
 
-Then open http://127.0.0.1:8788. Edit a file, refresh, see it.
+Open **http://127.0.0.1:8788**. There is no application bundling step or root `package.json`.
 
-Sign-in codes are printed to the console instead of emailed
-(`EMAIL_DEV_CONSOLE=true` in `.dev.vars`), so development can never email a real
-person. `.dev.vars` holds the local secrets and is gitignored —
-`.dev.vars.example` is the safe copy showing which names are needed.
+For an existing database, review and apply the relevant files in `migrations/`; `CREATE TABLE IF NOT EXISTS` in the schema does not upgrade existing tables. Do not use `--remote` for a local preview or test run.
 
 ## Tests
 
-190 checks across five suites. They wipe the **local** database each time, never
-production. See COMMANDS.md for how to run them.
+The repository includes shell-based HTTP integration suites and a standalone video-signing check. These exercise purchase events, authentication, course gates, progress, and refunds. They are implementation tests, not a claim that live provider accounts or the complete deployed system have been verified.
 
-## Still to build
+Start the local server with its output available to the login tests:
 
-- **Account merging** — one person, two email addresses. She buys one course
-  with a personal address and another with a work one, and ends up with two
-  accounts each holding half of what she paid for. With several courses sold
-  across several marketing sites this becomes likely rather than theoretical. It
-  needs an admin tool that moves enrollments and progress onto one student row,
-  with a human looking at it.
-- **Worksheets in R2**, served only to signed-in students who own that course
-- **dating-goddess.com** — the first satellite: the Dating Method sales page,
-  static, no backend, pointing its buy button back here
+```bash
+npx wrangler pages dev > /tmp/wrangler-dev.log 2>&1
+```
+
+Set the mock API base URLs and matching test values in `.dev.vars` before running payment tests. See the example file and the relevant test scripts. The purchase scripts start and stop their own local provider stand-ins.
+
+In another terminal:
+
+```bash
+bash test/purchase-flow.sh
+bash test/login-flow.sh
+bash test/gate-flow.sh
+bash test/progress-flow.sh
+bash test/lava-flow.sh
+node test/stream-signing.mjs
+```
+
+**Use a disposable local database:** the integration scripts delete local fixture data during setup. Do not point them at production. Run the suites sequentially because they share local state and mock ports.
+
+Test coverage in the source includes:
+
+- invalid and reused sign-in codes, session tampering, and redirect handling;
+- per-course access, including access after a refund;
+- repeated payment events and unpaid or invalid purchase refusals;
+- repeated completion, undo, and invalid lesson submissions;
+- signed video-token generation and signature validation.
+
+See [`test/README.md`](test/README.md) for detailed scenarios. Some historical counts and setup examples there predate the current scripts; use the checked-in scripts as the source of truth rather than treating a fixed test count as a quality badge.
+
+## Maintainer notes
+
+- **Keep the static output at `public/`.** `pages_build_output_dir` in `wrangler.toml` must not be changed to the repository root.
+- **Add products through the catalog.** Create a course definition under `functions/_lib/courses/`, register it in `functions/_lib/catalog.js`, and map the actual payment-provider product/price IDs. Verify the mapping and per-course access tests before enabling sales. The catalog supports course and service products.
+- **Keep lesson content and navigation together.** Lessons are defined in their course file. Reordering that data drives the curriculum and next/previous navigation. A missing video is handled as an unavailable-content state, not a working media lesson.
+- **Version stylesheet URLs after CSS changes.** Update the existing `?v=` values in public HTML and the shared application renderer to avoid serving new markup with cached old styles.
+- **Separate schema creation from migrations.** Update the fresh schema alongside numbered migrations. Review and test migrations locally before any deployment decision.
+- **Treat subscriber state carefully.** Website guide unsubscribe state and a third-party email platform's suppression state are separate concerns. Imports and retries must not silently restore an opt-out.
+- **Protect real data.** Never commit student exports, subscriber lists, credentials, session tokens, or screenshots of real accounts. Use fictional data for development and portfolio examples.
+
+[`COMMANDS.md`](COMMANDS.md) contains the longer operator reference. Its remote database and deployment commands are for authorized maintenance, not the local quick start above. The current workflow deploys pushes to `main`; review changes and verify the resulting deployment rather than assuming a push succeeded.
+
+## Current boundaries
+
+The code supports multiple courses, but that does not mean multiple courses are available for purchase. Cross-account enrollment merging and private R2 worksheet delivery remain planned rather than presented as complete. Enrollment expiration timestamps are recorded; the current access check uses enrollment status rather than enforcing those timestamps. Video signing depends on configuration. Third-party marketing automation, buyer exclusions, and cross-system unsubscribe behavior require their own operational validation.
+
+This repository demonstrates a framework-free approach to a complete customer journey: public discovery, identity, entitlements, and persistent learning state, with explicit boundaries between presentation and business rules.
