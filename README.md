@@ -6,7 +6,13 @@ A responsive marketing website and server-rendered learning platform for an inde
 
 [Visit the public website](https://dating-goddess.com) · [Architecture](#architecture) · [Run locally](#run-locally) · [Tests](#tests)
 
-> **Portfolio context:** This is a business website with an implemented learning platform, not an open demo account. Public pages can be explored without signing in. Student pages require an account and the appropriate enrollment. Course availability, checkout configuration, and email-provider setup are operational concerns separate from the features present in this repository.
+Built by **[Maria Blair](https://github.com/mashablair)** for her education business, connecting brand design with authentication, enrollment, and learning workflows.
+
+![Glorious Goddess live homepage with responsive navigation and branded course presentation](docs/screenshots/public-homepage.jpg)
+
+*Public marketing page captured from the deployed website. Student accounts and course records are not shown.*
+
+Public pages are available to explore; student pages require sign-in and enrollment. See [verification notes](docs/PORTFOLIO_CHECK.md) for what was checked locally and on the live site.
 
 ## The product problem
 
