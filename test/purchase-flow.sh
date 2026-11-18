@@ -17,6 +17,7 @@ for _ in $(seq 1 20); do
   sleep 0.5
 done
 SECRET=whsec_local_test_secret
+SUPPORT_EMAIL=$(node --input-type=module -e "import {support} from './functions/_lib/catalog.js'; console.log(support.email)")
 DB="npx --yes wrangler@latest d1 execute dating-goddess-db --local -y --command"
 pass=0; fail=0
 
@@ -91,7 +92,7 @@ echo "$resp" | grep -q "Payment received"        && ok "confirms the payment"   
 echo "$resp" | grep -q "Welcome, Anna"           && ok "greets her by name"        || bad "no personal greeting"
 echo "$resp" | grep -q "buyer@example.com"       && ok "shows which email has access" || bad "email not shown"
 echo "$resp" | grep -q 'href="/learn/dating"'          && ok "offers a way into the course" || bad "no link to the course"
-echo "$resp" | grep -qi "instagram.com/maria"    && ok "shows how to reach a human" || bad "no support contact"
+echo "$resp" | grep -Fqi "mailto:$SUPPORT_EMAIL"    && ok "shows how to reach a human" || bad "no support contact"
 grep -qi 'set-cookie: idm_session=' "$TMP/h1"    && ok "session cookie set"        || bad "no session cookie"
 grep -qi 'httponly' "$TMP/h1"                    && ok "cookie is HttpOnly"        || bad "cookie not HttpOnly"
 
@@ -100,7 +101,7 @@ echo "── The welcome link signs you in only once ────────"
 resp=$(curl -s -D "$TMP/h2" "$BASE/welcome?session_id=cs_test_paid")
 echo "$resp" | grep -q "opened this link before" && ok "second use noted"          || bad "second use not noted"
 grep -qi 'set-cookie: idm_session=' "$TMP/h2"    && bad "second use still signed in" || ok "no sign-in on second use"
-echo "$resp" | grep -qi "instagram.com/maria"    && ok "still shows support contact" || bad "no support contact"
+echo "$resp" | grep -Fqi "mailto:$SUPPORT_EMAIL"    && ok "still shows support contact" || bad "no support contact"
 
 echo
 echo "── Delayed payment (Klarna, bank transfer) ────────"
